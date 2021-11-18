@@ -5,43 +5,69 @@ const cookies = new Cookies();
 export default class RequestService {
 	static getData (url: string, headers: HeadersInit = {}) {
 		const token = cookies.get('AccessToken');
-
-		return fetch(url, {
-			method: 'GET',
-			headers: {
+		if (token) {
+			headers = {
 				...headers,
 				'Authorization': `Bearer ${token}`
-			},
+			}
+		}
+		return fetch(url, {
+			method: 'GET',
+			headers: headers
 		})
-			.then(response => {
-				if (response.status !== 200) {
-					throw `${response.status} ${response.statusText}`;
-				}
+		.then(response => {
+			if (response.status !== 200) {
+				throw `${response.status} ${response.statusText}`;
+			}
 
-				return response.json();
-			});
+			return response.json();
+		});
 	}
 
 	// TODO: find а more specific type for body
 	static postData (url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
 		const token = cookies.get('AccessToken');
-
-		return fetch(url, {
-			method: 'POST',
-			headers: {
+		if (token) {
+			headers = {
 				...headers,
 				'Authorization': `Bearer ${token}`
-			},
+			}
+		}
+		return fetch(url, {
+			method: 'POST',
+			headers: headers,
 			body
 		})
-			.then(response => {
-				const passingStatuses = [200, 201];
+		.then(response => {
+			const passingStatuses = [200, 201];
 
-				if (!passingStatuses.includes(response.status)) {
-					throw `${response.status} ${response.statusText}`;
-				}
+			if (!passingStatuses.includes(response.status)) {
+				throw `${response.status} ${response.statusText}`;
+			}
 
-				return response.json()
+			return response.json()
 		})
+	}
+
+	static deleteData(url: string, headers: HeadersInit = {}): Promise<boolean> {
+		const token = cookies.get('AccessToken');
+		if (token) {
+			headers = {
+				...headers,
+				'Authorization': `Bearer ${token}`
+			}
+		}
+		return fetch(url, {
+			method: 'DELETE',
+			headers: headers,
+		})
+		.then(response => {
+			if (response.status !== 200) {
+				throw `${response.status} ${response.statusText}`;
+				return false;
+			}
+
+			return true;
+		});
 	}
 }

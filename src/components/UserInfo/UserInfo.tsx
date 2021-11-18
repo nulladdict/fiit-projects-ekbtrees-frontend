@@ -42,6 +42,7 @@ export default class UserInfo extends Component<IUserInfoProps, IUserInfoState> 
             const button = closest(e.target, `.${styles.userBtn}`);
             const menu = closest(e.target, `.${styles.userMenuWrapper}`);
 
+            // this.setState({openMenu: false});
             if (
                 (!button.length || (button.length && button[0] !== this.button))
                 && (!menu.length || (menu.length && menu[0] !== this.menu))
@@ -60,7 +61,7 @@ export default class UserInfo extends Component<IUserInfoProps, IUserInfoState> 
 
         if (openMenu) {
             return (
-                <div className={styles.userMenuWrapper} ref={this.refMenu}>
+                <div className={styles.userMenuWrapper} ref={this.refMenu} onClick={this.handleClick}>
                     <UserMenu />
                 </div>
             );

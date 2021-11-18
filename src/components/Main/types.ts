@@ -6,4 +6,6 @@ export interface IMainProps {
     onCookie: any; // seems to be unused
 }
 
-export interface IMainState { }
+export interface IMainState {
+    mapViewPosition?: [number, number];
+}

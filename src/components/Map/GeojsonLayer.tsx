@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import {divIcon, icon} from 'leaflet';
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import React, {useState, useEffect, useRef, useCallback, useLayoutEffect} from 'react';
 import {Circle} from 'react-leaflet';
 import markerIcon from './markerIcon';
 import {getCircleOptions, getCircleRadius} from "./MapHelpers";
@@ -29,16 +29,15 @@ import {
 } from "./types";
 import {DefaultClusterColor, DefaultTreeColor, TreeSpeciesColors} from "./treeSpeciesColors";
 import "./GeojsonLayer.module.css";
-
+import MapButtonGeneral from "../MapAdditionalControls";
+import MapButtonContainer from "../MapAdditionalControls/MapButtonContainer";
+import MapButtonStyles from "../MapAdditionalControls/MapButtonStyles.module.css";
+import MapButtonAddTree from "../MapAdditionalControls/MapButtonAddTree";
 const DG = require('2gis-maps');
 
-
+let lastLambda: any = null;
+let lastMarkerLayer: any = null;
 const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) => {
-	const disableClusteringAtZoom = 19;
-	const markerLayer = DG.featureGroup();
-	const treesLayer = DG.featureGroup();
-	const geometryLayer = DG.featureGroup();
-
 	const [activeTreeId, setActiveTreeId] = useState<string | number | null>(null);
 	const [activeTreeData, setActiveTreeData] = useState<IJsonTree | null>(null);
 	const [newTreePosition, setNewTreePosition] = useState(null);
@@ -47,15 +46,31 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	const componentMounted = useRef<boolean>(false);
 	const markerRef = useRef<ILatLng | null>(null);
 	const buttonRef = useRef<HTMLButtonElement>(null);
-	const history = useHistory();
+
 
 	// User geolocation
-	const userGeolocationZoom: number = 30;
-	const userCircleColor: string = "#35C1DE";
+
 	const userCircleRef = useRef<any>(null);
 	const userCircleMarkerRef = useRef<any>(null);
 	const watchPositionId = useRef<number | null>(null);
+	const handlersSetUp = useRef<boolean>(false);
+	const history = useHistory();
 
+	const disableClusteringAtZoom = 19;
+	const markerLayer = DG.featureGroup();
+	const treesLayer = DG.featureGroup();
+	const geometryLayer = DG.featureGroup();
+
+	const userGeolocationZoom: number = 30;
+	const userCircleColor: string = "#35C1DE";
+
+	// const markerLayerRef = useRef<any | null>(null);
+	// if (markerLayerRef.current === null) {
+	// 	console.log("set up new marker layer");
+	// 	markerLayerRef.current = markerLayer;
+	// 	console.log(markerLayerRef.current);
+	// }
+	// let setClickHandler = false;
 
 	const startWatchUserGeolocation = () => {
 		watchPositionId.current = navigator.geolocation.watchPosition((e) => {
@@ -95,6 +110,7 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 		}
 		// console.log(" > map");
 		// console.log(map);
+
 		map && map.off('click', handleClick);
 		map && map.off('zoomend', handleZoomEndMoveEnd);
 		map && map.off('moveend', handleZoomEndMoveEnd);
@@ -179,30 +195,34 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	// FIXME: What type of events should 2-gis have
 	const handleTreeClick = (e: any, item: IJsonMapTree) => {
 		map.setView([e.latlng.lat, e.latlng.lng]);
-		// setActiveTreeData(item)
 		item.id && setActiveTreeId(item.id);
 	}
 
 	// FIXME: What type of events should 2-gis have
 	const handleClick = useCallback((event: any) => {
+		// console.log(event.latlng);
+		// console.log(`handleClick: ${mapState}`);
+		if (mapState === MapState.addTreeSelected) {
+			return;
+		}
 		if (event.originalEvent.target.tagName === 'BUTTON') {
 			return;
 		}
-
 		for (const layer in markerLayer._layers) {
 			markerLayer._layers[layer].removeFrom(map);
 			delete markerLayer._layers[layer];
 		}
-		markerLayer.removeFrom(map)
+		markerLayer.removeFrom(map);
 
 		if (mapState === MapState.addTreeBegin) {
 			setMapState(MapState.addTreeSelected)
-			updateMarkerRef(event)
+			updateMarkerRef(event);
 			DG.marker(markerRef.current, {draggable: true})
 				.addTo(markerLayer)
-				.on('drag', updateMarkerRef)
-			markerLayer.addTo(map)
+				.on('drag', updateMarkerRef);
+			markerLayer.addTo(map);
 		}
+		lastMarkerLayer = markerLayer;
 	}, [map, markerLayer]);
 
 	const clearLayer = (mapLayer: any) => {
@@ -222,18 +242,27 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 
 	const handleZoomEndMoveEnd = useCallback(() => {
 		clearLayer(treesLayer);
-		// console.log("> handleZoomEndMoveEnd: clearLayer(treesLayer)");
 		map && loadData();
-
 	}, [map])
 
 	useEffect(() => {
-		// console.log("> useEffect [mapState]: 'click', 'zoomend', 'moveend' -> handleClick");
-		// console.log(map.listens('click'));
+		map && map.off({'click' : lastLambda});
+		lastLambda = handleClick;
 		map && map.on('click', handleClick);
-		map && map.on('zoomend', handleZoomEndMoveEnd);
 		map && map.on('moveend', handleZoomEndMoveEnd);
 	}, [map, mapState]);
+
+	useLayoutEffect(() => {
+		map && map.off('click', handleClick);
+	}, []);
+
+	// useEffect(() => {
+	// 	// console.log("> useEffect [mapState]: 'click', 'zoomend', 'moveend' -> handleClick");
+	// 	// console.log(map.listens('click'));
+	// 	map && map.on('click', handleClick);
+	// 	// map && map.on('zoomend', handleZoomEndMoveEnd);
+	// 	// map && map.on('moveend', handleZoomEndMoveEnd);
+	// }, [map]);
 
 	useEffect(() => {
 		map && !mapData && loadData();
@@ -242,14 +271,10 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	useEffect(() => {
 		if (map === null || map === undefined) return;
 		setActiveTreeData(null);
-		// if (activeTreeId) {
-		// 	console.log("> useEffect [activeTreeId]: requesting activeTree info...");
-		// }
 		activeTreeId &&
 		fetchData(getTreeDataUrl(activeTreeId))
 			.then((jsonData: IJsonTree) => {
 				setActiveTreeData(jsonData);
-				// console.log("> useEffect [activeTreeId]: activeTree info loaded");
 			})
 			.catch(err => {
 				alert("Возникла ошибка при загрузке информации о дереве");
@@ -271,15 +296,41 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 		[styles.treeFormContainer]: true
 	});
 
-	const renderButton = () => user &&
-		<MapButton ref={buttonRef} mapState={mapState} setMapState={setMapState}/>;
+	const HandleAddTreeCancel = (s: number) => {
+		clearLayer(lastMarkerLayer);
+		lastMarkerLayer.removeFrom(map);
+		setMapState(MapState.default);
+	}
+
+	const HandleMapStateChange = (s: number) => {
+		if (s === MapState.default) setMapState(MapState.addTreeBegin);
+		if (s === MapState.addTreeSelected) setMapState(MapState.addTreeSubmit);
+	}
+
+	const HandleMapStateButtonTitleChange = (s: number): string => {
+		if (mapState === MapState.default) return "Добавить дерево";
+		if (mapState === MapState.addTreeBegin) return "Укажите точку на карте";
+		if (mapState === MapState.addTreeSelected || mapState === MapState.addTreeSubmit)
+			return "Добавить";
+		return "";
+	}
+
+	const renderButtons = () => user &&
+		<MapButtonContainer>
+			{(mapState != MapState.default) && <MapButtonGeneral state={mapState} changeState={HandleAddTreeCancel}
+							  getTitle={(s: number) => "Отмена"} isDisabled={(s: number) => s == MapState.default}
+								styleName={MapButtonStyles.mapButtonSecondary}/>}
+			<MapButtonGeneral state={mapState} changeState={HandleMapStateChange}
+							  getTitle={HandleMapStateButtonTitleChange} isDisabled={(s: number) => s == MapState.addTreeBegin}
+							  styleName={MapButtonStyles.mapButtonSuccess}/>
+		</MapButtonContainer>
 
 	return (
 		<>
 			<div className={stylesCN} onClick={handleClickTreeFormWrapper}>
 				{activeTreeData && <TreeForm activeTree={activeTreeData} onClose={handleClose}/>}
 			</div>
-			{renderButton()}
+			{!activeTreeData && renderButtons()}
 		</>
 	);
 }

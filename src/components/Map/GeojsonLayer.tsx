@@ -129,7 +129,8 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 			// console.log("started watching geolocation");
 			startWatchUserGeolocation();
 		}
-		if (waitingLoadData.current) {
+		// console.log(activeTreeData);
+		if (waitingLoadData.current || activeTreeData) {
 			return;
 		}
 
@@ -222,6 +223,7 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 				.on('drag', updateMarkerRef);
 			markerLayer.addTo(map);
 		}
+		// FIXME: saving last markerLayer to clean after cancel
 		lastMarkerLayer = markerLayer;
 	}, [map, markerLayer]);
 
@@ -318,8 +320,8 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	const renderButtons = () => user &&
 		<MapButtonContainer>
 			{(mapState != MapState.default) && <MapButtonGeneral state={mapState} changeState={HandleAddTreeCancel}
-							  getTitle={(s: number) => "Отмена"} isDisabled={(s: number) => s == MapState.default}
-								styleName={MapButtonStyles.mapButtonSecondary}/>}
+																 getTitle={(s: number) => "Отмена"} isDisabled={(s: number) => s == MapState.default}
+																 styleName={MapButtonStyles.mapButtonSecondary}/>}
 			<MapButtonGeneral state={mapState} changeState={HandleMapStateChange}
 							  getTitle={HandleMapStateButtonTitleChange} isDisabled={(s: number) => s == MapState.addTreeBegin}
 							  styleName={MapButtonStyles.mapButtonSuccess}/>
@@ -388,7 +390,7 @@ function getMarkerClusterGroup(state: number, data: IMapDataSeparateTrees | IMap
 			На экране отрисовывается точка с числом 8, а после слияния с другой точкой отображается число 2, т.к. отрисовано всего 2 объекта.
 	*/
 	if (data.isClusterData) {
-		console.log("Creating MarkerClusterGroup");
+		// console.log("Creating MarkerClusterGroup");
 		return (
 			<MarkerClusterGroup disableClusteringAtZoom={19}>
 				{data.json
@@ -403,7 +405,7 @@ function getMarkerClusterGroup(state: number, data: IMapDataSeparateTrees | IMap
 					))}
 			</MarkerClusterGroup>);
 	} else {
-		console.log(map.getZoom(), 'zoom');
+		// console.log(map.getZoom(), 'zoom');
 		return (
 			<MarkerClusterGroup disableClusteringAtZoom={19}>
 				{data.json

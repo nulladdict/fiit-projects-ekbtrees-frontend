@@ -1,6 +1,6 @@
 .mapButtonContainer {
     height: 40px;
-    position: fixed;
+    position: absolute;
     z-index: 999;
     right: 0px;
     bottom: 0px;

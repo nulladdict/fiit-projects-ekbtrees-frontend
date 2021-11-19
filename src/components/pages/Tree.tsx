@@ -48,7 +48,6 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 			geographicalPoint,
 			id
 		} = tree;
-		// console.log(tree);
 
 		return {
 			latitude: {
@@ -105,7 +104,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 			},
 			updated: {
 				title: 'Дата и время последнего редактирования',
-				value: updated ?? null
+				value: updated ? formatDate(updated) : null
 			},
 			id: id ?? 0 // FIXME: is it possible to not know tree id
 		}

@@ -167,7 +167,8 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     data[treeKey] = tree[treeKey];
                 }
             }
-        })
+        });
+        // data.created = Date.now();
         // console.log(data);
         addTree(data as {geographicalPoint: {latitude: number | null, longitude: number | null}})
             .then(_ => {

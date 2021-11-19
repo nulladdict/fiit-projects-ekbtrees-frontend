@@ -225,8 +225,8 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             }
         })
         data.authorId = this.props.user?.id;
-        data.created = "2021-11-16T06:09:02.141Z"; // TODO: use real dates
-        data.updated = "2021-11-16T06:09:02.141Z"; // TODO: use real dates
+        // data.created = "2021-11-16T06:09:02.141Z"; // TODO: use real dates
+        // data.updated = "2021-11-16T06:09:02.141Z"; // TODO: use real dates
         // console.log("> handleEditTree: data");
         // console.log(data);
         editTree(data)

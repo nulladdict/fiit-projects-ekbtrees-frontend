@@ -25,7 +25,7 @@ import {
 	IJsonMapTreeCluster,
 	ILatLng,
 	IMapDataClustered,
-	IMapDataSeparateTrees
+	IMapDataSeparateTrees, MapContainerCoords
 } from "./types";
 import {DefaultClusterColor, DefaultTreeColor, TreeSpeciesColors} from "./treeSpeciesColors";
 import "./GeojsonLayer.module.css";
@@ -137,52 +137,59 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 		const containerLatLng = getMapContainerLatLng();
 		const dataIsClustered = map.getZoom() < 14;
 		waitingLoadData.current = true;
+		// console.log("Fetching not Clustered data");
+		fetchData(getTreeMapInfoUrl(containerLatLng))
+			.then((jsonData: IJsonMapTree[]) => {
+				if (!componentMounted.current) {
+					// console.log(" > fetch but component Unmounted");
+					return;
+				}
+				// console.log(`Fetched ${jsonData.length} trees`)
+				setMapData({isClusterData: false, json: jsonData});
+				setUpTreeCircles(mapState, {isClusterData: false, json: jsonData}, handleTreeClick, treesLayer);
+				if (!dataIsClustered) {
+					treesLayer.addTo(map);
+					waitingLoadData.current = false;
+					// console.log("> loadData: data is loaded!")
+				} else {
+					requestClusteredData(containerLatLng);
+				}
+			})
+			.catch(err => {
+				waitingLoadData.current = false;
+				alert("Возникла ошибка при загрузке деревьев");
+				console.error(err);
+			});
+
 		if (dataIsClustered) {
 			// console.log("Fetching Clustered data");
 
-			fetchData(getClusterMapInfoUrl(containerLatLng))
-				.then((jsonData: IJsonMapTreeCluster[]) => {
-					if (!componentMounted.current) {
-						// console.log(" > fetch but component Unmounted");
-						return;
-					}
-					// console.log(`Fetched ${jsonData.length} clusters`)
-					setMapData({isClusterData: dataIsClustered, json: jsonData});
-					setUpTreeCircles(mapState, {isClusterData: dataIsClustered, json: jsonData}, handleTreeClick, treesLayer);
-					treesLayer.addTo(map);
-					// console.log("> loadData: data is loaded!");
-					waitingLoadData.current = false;
-				})
-				.catch(err => {
-					waitingLoadData.current = false;
-					alert("Возникла ошибка при загрузке деревьев");
-					console.error(err);
-				});
-		} else {
-			// console.log("Fetching not Clustered data");
-			// FIXME: What type of events should 2-gis have
-			fetchData(getTreeMapInfoUrl(containerLatLng))
-				.then((jsonData: IJsonMapTree[]) => {
-					if (!componentMounted.current) {
-						// console.log(" > fetch but component Unmounted");
-						return;
-					}
-					// console.log(`Fetched ${jsonData.length} trees`)
-					setMapData({isClusterData: dataIsClustered, json: jsonData});
-					setUpTreeCircles(mapState, {isClusterData: dataIsClustered, json: jsonData}, handleTreeClick, treesLayer);
-					treesLayer.addTo(map);
-					// console.log("> loadData: data is loaded!");
-					waitingLoadData.current = false;
-				})
-				.catch(err => {
-					waitingLoadData.current = false;
-					alert("Возникла ошибка при загрузке деревьев");
-					console.error(err);
-				});
+
 		}
 	};
 
-	const getMapContainerLatLng = () => {
+	const requestClusteredData = (containerLatLng: MapContainerCoords) => {
+		fetchData(getClusterMapInfoUrl(containerLatLng))
+			.then((jsonData: IJsonMapTreeCluster[]) => {
+				if (!componentMounted.current) {
+					// console.log(" > fetch but component Unmounted");
+					return;
+				}
+				// console.log(`Fetched ${jsonData.length} clusters`)
+				setMapData({isClusterData: true, json: jsonData});
+				setUpTreeCircles(mapState, {isClusterData: true, json: jsonData}, handleTreeClick, treesLayer);
+				treesLayer.addTo(map);
+				// console.log("> loadData: data is loaded!");
+				waitingLoadData.current = false;
+			})
+			.catch(err => {
+				waitingLoadData.current = false;
+				alert("Возникла ошибка при загрузке деревьев");
+				console.error(err);
+			});
+	};
+
+	const getMapContainerLatLng = (): MapContainerCoords => {
 		const mapContainerCoordinates = map.getContainer().getBoundingClientRect()
 		const {bottom, right, x, y} = mapContainerCoordinates;
 		const upperLeftCorner = map.containerPointToLatLng([y, x]);

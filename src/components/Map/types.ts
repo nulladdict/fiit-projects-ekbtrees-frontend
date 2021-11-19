@@ -42,7 +42,13 @@ export interface IGeojsonLayerProps {
     setMapState: any; // 2-gis map setter
 }
 
-export interface IGeojsonLayerState { }
+export interface IGeojsonLayerState {}
+
+export type MapContainerCoords = [
+    {lat: number, lng: number},
+    {lat: number, lng: number}
+];
+
 
 export interface IMapContainProps {
     user: IUser | null;

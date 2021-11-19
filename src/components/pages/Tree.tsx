@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import styles from './Tree.module.css'
-import {NavLink} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import Spinner from "../Spinner";
 import {getUrlParamValueByKey} from "../../helpers/url";
 import {getTree, getFilesByTree} from "../EditTreeForm/actions";
@@ -137,6 +137,10 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 				})
 				.catch(error => {
 					console.error(error, 'Ошибка!')
+					if (this.props.user === null) {
+						// TODO: redirect to login
+						this.props.history.push('/login');
+					}
 					this.setState({
 						loading: false
 					})

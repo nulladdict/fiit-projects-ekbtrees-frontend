@@ -36,6 +36,17 @@
     text-decoration: underline;
 }
 
+.removeLink {
+    margin: 0 2em;
+    cursor: pointer;
+    color: #ff3131;
+    font-size: 15px;
+}
+
+.removeLink:hover {
+    text-decoration: underline;
+}
+
 .table {
     width: 100%;
 }

@@ -3,17 +3,21 @@ import styles from './Tree.module.css'
 import {NavLink, useHistory} from "react-router-dom";
 import Spinner from "../Spinner";
 import {getUrlParamValueByKey} from "../../helpers/url";
-import {getTree, getFilesByTree} from "../EditTreeForm/actions";
+import {getTree, getFilesByTree, deleteTree} from "../EditTreeForm/actions";
 import {formatDate} from '../../helpers/date';
 import FileUpload from "../FileUpload";
 import { ITreeModelConverted, IJsonTree, IFile} from "../../common/types";
 import { ITreeProps, ITreeState } from "./types";
+import {getMyTrees} from "../../api/tree";
 
 
 export class Tree extends Component<ITreeProps, ITreeState> {
 	static defaultProps = {
 		user: null
 	}
+
+	private treeId: string | number | null = null;
+	private isMyTree: boolean = false;
 
 	constructor(props: ITreeProps) {
 		super(props);
@@ -44,6 +48,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 			geographicalPoint,
 			id
 		} = tree;
+		// console.log(tree);
 
 		return {
 			latitude: {
@@ -107,10 +112,10 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 	}
 
 	componentDidMount() {
-		const id = getUrlParamValueByKey('tree');
-
-		if (id) {
-			getTree(id)
+		this.treeId = getUrlParamValueByKey('tree');
+		this.checkIfMyTree();
+		if (this.treeId) {
+			getTree(this.treeId)
 				.then((tree: IJsonTree) => {
 					this.setState({
 						tree: this.convertTree(tree),
@@ -148,11 +153,36 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		}
 	}
 
+	checkIfMyTree() {
+		getMyTrees().then(trees => {
+			this.isMyTree = false;
+			for (let tree of trees) {
+				if (tree.id == this.treeId) {
+					this.isMyTree = true;
+					break;
+				}
+			}
+		})
+	}
+
+	deleteCurrentTree() {
+		if (this.treeId && this.isMyTree) {
+			deleteTree(this.treeId).then(succ => {
+				if (succ) {
+					alert("tree is deleted");
+				} else {
+					alert("error while deleting the tree");
+				}
+			});
+		}
+	}
+
 	renderEditLink () {
 		const {tree} = this.state;
 
 		return (
 			<div className={styles.editLinkWrapper}>
+				{ this.isMyTree && <span className={styles.removeLink} onClick={() => this.deleteCurrentTree()}>Удалить</span> }
 				<NavLink to={`/trees/tree=${tree?.id}/edit`} className={styles.editLink}>Редактировать</NavLink>
 			</div>
 		)

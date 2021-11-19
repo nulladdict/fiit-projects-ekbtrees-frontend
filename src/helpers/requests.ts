@@ -44,4 +44,24 @@ export default class RequestService {
 				return response.json()
 		})
 	}
+
+	static deleteData(url: string, headers: HeadersInit = {}): Promise<boolean> {
+		const token = cookies.get('AccessToken');
+
+		return fetch(url, {
+			method: 'DELETE',
+			headers: {
+				...headers,
+				'Authorization': `Bearer ${token}`
+			},
+		})
+		.then(response => {
+			if (response.status !== 200) {
+				throw `${response.status} ${response.statusText}`;
+				return false;
+			}
+
+			return true;
+		});
+	}
 }

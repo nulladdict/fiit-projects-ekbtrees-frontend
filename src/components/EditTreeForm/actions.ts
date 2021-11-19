@@ -7,6 +7,10 @@ export const getTree = (id: string | number): Promise<IJsonTree> => {
 	return RequestService.getData(`${baseUrl}tree/get/${id}`);
 }
 
+export const deleteTree = (id: string | number): Promise<any> => {
+	return RequestService.deleteData(`${baseUrl}tree/delete/${id}`);
+}
+
 export const getFilesByTree = (files: (string | number)[]): Promise<IFile[]> => {
 	return Promise.all(files.map((file: number | string) => {
 		return RequestService.getData(`${baseUrl}file/${file}`)

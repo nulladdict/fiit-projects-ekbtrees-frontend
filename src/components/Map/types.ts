@@ -49,6 +49,12 @@ export type MapContainerCoords = [
     {lat: number, lng: number}
 ];
 
+export interface GeolocationCoords {
+    latitude: number;
+    longitude: number;
+    accuracy: number;
+}
+
 
 export interface IMapContainProps {
     user: IUser | null;

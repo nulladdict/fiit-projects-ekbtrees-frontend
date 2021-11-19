@@ -20,6 +20,7 @@ import ClusterMarker from '../ClusterMarker/ClusterMarker';
 import MarkerClusterGroup from "react-leaflet-markercluster/src/react-leaflet-markercluster";
 import { IJsonTree } from "../../common/types";
 import {
+	GeolocationCoords,
 	IGeojsonLayerProps,
 	IJsonMapTree,
 	IJsonMapTreeCluster,
@@ -73,28 +74,34 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	// let setClickHandler = false;
 
 	const startWatchUserGeolocation = () => {
-		watchPositionId.current = navigator.geolocation.watchPosition((e) => {
-			const latitude = e.coords.latitude;
-			const longitude = e.coords.longitude;
-			const accuracy = e.coords.accuracy;
-			if (userCircleRef.current == null) {
-				// FIXME: The circle is quite large when accuracy is big
-				// console.log(`> geolocation: ${latitude} ${longitude}`);
-				userCircleRef.current = new DG.circle([latitude, longitude], accuracy, { color: userCircleColor })
-					// .bindPopup("You are Here").openPopup()
-					.addTo(geometryLayer);
-				userCircleMarkerRef.current = new DG.circleMarker([latitude, longitude],
-					{ color: '#ffffff', fillColor: userCircleColor, fill: true, fillOpacity: 1 })
-					.bindPopup("You are Here").openPopup()
-					.addTo(geometryLayer);
-				map.setView([latitude, longitude], userGeolocationZoom);
-			} else {
-				userCircleRef.current.setLatLng([latitude, longitude]);
-				userCircleRef.current.setRadius(accuracy);
-				userCircleMarkerRef.current.setLatLng([latitude, longitude]);
-			}
-		}, () => {}, { enableHighAccuracy: true });
+		// navigator.geolocation.getCurrentPosition(updateUserGeolocation, () => {}, { enableHighAccuracy: true });
+		watchPositionId.current = navigator.geolocation.watchPosition(updateUserGeolocation, () => {}, { enableHighAccuracy: true });
 		geometryLayer.addTo(map);
+	}
+
+	const updateUserGeolocation = (e: {coords: GeolocationCoords}) => {
+		const latitude = e.coords.latitude;
+		const longitude = e.coords.longitude;
+		const accuracy = e.coords.accuracy;
+		// console.log(`accuracy: ${accuracy}`);
+
+		if (accuracy > 300) return; // FIXME: too low accuracy
+		if (userCircleRef.current == null) {
+			// FIXME: The circle is quite large when accuracy is big
+			// console.log(`> geolocation: ${latitude} ${longitude}`);
+			userCircleRef.current = new DG.circle([latitude, longitude], accuracy, { color: userCircleColor })
+				// .bindPopup("You are Here").openPopup()
+				.addTo(geometryLayer);
+			userCircleMarkerRef.current = new DG.circleMarker([latitude, longitude],
+				{ color: '#ffffff', fillColor: userCircleColor, fill: true, fillOpacity: 1 })
+				.bindPopup("You are Here").openPopup()
+				.addTo(geometryLayer);
+			map.setView([latitude, longitude], userGeolocationZoom);
+		} else {
+			userCircleRef.current.setLatLng([latitude, longitude]);
+			userCircleRef.current.setRadius(accuracy);
+			userCircleMarkerRef.current.setLatLng([latitude, longitude]);
+		}
 	}
 
 	useEffect(() => {

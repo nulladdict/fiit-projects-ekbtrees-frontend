@@ -20,20 +20,20 @@ import ClusterMarker from '../ClusterMarker/ClusterMarker';
 import MarkerClusterGroup from "react-leaflet-markercluster/src/react-leaflet-markercluster";
 import { IJsonTree } from "../../common/types";
 import {
-	GeolocationCoords,
+	IGeolocationCoords,
 	IGeojsonLayerProps,
 	IJsonMapTree,
 	IJsonMapTreeCluster,
 	ILatLng,
 	IMapDataClustered,
-	IMapDataSeparateTrees, MapContainerCoords
+	IMapDataSeparateTrees,
+	MapContainerCoords
 } from "./types";
 import {DefaultClusterColor, DefaultTreeColor, TreeSpeciesColors} from "./treeSpeciesColors";
 import "./GeojsonLayer.module.css";
 import MapButtonGeneral from "../MapAdditionalControls";
 import MapButtonContainer from "../MapAdditionalControls/MapButtonContainer";
 import MapButtonStyles from "../MapAdditionalControls/MapButtonStyles.module.css";
-import MapButtonAddTree from "../MapAdditionalControls/MapButtonAddTree";
 const DG = require('2gis-maps');
 
 let lastLambda: any = null;
@@ -41,23 +41,19 @@ let lastMarkerLayer: any = null;
 const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) => {
 	const [activeTreeId, setActiveTreeId] = useState<string | number | null>(null);
 	const [activeTreeData, setActiveTreeData] = useState<IJsonTree | null>(null);
-	const [newTreePosition, setNewTreePosition] = useState(null);
 	const [mapData, setMapData] = useState<IMapDataSeparateTrees | IMapDataClustered | null>(null);
 	const waitingLoadData = useRef<boolean>(false);
 	const componentMounted = useRef<boolean>(false);
 	const markerRef = useRef<ILatLng | null>(null);
 	const buttonRef = useRef<HTMLButtonElement>(null);
 
-
 	// User geolocation
 
 	const userCircleRef = useRef<any>(null);
 	const userCircleMarkerRef = useRef<any>(null);
 	const watchPositionId = useRef<number | null>(null);
-	const handlersSetUp = useRef<boolean>(false);
 	const history = useHistory();
 
-	const disableClusteringAtZoom = 19;
 	const markerLayer = DG.featureGroup();
 	const treesLayer = DG.featureGroup();
 	const geometryLayer = DG.featureGroup();
@@ -65,21 +61,12 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	const userGeolocationZoom: number = 30;
 	const userCircleColor: string = "#35C1DE";
 
-	// const markerLayerRef = useRef<any | null>(null);
-	// if (markerLayerRef.current === null) {
-	// 	console.log("set up new marker layer");
-	// 	markerLayerRef.current = markerLayer;
-	// 	console.log(markerLayerRef.current);
-	// }
-	// let setClickHandler = false;
-
 	const startWatchUserGeolocation = () => {
-		// navigator.geolocation.getCurrentPosition(updateUserGeolocation, () => {}, { enableHighAccuracy: true });
 		watchPositionId.current = navigator.geolocation.watchPosition(updateUserGeolocation, () => {}, { enableHighAccuracy: true });
 		geometryLayer.addTo(map);
 	}
 
-	const updateUserGeolocation = (e: {coords: GeolocationCoords}) => {
+	const updateUserGeolocation = (e: {coords: IGeolocationCoords}) => {
 		const latitude = e.coords.latitude;
 		const longitude = e.coords.longitude;
 		const accuracy = e.coords.accuracy;
@@ -167,12 +154,6 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 				alert("Возникла ошибка при загрузке деревьев");
 				console.error(err);
 			});
-
-		if (dataIsClustered) {
-			// console.log("Fetching Clustered data");
-
-
-		}
 	};
 
 	const requestClusteredData = (containerLatLng: MapContainerCoords) => {
@@ -272,14 +253,6 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 		map && map.off('click', handleClick);
 	}, []);
 
-	// useEffect(() => {
-	// 	// console.log("> useEffect [mapState]: 'click', 'zoomend', 'moveend' -> handleClick");
-	// 	// console.log(map.listens('click'));
-	// 	map && map.on('click', handleClick);
-	// 	// map && map.on('zoomend', handleZoomEndMoveEnd);
-	// 	// map && map.on('moveend', handleZoomEndMoveEnd);
-	// }, [map]);
-
 	useEffect(() => {
 		map && !mapData && loadData();
 	}, [map, mapData]);
@@ -318,24 +291,38 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 		setMapState(MapState.default);
 	}
 
-	const HandleMapStateChange = (s: number) => {
-		if (s === MapState.default) setMapState(MapState.addTreeBegin);
-		if (s === MapState.addTreeSelected) setMapState(MapState.addTreeSubmit);
+	const HandleMapStateChange = (state: number) => {
+		switch (state) {
+			case MapState.default:
+				setMapState(MapState.addTreeBegin);
+				break;
+			case MapState.addTreeSelected:
+				setMapState(MapState.addTreeSubmit);
+				break;
+		}
 	}
 
-	const HandleMapStateButtonTitleChange = (s: number): string => {
-		if (mapState === MapState.default) return "Добавить дерево";
-		if (mapState === MapState.addTreeBegin) return "Укажите точку на карте";
-		if (mapState === MapState.addTreeSelected || mapState === MapState.addTreeSubmit)
-			return "Добавить";
-		return "";
+	const HandleMapStateButtonTitleChange = (state: number): string => {
+		switch(state) {
+			case MapState.default:
+				return "Добавить дерево";
+			case MapState.addTreeBegin:
+				return "Укажите точку на карте";
+			case MapState.addTreeSelected:
+			case MapState.addTreeSubmit:
+				return "Добавить";
+			default:
+				return ""
+		}
 	}
 
 	const renderButtons = () => user &&
 		<MapButtonContainer>
-			{(mapState != MapState.default) && <MapButtonGeneral state={mapState} changeState={HandleAddTreeCancel}
-																 getTitle={(s: number) => "Отмена"} isDisabled={(s: number) => s == MapState.default}
-																 styleName={MapButtonStyles.mapButtonSecondary}/>}
+			{(mapState != MapState.default) && (
+				<MapButtonGeneral state={mapState} changeState={HandleAddTreeCancel}
+							 getTitle={(s: number) => "Отмена"} isDisabled={(s: number) => s == MapState.default}
+							 styleName={MapButtonStyles.mapButtonSecondary}/>
+			)}
 			<MapButtonGeneral state={mapState} changeState={HandleMapStateChange}
 							  getTitle={HandleMapStateButtonTitleChange} isDisabled={(s: number) => s == MapState.addTreeBegin}
 							  styleName={MapButtonStyles.mapButtonSuccess}/>

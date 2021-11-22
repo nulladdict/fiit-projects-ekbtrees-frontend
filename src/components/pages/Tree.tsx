@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import styles from './Tree.module.css'
-import {NavLink, useHistory} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Spinner from "../Spinner";
-import {getUrlParamValueByKey} from "../../helpers/url";
-import {getTree, getFilesByTree, deleteTree} from "../EditTreeForm/actions";
-import {formatDate} from '../../helpers/date';
+import { getUrlParamValueByKey } from "../../helpers/url";
+import { getTree, getFilesByTree, deleteTree } from "../EditTreeForm/actions";
+import { formatDate} from '../../helpers/date';
 import FileUpload from "../FileUpload";
-import { ITreeModelConverted, IJsonTree, IFile} from "../../common/types";
+import { ITreeModelConverted, IJsonTree, IFile } from "../../common/types";
 import { ITreeProps, ITreeState } from "./types";
-import {getMyTrees} from "../../api/tree";
+import { getMyTrees } from "../../api/tree";
 
 
 export class Tree extends Component<ITreeProps, ITreeState> {
@@ -164,11 +164,12 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		})
 	}
 
-	deleteCurrentTree() {
+	deleteCurrentTree = () => {
 		if (this.treeId && this.isMyTree) {
 			deleteTree(this.treeId).then(succ => {
 				if (succ) {
 					alert("tree is deleted");
+					this.props.history.goBack();
 				} else {
 					alert("error while deleting the tree");
 				}
@@ -181,7 +182,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 
 		return (
 			<div className={styles.editLinkWrapper}>
-				{ this.isMyTree && <span className={styles.removeLink} onClick={() => this.deleteCurrentTree()}>Удалить</span> }
+				{ this.isMyTree && <span className={styles.removeLink} onClick={this.deleteCurrentTree}>Удалить</span> }
 				<NavLink to={`/trees/tree=${tree?.id}/edit`} className={styles.editLink}>Редактировать</NavLink>
 			</div>
 		)

@@ -121,13 +121,6 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
     handleAddTree = () => {
         const {tree} = this.state;
 
-        // const data: IJsonTree = {
-        //     geographicalPoint: {
-        //         latitude: null,
-        //         longitude: null
-        //     }
-        // };
-
         const data: IPostJsonTree = {
             geographicalPoint: {
                 latitude: null,

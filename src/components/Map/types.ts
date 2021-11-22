@@ -49,7 +49,7 @@ export type MapContainerCoords = [
     {lat: number, lng: number}
 ];
 
-export interface GeolocationCoords {
+export interface IGeolocationCoords {
     latitude: number;
     longitude: number;
     accuracy: number;

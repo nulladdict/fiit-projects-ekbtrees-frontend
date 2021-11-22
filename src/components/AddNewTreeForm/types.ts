@@ -16,5 +16,8 @@ export interface IAddNewTreeFormState {
     images?: IFile[];
     uploadingFiles?: boolean;
     uploadingImages?: boolean;
+    modalShow: boolean;
+    modalMessage?: string;
+    successfullyAdded?: boolean;
 }
 

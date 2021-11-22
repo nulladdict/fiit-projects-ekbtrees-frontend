@@ -24,6 +24,7 @@ import {
 } from "../../common/types";
 import { IEditTreeFormProps, IEditTreeFormState } from "./types";
 import {conditionAssessmentOptions, treePlantingTypeOptions, treeStatusOptions} from "../../common/treeForm";
+import Modal from "../Modal";
 
 
 export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormState> {
@@ -40,7 +41,9 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             loadingFiles: true,
             uploadingFiles: false,
             images: [],
-            uploadingImages: false
+            uploadingImages: false,
+            modalShow: false,
+            successfullyEdited: false,
         }
 
         this.treeUuid = getUrlParamValueByKey('tree');
@@ -229,11 +232,13 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
         // console.log(data);
         editTree(data)
             .then(_ => {
-                alert('Дерево успешно изменено!');
-                this.props.history.goBack();
+                // alert('Дерево успешно изменено!');
+                this.setState({modalShow: true, modalMessage: "Дерево успешно изменено!", successfullyEdited: true});
+                // this.props.history.goBack();
             })
             .catch(error => {
-                alert('Ошибка при изменении дерева');
+                // alert('Ошибка при изменении дерева');
+                this.setState({modalShow: true, modalMessage: "Ошибка при изменении дерева"});
                 console.error('Ошибка при изменении дерева', error);
             });
     }
@@ -400,6 +405,13 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
         });
     }
 
+    handleModalClose = () => {
+        this.setState({modalShow: false});
+        if (this.state.successfullyEdited) {
+            this.props.history.goBack();
+        }
+    }
+
     renderFiles () {
         const {files, loadingFiles, uploadingFiles} = this.state;
 
@@ -470,9 +482,14 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
 
     render() {
         return (
-            <div className={styles.formContainer}>
-                {this.renderContent()}
-            </div>
+            <React.Fragment>
+                <Modal show={this.state.modalShow} onClose={this.handleModalClose}>
+                    <p>{this.state.modalMessage}</p>
+                </Modal>
+                <div className={styles.formContainer}>
+                    {this.renderContent()}
+                </div>
+            </React.Fragment>
         );
     }
 }

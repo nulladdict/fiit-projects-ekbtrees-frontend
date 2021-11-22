@@ -12,15 +12,16 @@ import {
 } from "../../common/types";
 import {IAddNewTreeFormProps, IAddNewTreeFormState} from "./types";
 import {conditionAssessmentOptions, treePlantingTypeOptions, treeStatusOptions} from "../../common/treeForm";
+import Modal from "../Modal";
 
 
 export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAddNewTreeFormState> {
-
-
     constructor(props: IAddNewTreeFormProps) {
         super(props);
 
         this.state = {
+            modalShow: false,
+            successfullyAdded: false,
             tree: {
                 latitude: {
                     disabled: true,
@@ -165,11 +166,13 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         // console.log(data);
         addTree(data as {geographicalPoint: {latitude: number | null, longitude: number | null}})
             .then(_ => {
-                alert('Дерево успешно добавлено!');
-                this.props.history.goBack();
+                // alert('Дерево успешно добавлено!');
+                this.setState({modalShow: true, modalMessage: 'Дерево успешно добавлено!', successfullyAdded: true});
+                // this.props.history.goBack();
             })
             .catch(error => {
-                alert('Ошибка при добавлении дерева');
+                // alert('Ошибка при добавлении дерева');
+                this.setState({modalShow: true, modalMessage: 'Ошибка при добавлении дерева'});
                 console.error('Ошибка при добавлении дерева', error);
             });
     }
@@ -225,6 +228,13 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                         console.error('Возникла ошибка при получении типов', error);
                     })
             })
+        }
+    }
+
+    handleModalClose = () => {
+        this.setState({modalShow: false});
+        if (this.state.successfullyAdded) {
+            this.props.history.goBack();
         }
     }
 
@@ -285,6 +295,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                 getFilesByIds(fileIds)
                     .then(files => {
                         let newState: IAddNewTreeFormState = {
+                            modalShow: false,
                             [key]: (this.state[key] === undefined) ? files : (this.state[key] ?? []).concat(files),
                             tree: {
                                 ...this.state.tree,
@@ -296,6 +307,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     })
                     .catch(error => {
                         this.setState({
+                            modalShow: false,
                             tree: {
                                 ...this.state.tree,
                             },
@@ -307,6 +319,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
             })
             .catch(error => {
                 this.setState({
+                    modalShow: false,
                     tree: {
                         ...this.state.tree,
                     },
@@ -320,6 +333,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         const camelCaseKey = key.charAt(0).toUpperCase() + key.slice(1);
 
         this.setState({
+            modalShow: false,
             tree: {
                 ...this.state.tree,
             },
@@ -339,6 +353,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
 
     handleDeleteFile = (key: FileGroupType) => (id: string | number) => {
         this.setState({
+            modalShow: false,
             // Removed second parameter, func getFilesAfterDelete (id: any) uses only id
             [key]: this.getFilesAfterDelete(id),
             tree: {
@@ -401,14 +416,19 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
 
     render() {
         return (
-            <div className={styles.formContainer}>
-                <div className={styles.form}>
-                    {this.renderMainInformation()}
-                    {this.renderImages()}
-                    {this.renderFiles()}
-                    {this.renderButtons()}
+            <React.Fragment>
+                <Modal show={this.state.modalShow} onClose={this.handleModalClose}>
+                    <p>{this.state.modalMessage}</p>
+                </Modal>
+                <div className={styles.formContainer}>
+                    <div className={styles.form}>
+                        {this.renderMainInformation()}
+                        {this.renderImages()}
+                        {this.renderFiles()}
+                        {this.renderButtons()}
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 };

@@ -9,7 +9,8 @@ import FileUpload from "../FileUpload";
 import { ITreeModelConverted, IJsonTree, IFile } from "../../common/types";
 import { ITreeProps, ITreeState } from "./types";
 import { getMyTrees } from "../../api/tree";
-
+import Modal from "../Modal/Modal";
+import shadows from "@material-ui/core/styles/shadows";
 
 export class Tree extends Component<ITreeProps, ITreeState> {
 	static defaultProps = {
@@ -28,6 +29,9 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 			files: [],
 			images: [],
 			loadingFiles: true,
+			modalShow: false,
+			modalMessage: "Операция успешно выполнена",
+			successfullyDeleted: false,
 		}
 	}
 
@@ -168,12 +172,21 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		if (this.treeId && this.isMyTree) {
 			deleteTree(this.treeId).then(succ => {
 				if (succ) {
-					alert("tree is deleted");
-					this.props.history.goBack();
+					// alert("tree is deleted");
+					this.setState({modalShow: true, modalMessage: "Дерео удалено", successfullyDeleted: true});
+					// this.props.history.goBack();
 				} else {
-					alert("error while deleting the tree");
+					// alert("error while deleting the tree");
+					this.setState({modalShow: true, modalMessage: "Ошибка при удалении дерева"});
 				}
 			});
+		}
+	}
+
+	handleModalClose = () => {
+		this.setState({modalShow: false});
+		if (this.state.successfullyDeleted) {
+			this.props.history.goBack();
 		}
 	}
 
@@ -289,12 +302,17 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		}
 
 		return (
-			<div className={styles.container}>
-				<h3 className={styles.title}> Карточка дерева </h3>
-				{this.renderDetails()}
-				{this.renderImages()}
-				{this.renderFiles()}
-			</div>
+			<React.Fragment>
+				<Modal show={this.state.modalShow} onClose={() => this.setState({modalShow: false})}>
+					<p>{this.state.modalMessage}</p>
+				</Modal>
+				<div className={styles.container}>
+					<h3 className={styles.title}> Карточка дерева </h3>
+					{this.renderDetails()}
+					{this.renderImages()}
+					{this.renderFiles()}
+				</div>
+			</React.Fragment>
 		)
 	}
 

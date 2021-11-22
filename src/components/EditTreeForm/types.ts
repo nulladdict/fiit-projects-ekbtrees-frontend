@@ -17,5 +17,8 @@ export interface IEditTreeFormState {
     uploadingFiles: boolean;
     images: IFile[];
     uploadingImages: boolean;
+    modalShow: boolean;
+    modalMessage?: string;
+    successfullyEdited?: boolean;
     [key: string]: any;
 }

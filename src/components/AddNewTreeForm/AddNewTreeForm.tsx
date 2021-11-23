@@ -167,6 +167,13 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         addTree(data as {geographicalPoint: {latitude: number | null, longitude: number | null}})
             .then(_ => {
                 // alert('Дерево успешно добавлено!');
+                let lat = data.geographicalPoint?.latitude;
+                let lon = data.geographicalPoint?.longitude;
+                // console.log(`added tree at: [${lat}, ${lon}]`);
+                if (lat && lon) {
+                    this.props.setMapViewPosition([lat, lon]); // set map position on success
+                    // console.log(`SetMapViewPosition: [${lat}, ${lon}]`);
+                }
                 this.setState({modalShow: true, modalMessage: 'Дерево успешно добавлено!', successfullyAdded: true});
                 // this.props.history.goBack();
             })

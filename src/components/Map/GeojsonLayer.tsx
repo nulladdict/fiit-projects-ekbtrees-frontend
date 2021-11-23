@@ -38,7 +38,7 @@ const DG = require('2gis-maps');
 
 let lastLambda: any = null;
 let lastMarkerLayer: any = null;
-const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) => {
+const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGeojsonLayerProps) => {
 	const [activeTreeId, setActiveTreeId] = useState<string | number | null>(null);
 	const [activeTreeData, setActiveTreeData] = useState<IJsonTree | null>(null);
 	const [mapData, setMapData] = useState<IMapDataSeparateTrees | IMapDataClustered | null>(null);
@@ -83,7 +83,11 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 				{ color: '#ffffff', fillColor: userCircleColor, fill: true, fillOpacity: 1 })
 				.bindPopup("You are Here").openPopup()
 				.addTo(geometryLayer);
-			map.setView([latitude, longitude], userGeolocationZoom);
+			// console.log(`GeojsonLayer: setMapViewOnUser: `);
+			// console.log(setMapViewOnUser);
+			if (setMapViewOnUser) {
+				map.setView([latitude, longitude], userGeolocationZoom);
+			}
 		} else {
 			userCircleRef.current.setLatLng([latitude, longitude]);
 			userCircleRef.current.setRadius(accuracy);

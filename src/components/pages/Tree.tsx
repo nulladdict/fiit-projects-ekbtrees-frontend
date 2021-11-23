@@ -321,6 +321,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 				</Modal>
 				<div className={styles.container}>
 					<h3 className={styles.title}> Карточка дерева </h3>
+					{/*<button onClick={this.confirmDeleteCurrentTree} >Show Modal</button>*/}
 					{this.renderDetails()}
 					{this.renderImages()}
 					{this.renderFiles()}

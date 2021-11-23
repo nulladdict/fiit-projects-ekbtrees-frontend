@@ -1,13 +1,15 @@
 import {RouteComponentProps} from "react-router";
 import * as H from "history";
-import {IFile, INewTree} from "../../common/types";
+import {IFile, INewTree, IUser} from "../../common/types";
 
 export interface IAddNewTreeFormRouterProps {
     lat: string;
     lng: string;
 }
 export interface IAddNewTreeFormProps extends RouteComponentProps<IAddNewTreeFormRouterProps> {
+    user?: IUser | null;
     history: H.History;
+    setMapViewPosition: (position: [number, number]) => void;
 }
 
 export interface IAddNewTreeFormState {

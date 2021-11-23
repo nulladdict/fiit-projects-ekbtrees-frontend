@@ -16,23 +16,38 @@ import Tree from "../pages/Tree";
 import UserList from '../UserList';
 import {IMainProps, IMainState} from "./types";
 
+export const setMapViewPositionContext = React.createContext<((viewPos: [number, number] | undefined) => void)>(() => {});
+export const mapViewPositionContext = React.createContext<[number, number] | undefined>(undefined);
 
 export default class Main extends Component<IMainProps, IMainState> {
+    constructor(props: IMainProps) {
+        super(props);
+        this.state = {};
+    }
+    setMapViewPosition = (viewPos: [number, number] | undefined) => {
+        // console.log("Main: setMapViewPosition is changed");
+        // console.log(viewPos);
+        this.setState({mapViewPosition: viewPos});
+    }
+
   renderRoutesWithAuth () {
       const {user} = this.props;
 
       return (
-            <Switch>
-                <Route exact path='/addtree/:lat/:lng' component={AddNewTreeForm} />
-                {/*<Route exact path='/trees/tree=:id/edit' component={EditTreeForm} />*/}
-                <Route exact path='/trees/tree=:id/edit' render={(props) => <EditTreeForm {...props} user={user} />} />
-                <Route exact path='/trees' component={TreeLists} />
-                <Route exact path='/users' component={UserList} />
-                <Route exact path='/profileSettings'
-                       render={(props) => <ProfileSettings {...props} user={user} />} />
-                <Redirect to='/' />
-            </Switch>
-        );
+          <Switch>
+              {/*<Route exact path='/addtree/:lat/:lng' component={AddNewTreeForm} />*/}
+              <Route exact path='/addtree/:lat/:lng'
+                     render={(props) => <AddNewTreeForm {...props} setMapViewPosition={this.setMapViewPosition}
+                                                        user={user}/>}/>
+              {/*<Route exact path='/trees/tree=:id/edit' component={EditTreeForm} />*/}
+              <Route exact path='/trees/tree=:id/edit' render={(props) => <EditTreeForm {...props} user={user}/>}/>
+              <Route exact path='/trees' component={TreeLists}/>
+              <Route exact path='/users' component={UserList}/>
+              <Route exact path='/profileSettings'
+                     render={(props) => <ProfileSettings {...props} user={user}/>}/>
+              <Redirect to='/'/>
+          </Switch>
+      );
   }
 
   renderRoutesWithoutAuth () {
@@ -72,21 +87,29 @@ export default class Main extends Component<IMainProps, IMainState> {
   render () {
       const {user} = this.props;
 
-    return (
-      <main className={styles.mainWrapper}>
-        <Switch>
-          <Route exact path='/' render={(props) => <Home {...props} user={user} />} />
-          <Route exact path='/map' render={(props) => <MapContain {...props} user={user} className='fullMap' />} />
-            <Route exact path='/trees/tree=:id' render={(props) => <Tree {...props} user={user} />} />
-          <Route exact path='/passRecovery' component={PassRecovery} />
-          <Route exact path='/aboutUs' component={AboutUs} />
-            <Route path='/vk' component={this.vkAuth2}/>
-            <Route path='/fb' component={this.fbAuth2}/>
-            <Route exact path='/image/:id' component={ImageView} />
-            {this.renderRoutes()}
-            <Redirect to='/' />
-        </Switch>
-      </main>
-    )
+      return (
+          <setMapViewPositionContext.Provider value={this.setMapViewPosition}>
+              <mapViewPositionContext.Provider value={this.state.mapViewPosition}>
+                  <main className={styles.mainWrapper}>
+                      <Switch>
+                          <Route exact path='/' render={(props) => <Home {...props} user={user}/>}/>
+
+                          <Route exact path='/map'
+                                 render={(props) =>
+                                     <MapContain {...props} user={user} mapViewPosition={this.state.mapViewPosition}
+                                                 setMapViewPosition={this.setMapViewPosition} className='fullMap'/>}/>
+                          <Route exact path='/trees/tree=:id' render={(props) => <Tree {...props} user={user}/>}/>
+                          <Route exact path='/passRecovery' component={PassRecovery}/>
+                          <Route exact path='/aboutUs' component={AboutUs}/>
+                          <Route path='/vk' component={this.vkAuth2}/>
+                          <Route path='/fb' component={this.fbAuth2}/>
+                          <Route exact path='/image/:id' component={ImageView}/>
+                          {this.renderRoutes()}
+                          <Redirect to='/'/>
+                      </Switch>
+                  </main>
+              </mapViewPositionContext.Provider>
+          </setMapViewPositionContext.Provider>
+      )
   }
 }

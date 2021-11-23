@@ -10,7 +10,7 @@ import { ITreeModelConverted, IJsonTree, IFile } from "../../common/types";
 import { ITreeProps, ITreeState } from "./types";
 import { getMyTrees } from "../../api/tree";
 import Modal from "../Modal/Modal";
-import shadows from "@material-ui/core/styles/shadows";
+
 
 export class Tree extends Component<ITreeProps, ITreeState> {
 	static defaultProps = {
@@ -116,10 +116,11 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 
 	componentDidMount() {
 		this.treeId = getUrlParamValueByKey('tree');
-		this.checkIfMyTree();
+
 		if (this.treeId) {
 			getTree(this.treeId)
 				.then((tree: IJsonTree) => {
+					this.isMyTree = this.checkIfMyTree(tree);
 					this.setState({
 						tree: this.convertTree(tree),
 						loading: false
@@ -156,16 +157,13 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		}
 	}
 
-	checkIfMyTree() {
-		getMyTrees().then(trees => {
-			this.isMyTree = false;
-			for (let tree of trees) {
-				if (tree.id == this.treeId) {
-					this.isMyTree = true;
-					break;
-				}
-			}
-		})
+	checkIfMyTree(tree: IJsonTree) {
+		// console.log(tree);
+		// console.log(`checking tree is our: user id = ${this.props.user?.id} tree authorId = ${tree.authorId}`);
+		if (this.props.user && tree.authorId) {
+			return this.props.user.id == tree.authorId;
+		}
+		return false;
 	}
 
 	deleteCurrentTree = () => {

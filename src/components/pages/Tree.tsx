@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './Tree.module.css'
+import modalStyles from "../Modal/Modal.module.css";
 import { NavLink } from "react-router-dom";
 import Spinner from "../Spinner";
 import { getUrlParamValueByKey } from "../../helpers/url";
@@ -8,7 +9,6 @@ import { formatDate} from '../../helpers/date';
 import FileUpload from "../FileUpload";
 import { ITreeModelConverted, IJsonTree, IFile } from "../../common/types";
 import { ITreeProps, ITreeState } from "./types";
-import { getMyTrees } from "../../api/tree";
 import Modal from "../Modal/Modal";
 
 
@@ -18,7 +18,9 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 	}
 
 	private treeId: string | number | null = null;
-	private isMyTree: boolean = false;
+	private canDelete: boolean = false;
+	private canEdit: boolean = false;
+	private operationInProgress: boolean = false;
 
 	constructor(props: ITreeProps) {
 		super(props);
@@ -30,7 +32,6 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 			images: [],
 			loadingFiles: true,
 			modalShow: false,
-			modalMessage: "Операция успешно выполнена",
 			successfullyDeleted: false,
 		}
 	}
@@ -120,7 +121,8 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		if (this.treeId) {
 			getTree(this.treeId)
 				.then((tree: IJsonTree) => {
-					this.isMyTree = this.checkIfMyTree(tree);
+					this.canDelete = this.checkCanDelete(tree);
+					this.canEdit = this.checkCanEdit(tree);
 					this.setState({
 						tree: this.convertTree(tree),
 						loading: false
@@ -157,7 +159,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		}
 	}
 
-	checkIfMyTree(tree: IJsonTree) {
+	checkCanDelete(tree: IJsonTree) {
 		// console.log(tree);
 		// console.log(`checking tree is our: user id = ${this.props.user?.id} tree authorId = ${tree.authorId}`);
 		if (this.props.user && tree.authorId) {
@@ -166,44 +168,57 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		return false;
 	}
 
+	checkCanEdit(tree: IJsonTree) {
+		return true;
+	}
+
+	confirmDeleteCurrentTree = () => {
+		this.setState({modalShow: true});
+	}
+
+	closeModal = () => this.setState({modalShow: false});
+
 	deleteCurrentTree = () => {
-		if (this.treeId && this.isMyTree) {
+		if (this.treeId && this.canDelete && !this.operationInProgress) {
+			this.operationInProgress = true;
 			deleteTree(this.treeId).then(succ => {
 				if (succ) {
 					// alert("tree is deleted");
-					this.setState({modalShow: true, modalMessage: "Дерео удалено", successfullyDeleted: true});
-					// this.props.history.goBack();
+					this.setState({modalShow: false});
+					this.props.history.goBack();
 				} else {
-					// alert("error while deleting the tree");
-					this.setState({modalShow: true, modalMessage: "Ошибка при удалении дерева"});
+					alert("error while deleting the tree");
+					// this.setState({modalShow: true, modalMessage: "Ошибка при удалении дерева"});
 				}
 			});
 		}
 	}
 
-	handleModalClose = () => {
-		this.setState({modalShow: false});
-		if (this.state.successfullyDeleted) {
-			this.props.history.goBack();
-		}
+	renderModalContent() {
+		return (
+			<React.Fragment>
+				<p>Вы уверены, что хотите удалить это дерево?</p>
+				<div className={modalStyles.buttonContainer}>
+					<button className={modalStyles.danger} onClick={this.deleteCurrentTree}>Да, удалить</button>
+					<button className={modalStyles.success} onClick={this.closeModal}>Нет</button>
+				</div>
+			</React.Fragment>
+		)
 	}
 
 	renderEditLink () {
 		const {tree} = this.state;
-
 		return (
 			<div className={styles.editLinkWrapper}>
-				{ this.isMyTree && <span className={styles.removeLink} onClick={this.deleteCurrentTree}>Удалить</span> }
-				<NavLink to={`/trees/tree=${tree?.id}/edit`} className={styles.editLink}>Редактировать</NavLink>
+				{ this.canDelete && <span className={styles.removeLink} onClick={this.confirmDeleteCurrentTree}>Удалить</span> }
+				{ this.canEdit && <NavLink to={`/trees/tree=${tree?.id}/edit`} className={styles.editLink}>Редактировать</NavLink> }
 			</div>
 		)
 	}
 
 	renderRows () {
 		const {tree} = this.state;
-
 		const result: JSX.Element[]  = [];
-
 		if (tree == null) {
 			return result;
 		}
@@ -301,8 +316,8 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 
 		return (
 			<React.Fragment>
-				<Modal show={this.state.modalShow} onClose={() => this.setState({modalShow: false})}>
-					<p>{this.state.modalMessage}</p>
+				<Modal show={this.state.modalShow} onClose={this.closeModal}>
+					{this.renderModalContent()}
 				</Modal>
 				<div className={styles.container}>
 					<h3 className={styles.title}> Карточка дерева </h3>

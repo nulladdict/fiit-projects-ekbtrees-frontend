@@ -14,6 +14,5 @@ export interface ITreeState {
     images: IFile[];
     loadingFiles: boolean;
     modalShow: boolean;
-    modalMessage?: string;
     successfullyDeleted?: boolean;
 }

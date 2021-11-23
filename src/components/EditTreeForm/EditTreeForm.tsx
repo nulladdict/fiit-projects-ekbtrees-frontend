@@ -233,8 +233,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
         editTree(data)
             .then(_ => {
                 // alert('Дерево успешно изменено!');
-                this.setState({modalShow: true, modalMessage: "Дерево успешно изменено!", successfullyEdited: true});
-                // this.props.history.goBack();
+                this.props.history.push(`/trees/tree=${tree.id}`);
             })
             .catch(error => {
                 // alert('Ошибка при изменении дерева');

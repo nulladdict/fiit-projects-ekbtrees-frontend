@@ -31,7 +31,7 @@ export class MobileHeader extends Component<IMobileHeaderProps, IMobileHeaderSta
 		const {open} = this.state;
 		return open
 			? <div ref={this.handleRef}>
-				<Menu onClick={this.handleClick} user={this.props.user} />
+				<Menu onClick={this.handleClick} onCookieRemove={this.props.onCookieRemove} user={this.props.user} />
 			</div>
 			: null;
 	}

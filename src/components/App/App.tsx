@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+import React, {Component } from 'react';
 import jwt_decode from "jwt-decode";
 import Cookies from 'universal-cookie';
 import Main from "../Main";
 import Header from "../Header";
 import { ICookieAccess, IUser} from "../../common/types";
 import { IAppProps, IAppState } from "./types";
+import RequestService from "../../helpers/requests";
+import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
 
 const cookies = new Cookies();
 
-export default class App extends Component<IAppProps, IAppState> {
-    constructor(props: IAppProps) {
+
+class App extends Component<IAppProps & RouteComponentProps , IAppState> {
+    constructor(props: IAppProps & RouteComponentProps ) {
         super(props);
 
         this.state = {
@@ -23,13 +26,20 @@ export default class App extends Component<IAppProps, IAppState> {
         this.handleCookie();
     }
 
-
-    removeCookie = () => {
-        cookies.remove('AccessToken');
-
+    clearUserAndRedirect = () => {
         this.setState({
             user: null
-        })
+        });
+        this.props.history.push("/");
+    }
+
+    removeCookie = () => {
+        RequestService.postData('/auth/logout', null).then(() => {
+            this.clearUserAndRedirect();
+        }).catch(err => {
+            console.log("error while logout");
+            this.clearUserAndRedirect();
+        });
     }
 
     handleCookie = () => {
@@ -63,3 +73,5 @@ export default class App extends Component<IAppProps, IAppState> {
         )
     }
 }
+
+export default withRouter(App);

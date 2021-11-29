@@ -128,7 +128,7 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 			startWatchUserGeolocation();
 		}
 		// console.log(activeTreeData);
-		if (waitingLoadData.current || activeTreeData) {
+		if (waitingLoadData.current || activeTreeData || activeTreeId) {
 			return;
 		}
 
@@ -161,6 +161,7 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 	};
 
 	const requestClusteredData = (containerLatLng: MapContainerCoords) => {
+		// console.log("Fetching Clustered data");
 		fetchData(getClusterMapInfoUrl(containerLatLng))
 			.then((jsonData: IJsonMapTreeCluster[]) => {
 				if (!componentMounted.current) {
@@ -194,8 +195,9 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 
 	// FIXME: What type of events should 2-gis have
 	const handleTreeClick = (e: any, item: IJsonMapTree) => {
-		map.setView([e.latlng.lat, e.latlng.lng]);
+		waitingLoadData.current = true;
 		item.id && setActiveTreeId(item.id);
+		map.setView([e.latlng.lat, e.latlng.lng]);
 	}
 
 	// FIXME: What type of events should 2-gis have
@@ -238,7 +240,8 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 	}
 
 	const handleClose = () => {
-		setActiveTreeData(null)
+		setActiveTreeData(null);
+		waitingLoadData.current = false;
 	}
 
 	const handleZoomEndMoveEnd = useCallback(() => {

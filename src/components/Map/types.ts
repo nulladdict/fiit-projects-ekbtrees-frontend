@@ -40,14 +40,30 @@ export interface IGeojsonLayerProps {
     map: any; // 2-gis map
     mapState: number;
     setMapState: any; // 2-gis map setter
+    // mapViewPosition?: [number, number];
+    setMapViewOnUser: boolean;
 }
 
-export interface IGeojsonLayerState { }
+export interface IGeojsonLayerState {}
+
+export type MapContainerCoords = [
+    {lat: number, lng: number},
+    {lat: number, lng: number}
+];
+
+export interface IGeolocationCoords {
+    latitude: number;
+    longitude: number;
+    accuracy: number;
+}
+
 
 export interface IMapContainProps {
     user: IUser | null;
     className?: string;
     styleName?: string;
+    mapViewPosition?: [number, number];
+    setMapViewPosition: (position: [number, number] | undefined) => void;
 }
 
 export interface IMapContainState { }

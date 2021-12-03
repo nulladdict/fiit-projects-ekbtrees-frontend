@@ -4,16 +4,18 @@ import decode from "jwt-decode";
 const cookies = new Cookies();
 
 export default class RequestService {
-	static getData (url: string, headers: HeadersInit = {}) {
-		this.refreshToken().then(() => {
+	static getData(url: string, headers: HeadersInit = {}) {
+		return this.refreshToken().then(() => {
 			const token = cookies.get('AccessToken');
-
-			return fetch(url, {
-				method: 'GET',
-				headers: {
+			if (token) {
+				headers = {
 					...headers,
 					'Authorization': `Bearer ${token}`
-				},
+				}
+			}
+			return fetch(url, {
+				method: 'GET',
+				headers: headers,
 			})
 				.then(response => {
 					if (response.status !== 200) {
@@ -26,15 +28,18 @@ export default class RequestService {
 	}
 
 	// TODO: find а more specific type for body
-	static postData (url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
+	static postData(url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
 		return this.refreshToken().then(() => {
 			const token = cookies.get('AccessToken');
-			return fetch(url, {
-				method: 'POST',
-				headers: {
+			if (token) {
+				headers = {
 					...headers,
 					'Authorization': `Bearer ${token}`
-				},
+				}
+			}
+			return fetch(url, {
+				method: 'POST',
+				headers: headers,
 				body
 			})
 				.then(response => {
@@ -45,6 +50,30 @@ export default class RequestService {
 					}
 
 					return response.json();
+				});
+		});
+	}
+
+	static deleteData(url: string, headers: HeadersInit = {}): Promise<boolean> {
+		return this.refreshToken().then(() => {
+			const token = cookies.get('AccessToken');
+			if (token) {
+				headers = {
+					...headers,
+					'Authorization': `Bearer ${token}`
+				}
+			}
+			return fetch(url, {
+				method: 'DELETE',
+				headers: headers,
+			})
+				.then(response => {
+					if (response.status !== 200) {
+						throw `${response.status} ${response.statusText}`;
+						return false;
+					}
+
+					return true;
 				});
 		});
 	}

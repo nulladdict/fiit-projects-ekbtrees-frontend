@@ -5,6 +5,7 @@ import MapContain from '../Map/MapContain';
 import styles from './Home.module.css';
 import './Map.css';
 import {IHomeProps, IHomeState} from "./types";
+import {mapViewPositionContext, setMapViewPositionContext} from "../Main/Main";
 
 
 export default class Home extends Component<IHomeProps, IHomeState> {
@@ -23,7 +24,15 @@ export default class Home extends Component<IHomeProps, IHomeState> {
             <div className={cn([styles.green, styles.mapBlock])} />
               <div className={styles.mapContainer}>
                 <div className={styles.map}>
-                  <MapContain user={this.props.user} />
+                  <setMapViewPositionContext.Consumer>
+                    { setMapViewPosition => (
+                        <mapViewPositionContext.Consumer>
+                          { mapViewPosition => (
+                            <MapContain user={this.props.user} mapViewPosition={mapViewPosition} setMapViewPosition={setMapViewPosition} />
+                          )}
+                        </mapViewPositionContext.Consumer>
+                    )}
+                  </setMapViewPositionContext.Consumer>
                 </div>
             </div>
           </div>

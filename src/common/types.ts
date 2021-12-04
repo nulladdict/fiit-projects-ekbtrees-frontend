@@ -46,6 +46,8 @@ export interface ITreeProperty {
     parse?: any;
     loading?: boolean;
     disabled?: boolean;
+    validate?: (val: string | number | undefined) => string | null;
+    required?: boolean;
 }
 
 export interface INewTree {
@@ -139,6 +141,8 @@ export interface IJsonTree {
     authorId?: string;
     status?: string;
     fileIds?: number[];
+    editable?: boolean;
+    deletable?: boolean;
 }
 
 

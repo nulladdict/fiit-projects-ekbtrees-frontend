@@ -8,7 +8,8 @@ import {
     getTree,
     getFilesByIds,
     getTypesOfTrees,
-    uploadFilesByTree
+    uploadFilesByTree,
+    deleteFile
 } from "./actions";
 import Spinner from "../Spinner/Spinner";
 import FileUpload from "../FileUpload";
@@ -20,10 +21,12 @@ import {
     IFile,
     IJsonTree,
     ITreePropertyValue,
-    IPostJsonTree,
 } from "../../common/types";
 import { IEditTreeFormProps, IEditTreeFormState } from "./types";
-import {conditionAssessmentOptions, treePlantingTypeOptions, treeStatusOptions} from "../../common/treeForm";
+import {
+    conditionAssessmentOptions, treePlantingTypeOptions, treeStatusOptions,
+    validateIsNotNegativeNumber, validateLessThan, validateIsSet, validateGreaterThan
+} from "../../common/treeForm";
 import Modal from "../Modal";
 
 
@@ -44,6 +47,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             uploadingImages: false,
             modalShow: false,
             successfullyEdited: false,
+            errors: {}
         }
 
         this.treeUuid = getUrlParamValueByKey('tree');
@@ -66,15 +70,16 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             id
         } = tree;
 
-        let conditionAssessmentId = conditionAssessmentOptions.find(op => op.title == conditionAssessment)?.id ?? '';
-        let treeStatusOptionId = treeStatusOptions.find(op => op.title == status)?.id ?? '';
-        let treePlantingTypeId = treePlantingTypeOptions.find(op => op.title == treePlantingType)?.id ?? '';
+        const conditionAssessmentId = conditionAssessmentOptions.find(op => op.title == conditionAssessment)?.id ?? '';
+        const treeStatusOptionId = treeStatusOptions.find(op => op.title == status)?.id ?? '';
+        const treePlantingTypeId = treePlantingTypeOptions.find(op => op.title == treePlantingType)?.id ?? '';
 
         return {
             age: {
                 title: 'Возраст (в годах)',
                 value: age,
-                type: 'number'
+                type: 'number',
+                validate: validateIsNotNegativeNumber,
             },
             conditionAssessment: {
                 title: 'Визуальная оценка состония',
@@ -85,28 +90,33 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             diameterOfCrown: {
                 title: 'Диаметр кроны (в метрах)',
                 value: diameterOfCrown,
-                type: 'number'
+                type: 'number',
+                validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 50),
             },
             heightOfTheFirstBranch: {
                 title: 'Высота первой ветви от земли (в метрах)',
                 value: heightOfTheFirstBranch,
-                type: 'number'
+                type: 'number',
+                validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 100),
             },
             numberOfTreeTrunks: {
                 title: 'Число стволов',
                 value: numberOfTreeTrunks,
-                type: 'number'
+                type: 'number',
+                validate: (v) => validateGreaterThan(v, 0) || validateLessThan(v, 20),
             },
             treeHeight: {
                 title: 'Высота (в метрах)',
                 value: treeHeight,
-                type: 'number'
+                type: 'number',
+                validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 100),
             },
             species: {
                 title: 'Порода',
                 values: species && [species],
                 value: species?.id,
-                loading: false
+                loading: false,
+                validate: validateIsSet,
             },
             status: {
                 title: 'Статус дерева',
@@ -122,7 +132,8 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             trunkGirth: {
                 title: 'Обхват самого толстого ствола (в сантиметрах)',
                 value: trunkGirth,
-                type: 'number'
+                type: 'number',
+                validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 1600),
             },
             id,
             fileIds: fileIds || [],
@@ -150,6 +161,8 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                         getFilesByTree(tree.fileIds ?? []) // TODO: Find out if it's test data
                             .then((files: IFile[]) => {
                                 const images = files.filter((file: IFile) => file.mimeType.startsWith('image'));
+                                // console.log("images:");
+                                // console.log(images);
                                 const filesWithoutImages = files.filter((file: IFile) => !file.mimeType.startsWith('image'));
 
                                 this.setState({
@@ -179,56 +192,77 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
         }
     }
 
+    validateTree(tree: IEditedTree) {
+        // console.log("Tree Validation...");
+        const errors: {[key: string]: string} = {};
+        Object.keys(tree).forEach((key: string) => {
+            const editTreeKey = key as keyof IEditedTree;
+            if (editTreeKey === "id") {
+                return;
+            }
+            const field = tree[editTreeKey];
+            if (field && "validate" in field && field.validate) {
+                const errorMessage = field.validate(field.value);
+                if (errorMessage) {
+                    errors[editTreeKey] = errorMessage;
+                }
+            }
+        });
+        this.setState({errors: errors});
+        return Object.keys(errors).length === 0;
+    }
+
+    convertIEditedTreeToIJsonTree(tree: IEditedTree) {
+        const data: IJsonTree = {};
+        Object.keys(tree).forEach(key => {
+            if (key === "editable" || key === "deletable") return;
+            const jsonTreeKey = key as keyof IJsonTree;
+            if (jsonTreeKey === "fileIds" && tree[jsonTreeKey] === null) {
+                tree[jsonTreeKey] = [];
+            }
+            if (tree[jsonTreeKey as keyof IEditedTree] && Object.prototype.hasOwnProperty.call(tree[jsonTreeKey as keyof IEditedTree], 'value')) {
+                //@ts-ignore: must be protected by a condition from above
+                const rawVal = tree[jsonTreeKey].value;
+                if (rawVal === null || rawVal === undefined || rawVal === '') {
+                    return;
+                }
+
+                if (jsonTreeKey === "species") {
+                    //@ts-ignore: must be protected by a condition from above
+                    data["speciesId"] = parseInt(tree[jsonTreeKey].value);
+                } else if (jsonTreeKey === "status") {
+                    //@ts-ignore: must be protected by a condition from above
+                    data[jsonTreeKey] = treeStatusOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
+                } else if (jsonTreeKey === "treePlantingType") {
+                    //@ts-ignore: must be protected by a condition from above
+                    data[jsonTreeKey] = treePlantingTypeOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
+                } else {
+                    const val = parseInt(rawVal, 10);
+                    data[jsonTreeKey] = isNaN(val) ? rawVal : val;
+                }
+            } else {
+                //@ts-ignore: must be protected by a condition from above
+                data[jsonTreeKey] = tree[jsonTreeKey];
+            }
+        });
+        return data;
+    }
+
 
     handleEditTree = () => {
         const {tree} = this.state;
         if (tree === null) {
             return;
         }
-        const data: IPostJsonTree = {};
-        // console.log("> handleEditTree: tree");
-        // console.log(tree);
-        Object.keys(tree).forEach(key => {
-            const jsonTreeKey = key as keyof IJsonTree;
-            if (jsonTreeKey === "fileIds" && tree[jsonTreeKey] === null) {
-                tree[jsonTreeKey] = [];
-            }
-            if (tree[jsonTreeKey] && Object.prototype.hasOwnProperty.call(tree[jsonTreeKey], 'value')) {
-                // const selects = ['species', 'treePlantingType', 'conditionAssessment'];
-                // const selects = ['species', 'treePlantingType'];
-                const selects = ['species'];
-                // const selects = ['never'];
 
-                if (selects.includes(jsonTreeKey)) {
-                    // if (jsonTreeKey === "species") {
-                        //@ts-ignore: must be protected by a condition from above
-                        // data["speciesId"] = {id: tree[jsonTreeKey]?.value}
-                    // } else {
-                        //@ts-ignore: must be protected by a condition from above
-                        data[jsonTreeKey] = tree[jsonTreeKey].values.find(s => s.id == tree[jsonTreeKey]?.value) //{id: tree[jsonTreeKey]?.value}
-                    // }
-                } else {
-                    if (jsonTreeKey === "species") {
-                        //@ts-ignore: must be protected by a condition from above
-                        data["speciesId"] = tree[jsonTreeKey].value;
-                    } else if (jsonTreeKey === "status") {
-                        //@ts-ignore: must be protected by a condition from above
-                        data[jsonTreeKey] = treeStatusOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
-                    } else if (jsonTreeKey === "treePlantingType") {
-                        //@ts-ignore: must be protected by a condition from above
-                        data[jsonTreeKey] = treePlantingTypeOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
-                    } else {
-                        //@ts-ignore: must be protected by a condition from above
-                        data[jsonTreeKey] = tree[jsonTreeKey].value;
-                    }
-                }
-            } else {
-                //@ts-ignore: must be protected by a condition from above
-                data[jsonTreeKey] = tree[jsonTreeKey];
-            }
-        })
+        const isValid = this.validateTree(tree);
+        if (!isValid) {
+            return;
+        }
+        const data: IJsonTree = this.convertIEditedTreeToIJsonTree(tree);
+
         data.authorId = this.props.user?.id;
-        // console.log("> handleEditTree: data");
+        // console.log("data to send");
         // console.log(data);
         editTree(data)
             .then(_ => {
@@ -296,6 +330,32 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
         }
     }
 
+    renderErrors() {
+        const {errors} = this.state;
+        if (Object.keys(errors).length === 0 || this.state.tree === null) {
+            return null;
+        }
+
+        return Object.keys(errors).map(
+            (fieldName: string) => {
+                let title: string | undefined = fieldName;
+                const editTreeKey = fieldName as keyof IEditedTree;
+                if (editTreeKey === "id") {
+                    return;
+                }
+                const field = this.state.tree![editTreeKey];
+
+                if (field && "title" in field) {
+                    title = field.title;
+                }
+
+                return (
+                    <p className={styles.errorMessage} key={fieldName}>{title}: {errors[fieldName]}</p>
+                );
+            }
+        )
+    }
+
     renderItems () {
         const {tree} = this.state;
         if (tree === null || tree === undefined) {
@@ -323,6 +383,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                                     item={tree[key]!} // must be protected by a condition from above
                                     id={key}
                                     onChange={this.handleChange(key)}
+                                    errorMessage={this.state.errors[key]}
                                 />
                             </div>
                         )
@@ -350,13 +411,14 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
 
         uploadFilesByTree(this.treeUuid, files)
             .then(fileIds => {
+                const newFileIds = (this.state.tree?.fileIds ?? []).concat(fileIds);
                 getFilesByIds(fileIds)
                     .then(files => {
                         this.setState({
                             [key]: this.state[key].concat(files),
                             tree: {
                                 ...this.state.tree,
-                                fileIds: this.state.tree?.fileIds?.concat(fileIds),
+                                fileIds: newFileIds,
                             } as IEditedTree,
                             [`uploading${camelCaseKey}`]: false
                         })
@@ -395,12 +457,14 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
     }
 
     handleDeleteFile = (key: string) => (id: string | number) => {
-        this.setState({
-            [key]: this.getFilesAfterDelete(id, key),
-            tree: {
-                ...this.state.tree,
-                fileIds: this.getFileIdsAfterDelete(id)
-            }
+        deleteFile(id).then(succ => {
+            this.setState({
+                [key]: this.getFilesAfterDelete(id, key),
+                tree: {
+                    ...this.state.tree,
+                    fileIds: this.getFileIdsAfterDelete(id)
+                }
+            });
         });
     }
 
@@ -464,6 +528,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                 {this.renderMainInformation()}
                 {this.renderImages()}
                 {this.renderFiles()}
+                {this.renderErrors()}
                 {this.renderButtons()}
             </div>
         )

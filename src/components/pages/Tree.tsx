@@ -4,12 +4,13 @@ import modalStyles from "../Modal/Modal.module.css";
 import { NavLink } from "react-router-dom";
 import Spinner from "../Spinner";
 import { getUrlParamValueByKey } from "../../helpers/url";
-import { getTree, getFilesByTree, deleteTree } from "../EditTreeForm/actions";
+import {getTree, getFilesByTree, deleteTree, deleteFiles} from "../EditTreeForm/actions";
 import { formatDate} from '../../helpers/date';
 import FileUpload from "../FileUpload";
 import { ITreeModelConverted, IJsonTree, IFile } from "../../common/types";
 import { ITreeProps, ITreeState } from "./types";
 import Modal from "../Modal/Modal";
+import {isNumber} from "../../common/treeForm";
 
 
 export class Tree extends Component<ITreeProps, ITreeState> {
@@ -18,6 +19,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 	}
 
 	private treeId: string | number | null = null;
+	private fileIds: number[] = [];
 	private canDelete: boolean = false;
 	private canEdit: boolean = false;
 	private operationInProgress: boolean = false;
@@ -121,6 +123,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		if (this.treeId) {
 			getTree(this.treeId)
 				.then((tree: IJsonTree) => {
+					this.fileIds = tree.fileIds ?? [];
 					this.canDelete = this.checkCanDelete(tree);
 					this.canEdit = this.checkCanEdit(tree);
 					this.setState({
@@ -160,16 +163,11 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 	}
 
 	checkCanDelete(tree: IJsonTree) {
-		// console.log(tree);
-		// console.log(`checking tree is our: user id = ${this.props.user?.id} tree authorId = ${tree.authorId}`);
-		if (this.props.user && tree.authorId) {
-			return this.props.user.id == tree.authorId;
-		}
-		return false;
+		return tree.deletable ?? false;
 	}
 
 	checkCanEdit(tree: IJsonTree) {
-		return true;
+		return tree.editable ?? false;
 	}
 
 	confirmDeleteCurrentTree = () => {
@@ -178,18 +176,41 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 
 	closeModal = () => this.setState({modalShow: false});
 
+	trySetMaoViewPosition = () => {
+		if (this.state.tree) {
+			const lat = this.state.tree.latitude.value;
+			const lon = this.state.tree.longitude.value;
+
+			if (lat && lon) {
+				const latNum = isNumber(lat) ? lat : parseFloat(lat.toString());
+				const lonNum = isNumber(lon) ? lon : parseFloat(lon.toString());
+				this.props.setMapViewPosition([latNum, lonNum]);
+			}
+		}
+	}
+
 	deleteCurrentTree = () => {
 		if (this.treeId && this.canDelete && !this.operationInProgress) {
 			this.operationInProgress = true;
-			deleteTree(this.treeId).then(succ => {
-				if (succ) {
-					// alert("tree is deleted");
-					this.setState({modalShow: false});
-					this.props.history.goBack();
-				} else {
-					alert("error while deleting the tree");
-					// this.setState({modalShow: true, modalMessage: "Ошибка при удалении дерева"});
+			deleteFiles(this.fileIds).then(deletedAllFiles => {
+				if (!deletedAllFiles.every(v => v) || !this.treeId) {
+					alert("error while deleting all files");
+					return;
 				}
+				deleteTree(this.treeId).then(succ => {
+					if (succ) {
+						// alert("tree is deleted");
+						this.trySetMaoViewPosition();
+						this.setState({modalShow: false});
+						// this.props.history.goBack();
+						this.props.history.push("/map");
+					} else {
+						alert("error while deleting the tree");
+						// this.setState({modalShow: true, modalMessage: "Ошибка при удалении дерева"});
+					}
+				}).catch(err => {
+					alert("error while deleting the tree");
+				});
 			});
 		}
 	}
@@ -224,7 +245,7 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 		}
 		Object.keys(tree).forEach((key, index) => {
 			const treeKey = key as keyof ITreeModelConverted;
-			if (treeKey == 'id') {
+			if (treeKey === 'id') {
 				return;
 			}
 			if (tree[treeKey].value) {
@@ -321,7 +342,6 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 				</Modal>
 				<div className={styles.container}>
 					<h3 className={styles.title}> Карточка дерева </h3>
-					{/*<button onClick={this.confirmDeleteCurrentTree} >Show Modal</button>*/}
 					{this.renderDetails()}
 					{this.renderImages()}
 					{this.renderFiles()}

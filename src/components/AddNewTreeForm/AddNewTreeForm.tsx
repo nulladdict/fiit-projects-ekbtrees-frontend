@@ -141,7 +141,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
 
             if (Object.prototype.hasOwnProperty.call(tree[treeKey], 'value')) {
                 // console.log(`${treeKey} has value`);
-                if (treeKey == 'fileIds') {
+                if (treeKey === 'fileIds') {
                     // should be in else branch
                     return;
                 }
@@ -181,7 +181,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
     }
 
     handleChange = (fieldName: keyof INewTree) => (event: React.ChangeEvent<{name?: string | undefined, value: unknown}>) => {
-        if (fieldName == 'fileIds') {
+        if (fieldName === 'fileIds') {
             // TODO: find other way to filter this case
             return;
         }
@@ -241,7 +241,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         Object.keys(tree).forEach((key, index) => {
             let treeKey = key as keyof INewTree;
             // TODO: find other way to filter this case
-            if (treeKey == 'fileIds') {
+            if (treeKey === 'fileIds') {
                 // should be in else branch
                 return;
             }
@@ -284,6 +284,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         )
     }
 
+    // TODO use Promises to avoid callback hell
     uploadFiles (files: (string | Blob)[], key: FileGroupType) {
         const camelCaseKey = key.charAt(0).toUpperCase() + key.slice(1) as "Files" | "Images";
         uploadFiles(files)
@@ -307,8 +308,10 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                             },
                             [`uploading${camelCaseKey}` as ResourceAction]: false
                         })
-
-                        throw `Произошла ошибка при получении загруженных файлов/картинок ${error}`;
+                        throw Object.assign(
+                            new Error(`Произошла ошибка при получении загруженных файлов/картинок ${error}`),
+                            { code: 404 }
+                        )
                     })
             })
             .catch(error => {

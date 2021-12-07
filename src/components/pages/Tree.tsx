@@ -159,12 +159,12 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 
 		const result: JSX.Element[]  = [];
 
-		if (tree == null) {
+		if (!tree) {
 			return result;
 		}
 		Object.keys(tree).forEach((key, index) => {
 			const treeKey = key as keyof ITreeModelConverted;
-			if (treeKey == 'id') {
+			if (treeKey === 'id') {
 				return;
 			}
 			if (tree[treeKey].value) {

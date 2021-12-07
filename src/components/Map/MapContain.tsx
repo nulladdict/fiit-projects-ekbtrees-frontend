@@ -10,7 +10,7 @@ const DG = require('2gis-maps');
 
 
 const MapContain = (props: IMapContainProps) => {
-	const {styleName, user} = props;
+	const {user} = props;
 
 	const defaultPosition = [56.8391040, 60.6082500]; // Yekaterinburg position
 	const [map, setMap] = useState<any>(); // for 2-gis map

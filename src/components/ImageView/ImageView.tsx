@@ -21,7 +21,10 @@ export default class ImageView extends Component<IImageViewProps, IImageViewStat
     render() {
         return (
             <div className={styles.viewImagePageContainer}>
-                <img src={this.state.imageData?.uri}/>
+                <img 
+                    src={this.state.imageData?.uri}
+                    alt="Что-то пошло не так. Пожалуйста, перезагрузите страницу"    
+                />
             </div>
         )
     }

@@ -1,13 +1,11 @@
 import cn from 'classnames';
-import {divIcon, icon} from 'leaflet';
-import React, {useState, useEffect, useRef, useCallback} from 'react';
-import {Circle} from 'react-leaflet';
-import markerIcon from './markerIcon';
-import {getCircleOptions, getCircleRadius} from "./MapHelpers";
-import {TreeForm} from "../MarkerForm/TreeForm";
-import {NewTreeMarker} from "../NewTreeMarker/NewTreeMarker";
-import {MapState} from "./MapState";
-import {useHistory} from "react-router-dom";
+import { divIcon } from 'leaflet';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Circle} from 'react-leaflet';
+import { getCircleOptions, getCircleRadius } from "./MapHelpers";
+import { TreeForm } from "../MarkerForm/TreeForm";
+import { MapState } from "./MapState";
+import { useHistory } from "react-router-dom";
 import {
 	getTreeMapInfoUrl,
 	getTreeDataUrl,
@@ -27,7 +25,7 @@ import {
 	IMapDataClustered,
 	IMapDataSeparateTrees
 } from "./types";
-import {DefaultClusterColor, DefaultTreeColor, TreeSpeciesColors} from "./treeSpeciesColors";
+import { DefaultTreeColor, TreeSpeciesColors } from "./treeSpeciesColors";
 import "./GeojsonLayer.module.css";
 
 const DG = require('2gis-maps');
@@ -62,7 +60,7 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 			const latitude = e.coords.latitude;
 			const longitude = e.coords.longitude;
 			const accuracy = e.coords.accuracy;
-			if (userCircleRef.current == null) {
+			if (!userCircleRef.current) {
 				// FIXME: The circle is quite large when accuracy is big
 				// console.log(`> geolocation: ${latitude} ${longitude}`);
 				userCircleRef.current = new DG.circle([latitude, longitude], accuracy, { color: userCircleColor })
@@ -89,7 +87,7 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	useEffect( () => () => {
 		componentMounted.current = false;
 		// console.log(" > onUnmount");
-		if (watchPositionId.current !== null) {
+		if (!!watchPositionId.current) {
 			// console.log("disposing watch location id");
 			navigator.geolocation.clearWatch(watchPositionId.current);
 		}
@@ -98,7 +96,7 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 		map && map.off('click', handleClick);
 		map && map.off('zoomend', handleZoomEndMoveEnd);
 		map && map.off('moveend', handleZoomEndMoveEnd);
-	}, [] );
+	});
 
 	// FIXME: type of 2-gis event
 	const updateMarkerRef = (event: any) => {
@@ -109,7 +107,7 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 		// console.log("> loadData: start loading data...");
 		// console.log(`watching geoposition: ${watchPositionId.current}`);
 		// Start watching User geolocation if haven't started before
-		if (watchPositionId.current === null) {
+		if (!watchPositionId.current) {
 			// console.log("started watching geolocation");
 			startWatchUserGeolocation();
 		}
@@ -240,7 +238,9 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 	}, [map, mapData]);
 
 	useEffect(() => {
-		if (map === null || map === undefined) return;
+		if (!map) {
+			return;
+		}
 		setActiveTreeData(null);
 		// if (activeTreeId) {
 		// 	console.log("> useEffect [activeTreeId]: requesting activeTree info...");
@@ -259,7 +259,7 @@ const GeojsonLayer = ({map, mapState, setMapState, user} : IGeojsonLayerProps) =
 
 	useEffect(() => {
 		if (mapState === MapState.addTreeSubmit) {
-			if (markerRef.current === null) {
+			if (!markerRef.current) {
 				return;
 			}
 			const {lat, lng} = markerRef.current;
@@ -366,10 +366,7 @@ function getMarkerClusterGroup(state: number, data: IMapDataSeparateTrees | IMap
 
 
 function GenerateCircleForTree(f: IJsonTree, key: number, onClick: any, title: string | number) {
-	if (f.geographicalPoint === undefined ||
-		f.geographicalPoint.latitude === null ||
-		f.geographicalPoint.longitude === null
-	) {
+	if (!f.geographicalPoint || !f.geographicalPoint.latitude || !f.geographicalPoint.longitude) {
 		return null;
 	}
 

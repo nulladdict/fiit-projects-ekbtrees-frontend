@@ -4,25 +4,27 @@ import decode from "jwt-decode";
 const cookies = new Cookies();
 
 export default class RequestService {
-	static getData (url: string, headers: HeadersInit = {}) {
-		this.refreshToken().then(() => {
-			const token = cookies.get('AccessToken');
-
-			return fetch(url, {
-				method: 'GET',
-				headers: {
-					...headers,
-					'Authorization': `Bearer ${token}`
-				},
-			})
-				.then(response => {
-					if (response.status !== 200) {
-						throw `${response.status} ${response.statusText}`;
-					}
-
-					return response.json();
-				});
-		})
+	static async getData (url: string, headers: HeadersInit = {}) {
+		await this.refreshToken()
+		const token = cookies.get('AccessToken');
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				...headers,
+				'Authorization': `Bearer ${token}`
+			},
+		});
+		switch (response.status) {
+			case 200:
+				return await response.json();
+			case 401: 
+				throw `${response.status} ${response.statusText}`; // TODO use router
+			default: 
+				throw Object.assign(
+					new Error(response.statusText),
+					{ code: response.status }
+				)
+		}
 	}
 
 	// TODO: find а more specific type for body
@@ -41,7 +43,10 @@ export default class RequestService {
 					const passingStatuses = [200, 201];
 
 					if (!passingStatuses.includes(response.status)) {
-						throw `${response.status} ${response.statusText}`;
+						throw Object.assign(
+							new Error(response.statusText),
+							{ code: response.status }
+						)
 					}
 
 					return response.json();

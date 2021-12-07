@@ -5,9 +5,9 @@ import {IClusterMarkerProps, IClusterMarkerState} from "./types";
 
 
 export default class ClusterMarker extends Component<IClusterMarkerProps, IClusterMarkerState> {
-    constructor(props: IClusterMarkerProps) {
-        super(props);
-    }
+//    constructor(props: IClusterMarkerProps) {
+//        super(props);
+//    }
 
     render() {
         const markerIcon = divIcon({

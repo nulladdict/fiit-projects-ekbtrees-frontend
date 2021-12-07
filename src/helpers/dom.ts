@@ -7,7 +7,7 @@ import { SimpleMathesSelectors } from "../common/types";
 export const closest = (element: EventTarget | HTMLElement | null, selector: string): [HTMLElement?] => {
 	const htmlElement = element as HTMLElement;
 	// Added guard in case element is null
-	if (element == null) return [];
+	if (!element) return [];
 	const body: HTMLElement = document.body;
 	let matchesFn = '';
 

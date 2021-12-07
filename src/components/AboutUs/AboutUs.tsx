@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './AboutUs.css';
 import {IAboutUsProps, IAboutUsState} from "./types";
 
@@ -16,7 +16,11 @@ export default class AboutUs extends Component<IAboutUsProps, IAboutUsState> {
           <a className="read-more">Читать больше</a>
         </div>
         <div className="flex-image-part">
-          <img className="flex-image" src="http://pngimg.com/uploads/men_in_black/men_in_black_PNG20.png"></img>
+          <img 
+            className="flex-image" 
+            src="http://pngimg.com/uploads/men_in_black/men_in_black_PNG20.png" 
+            alt="Похоже, что-то пошло не так. Перезагрузите страницу"
+          ></img>
         </div>
       </section>
     )

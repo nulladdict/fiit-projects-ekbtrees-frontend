@@ -14,7 +14,6 @@ import Spinner from "../Spinner/Spinner";
 import FileUpload from "../FileUpload";
 import TextField from '../TextField';
 import Select from '../Select';
-import {resolveAny} from "dns";
 import {
     IEditedTree,
     IFile,
@@ -63,9 +62,9 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             id
         } = tree;
 
-        let conditionAssessmentId = conditionAssessmentOptions.find(op => op.title == conditionAssessment)?.id ?? '';
-        let treeStatusOptionId = treeStatusOptions.find(op => op.title == status)?.id ?? '';
-        let treePlantingTypeId = treePlantingTypeOptions.find(op => op.title == treePlantingType)?.id ?? '';
+        let conditionAssessmentId = conditionAssessmentOptions.find(op => op.title === conditionAssessment)?.id ?? '';
+        let treeStatusOptionId = treeStatusOptions.find(op => op.title === status)?.id ?? '';
+        let treePlantingTypeId = treePlantingTypeOptions.find(op => op.title === treePlantingType)?.id ?? '';
 
         return {
             age: {
@@ -179,7 +178,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
 
     handleEditTree = () => {
         const {tree} = this.state;
-        if (tree === null) {
+        if (!tree) {
             return;
         }
         const data: IPostJsonTree = {};
@@ -187,7 +186,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
         // console.log(tree);
         Object.keys(tree).forEach(key => {
             const jsonTreeKey = key as keyof IJsonTree;
-            if (jsonTreeKey === "fileIds" && tree[jsonTreeKey] === null) {
+            if (jsonTreeKey === "fileIds" && !tree[jsonTreeKey]) {
                 tree[jsonTreeKey] = [];
             }
             if (tree[jsonTreeKey] && Object.prototype.hasOwnProperty.call(tree[jsonTreeKey], 'value')) {
@@ -202,7 +201,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                         // data["speciesId"] = {id: tree[jsonTreeKey]?.value}
                     // } else {
                         //@ts-ignore: must be protected by a condition from above
-                        data[jsonTreeKey] = tree[jsonTreeKey].values.find(s => s.id == tree[jsonTreeKey]?.value) //{id: tree[jsonTreeKey]?.value}
+                        data[jsonTreeKey] = tree[jsonTreeKey].values.find(s => s.id === tree[jsonTreeKey]?.value) //{id: tree[jsonTreeKey]?.value}
                     // }
                 } else {
                     if (jsonTreeKey === "species") {
@@ -210,10 +209,10 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                         data["speciesId"] = tree[jsonTreeKey].value;
                     } else if (jsonTreeKey === "status") {
                         //@ts-ignore: must be protected by a condition from above
-                        data[jsonTreeKey] = treeStatusOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
+                        data[jsonTreeKey] = treeStatusOptions.find(op => op.id === tree[jsonTreeKey].value)?.title ;
                     } else if (jsonTreeKey === "treePlantingType") {
                         //@ts-ignore: must be protected by a condition from above
-                        data[jsonTreeKey] = treePlantingTypeOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
+                        data[jsonTreeKey] = treePlantingTypeOptions.find(op => op.id === tree[jsonTreeKey].value)?.title ;
                     } else {
                         //@ts-ignore: must be protected by a condition from above
                         data[jsonTreeKey] = tree[jsonTreeKey].value;
@@ -242,7 +241,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
 
     handleChange = (fieldName: keyof IEditedTree) => (event: ChangeEvent<{ name?: string | undefined; value: unknown; }>) => {
         const {tree} = this.state;
-        if (tree === null || tree === undefined) {
+        if (!tree) {
             return;
         }
         if (fieldName !== 'id' && fieldName !== 'geographicalPoint' && fieldName !== 'fileIds')
@@ -296,7 +295,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
 
     renderItems () {
         const {tree} = this.state;
-        if (tree === null || tree === undefined) {
+        if (!tree) {
             return;
         }
         const result: JSX.Element[]  = [];

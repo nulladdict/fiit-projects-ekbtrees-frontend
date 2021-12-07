@@ -11,7 +11,7 @@ export default class Header extends Component<IHeaderProps, IHeaderState> {
 
         return (
             <header className={styles.headerWrapper}>
-                <MobileHeader user = {this.props.user}/>
+                <MobileHeader onCookieRemove={onCookieRemove} user = {this.props.user}/>
                 <DesktopHeader onCookieRemove={onCookieRemove} user={this.props.user}/>
             </header>
         )

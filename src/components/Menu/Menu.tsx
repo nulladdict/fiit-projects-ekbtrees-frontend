@@ -28,6 +28,14 @@ export default class Menu extends Component<IMenuProps, IMenuState> {
                 title: 'Список деревьев',
                 to: '/trees',
                 className: styles.visibleMenuLink
+            },
+            {
+                activeClassName: styles.active,
+                exact: true,
+                onClick: this.props.onCookieRemove,
+                title: 'Выйти',
+                to: '/',
+                className: styles.visibleMenuLink
             })
         } else {
             authLinks.push({

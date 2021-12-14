@@ -149,10 +149,9 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 							})
 					})
 				})
-				.catch(error => {
+				.catch((error: Error) => {
 					console.error(error, 'Ошибка!')
-					if (this.props.user === null) {
-						// TODO: redirect to login
+					if (this.props.user === null || error.message?.split(' ')[0] === '401') {
 						this.props.history.push('/login');
 					}
 					this.setState({

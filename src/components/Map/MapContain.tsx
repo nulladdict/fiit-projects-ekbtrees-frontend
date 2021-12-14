@@ -10,7 +10,7 @@ const DG = require('2gis-maps');
 
 
 const MapContain = (props: IMapContainProps) => {
-	const {styleName, mapViewPosition, setMapViewPosition, user} = props;
+	const { mapViewPosition, setMapViewPosition, user } = props;
 
 	const defaultPosition = [56.8391040, 60.6082500]; // Yekaterinburg position
 	const defaultZoom = 14; // Yekaterinburg position

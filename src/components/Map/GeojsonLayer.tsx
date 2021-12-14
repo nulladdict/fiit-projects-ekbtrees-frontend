@@ -1,11 +1,7 @@
 import cn from 'classnames';
-import {divIcon, icon} from 'leaflet';
+import { divIcon } from 'leaflet';
 import React, {useState, useEffect, useRef, useCallback, useLayoutEffect} from 'react';
-import {Circle} from 'react-leaflet';
-import markerIcon from './markerIcon';
-import {getCircleOptions, getCircleRadius} from "./MapHelpers";
 import {TreeForm} from "../MarkerForm/TreeForm";
-import {NewTreeMarker} from "../NewTreeMarker/NewTreeMarker";
 import {MapState} from "./MapState";
 import {useHistory} from "react-router-dom";
 import {
@@ -14,10 +10,7 @@ import {
 	getClusterMapInfoUrl,
 	fetchData
 } from '../ApiDataLoadHelper/DataLoadHelper';
-import MapButton from '../MapButton';
 import styles from "./GeojsonLayer.module.css";
-import ClusterMarker from '../ClusterMarker/ClusterMarker';
-import MarkerClusterGroup from "react-leaflet-markercluster/src/react-leaflet-markercluster";
 import { IJsonTree } from "../../common/types";
 import {
 	IGeolocationCoords,
@@ -29,7 +22,7 @@ import {
 	IMapDataSeparateTrees,
 	MapContainerCoords
 } from "./types";
-import {DefaultClusterColor, DefaultTreeColor, TreeSpeciesColors} from "./treeSpeciesColors";
+import { DefaultTreeColor, TreeSpeciesColors } from "./treeSpeciesColors";
 import "./GeojsonLayer.module.css";
 import MapButtonGeneral from "../MapAdditionalControls";
 import MapButtonContainer from "../MapAdditionalControls/MapButtonContainer";
@@ -45,7 +38,6 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 	const waitingLoadData = useRef<boolean>(false);
 	const componentMounted = useRef<boolean>(false);
 	const markerRef = useRef<ILatLng | null>(null);
-	const buttonRef = useRef<HTMLButtonElement>(null);
 
 	// User geolocation
 
@@ -330,13 +322,13 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 
 	const renderButtons = () => user &&
 		<MapButtonContainer>
-			{(mapState != MapState.default) && (
+			{(mapState !== MapState.default) && (
 				<MapButtonGeneral state={mapState} changeState={HandleAddTreeCancel}
-								  getTitle={(s: number) => "Отмена"} isDisabled={(s: number) => s == MapState.default}
+								  getTitle={(s: number) => "Отмена"} isDisabled={(s: number) => s === MapState.default}
 								  styleName={MapButtonStyles.mapButtonSecondary}/>
 			)}
 			<MapButtonGeneral state={mapState} changeState={HandleMapStateChange}
-							  getTitle={HandleMapStateButtonTitleChange} isDisabled={(s: number) => s == MapState.addTreeBegin}
+							  getTitle={HandleMapStateButtonTitleChange} isDisabled={(s: number) => s === MapState.addTreeBegin}
 							  styleName={MapButtonStyles.mapButtonSuccess}/>
 		</MapButtonContainer>
 
@@ -406,68 +398,5 @@ function setUpTreeCircles(state: number, data: IMapDataSeparateTrees | IMapDataC
 		});
 	}
 }
-
-
-// NOTE: not used, function setUpTreeCircles is used instead
-function getMarkerClusterGroup(state: number, data: IMapDataSeparateTrees | IMapDataClustered, setActiveTree: any, map: any) {
-	/* FixMe - Этот кусок кода игнорируется, т.к isClusterData зашит на false.
-			Как я понял, MarkerClusterGroup должен принимать столько точек, сколько реально должно отрисоваться.
-			Т.е. если нам пришло 8 точек, то в MarkerClusterGroup должно быть 8 объектов, тогда кластеризация происходит корректно.
-			На данный момент в MarkerClusterGroup приходит 1 объект, в котором число доступных деревьев равно 8.
-			На экране отрисовывается точка с числом 8, а после слияния с другой точкой отображается число 2, т.к. отрисовано всего 2 объекта.
-	*/
-	if (data.isClusterData) {
-		// console.log("Creating MarkerClusterGroup");
-		return (
-			<MarkerClusterGroup disableClusteringAtZoom={19}>
-				{data.json
-
-					.map((f: any, idx: number) => (
-						<ClusterMarker
-							key={idx}
-							count={f.count}
-							position={[f.centre.latitude, f.centre.longitude]}
-							weight={1}>
-						</ClusterMarker>
-					))}
-			</MarkerClusterGroup>);
-	} else {
-		// console.log(map.getZoom(), 'zoom');
-		return (
-			<MarkerClusterGroup disableClusteringAtZoom={19}>
-				{data.json
-					.map((f: IJsonTree, idx: number) => GenerateCircleForTree(f, idx,
-						() => state === MapState.default && setActiveTree(f.id), 1))
-				}
-			</MarkerClusterGroup>
-		);
-	}
-}
-
-
-function GenerateCircleForTree(f: IJsonTree, key: number, onClick: any, title: string | number) {
-	if (f.geographicalPoint === undefined ||
-		f.geographicalPoint.latitude === null ||
-		f.geographicalPoint.longitude === null
-	) {
-		return null;
-	}
-
-	const customProps = {title: title};
-	return (
-		<Circle
-			eventHandlers={{click: onClick}}
-			key={key}
-			center={[f.geographicalPoint.latitude, f.geographicalPoint.longitude]}
-			pathOptions={getCircleOptions(f.species?.title ?? "")}
-			radius={getCircleRadius(f.diameterOfCrown ?? 10)}
-			weight={1}
-			// title={1}
-			{...customProps} // used instead of "title={1}"
-		>
-		</Circle>
-	)
-}
-
 
 export default GeojsonLayer;

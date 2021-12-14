@@ -2,7 +2,7 @@ import React, {ChangeEvent, Component, Fragment} from 'react';
 import styles from './ProfileSettings.module.css';
 import cn from "classnames";
 import {IProfileSettingsProps, IProfileSettingsState, IUserInfo} from "./types";
-import {getUser, updateUser, updateUserPassword} from "./actions";
+import { getUser, updateUser } from "./actions";
 
 
 export default class ProfileSettings extends Component<IProfileSettingsProps, IProfileSettingsState> {

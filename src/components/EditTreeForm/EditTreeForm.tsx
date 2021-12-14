@@ -15,7 +15,7 @@ import Spinner from "../Spinner/Spinner";
 import FileUpload from "../FileUpload";
 import TextField from '../TextField';
 import Select from '../Select';
-import {resolveAny} from "dns";
+
 import {
     IEditedTree,
     IFile,
@@ -70,9 +70,9 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
             id
         } = tree;
 
-        const conditionAssessmentId = conditionAssessmentOptions.find(op => op.title == conditionAssessment)?.id ?? '';
-        const treeStatusOptionId = treeStatusOptions.find(op => op.title == status)?.id ?? '';
-        const treePlantingTypeId = treePlantingTypeOptions.find(op => op.title == treePlantingType)?.id ?? '';
+        const conditionAssessmentId = conditionAssessmentOptions.find(op => op.title === conditionAssessment)?.id ?? '';
+        const treeStatusOptionId = treeStatusOptions.find(op => op.title === status)?.id ?? '';
+        const treePlantingTypeId = treePlantingTypeOptions.find(op => op.title === treePlantingType)?.id ?? '';
 
         return {
             age: {
@@ -232,10 +232,10 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                     data["speciesId"] = parseInt(tree[jsonTreeKey].value);
                 } else if (jsonTreeKey === "status") {
                     //@ts-ignore: must be protected by a condition from above
-                    data[jsonTreeKey] = treeStatusOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
+                    data[jsonTreeKey] = treeStatusOptions.find(op => op.id === tree[jsonTreeKey].value)?.title ;
                 } else if (jsonTreeKey === "treePlantingType") {
                     //@ts-ignore: must be protected by a condition from above
-                    data[jsonTreeKey] = treePlantingTypeOptions.find(op => op.id == tree[jsonTreeKey].value)?.title ;
+                    data[jsonTreeKey] = treePlantingTypeOptions.find(op => op.id === tree[jsonTreeKey].value)?.title ;
                 } else {
                     const val = parseInt(rawVal, 10);
                     data[jsonTreeKey] = isNaN(val) ? rawVal : val;
@@ -341,7 +341,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                 let title: string | undefined = fieldName;
                 const editTreeKey = fieldName as keyof IEditedTree;
                 if (editTreeKey === "id") {
-                    return;
+                    return null;
                 }
                 const field = this.state.tree![editTreeKey];
 
@@ -457,7 +457,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
     }
 
     handleDeleteFile = (key: string) => (id: string | number) => {
-        deleteFile(id).then(succ => {
+        deleteFile(id).then(() => {
             this.setState({
                 [key]: this.getFilesAfterDelete(id, key),
                 tree: {
@@ -465,7 +465,13 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                     fileIds: this.getFileIdsAfterDelete(id)
                 }
             });
-        });
+        }).catch((error: Error) => {
+            if (error.message?.split(' ')[0] === '401') {
+                this.props.history.push('/login')
+            } else {
+                throw error
+            }
+        })
     }
 
     handleModalClose = () => {

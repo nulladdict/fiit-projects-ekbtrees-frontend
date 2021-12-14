@@ -48,8 +48,12 @@ export default class TreeLists extends Component<ITreeListsProps, ITreeListsStat
             .then(data => {
                 this.setState({trees: data, loading: false})
             })
-            .catch(error => {
-                console.error('Произошла ошибка при получении деревьев!', error);
+            .catch((error : Error) => {
+                if (error.message?.split(' ')[0] === '401') {
+                    this.props.history.push('/login')
+                } else {
+                    console.error('Произошла ошибка при получении деревьев!', error);
+                }
             })
     }
 

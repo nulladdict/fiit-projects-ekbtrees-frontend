@@ -1,5 +1,4 @@
 import React from 'react';
-import {MapState} from "../Map/MapState";
 import styles from './MapButtonStyles.module.css';
 
 const MapButtonContainer: React.FC = (props) => {

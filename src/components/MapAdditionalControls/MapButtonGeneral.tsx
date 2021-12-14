@@ -1,7 +1,5 @@
 import React from 'react';
-import {MapState} from "../Map/MapState";
-import styles from './MapButtonStyles.module.css';
-import {IMapButtonGeneralProps} from "./types";
+import { IMapButtonGeneralProps } from "./types";
 
 
 const MapButtonGeneral = React.forwardRef<HTMLButtonElement, IMapButtonGeneralProps>(

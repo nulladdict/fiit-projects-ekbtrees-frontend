@@ -6,7 +6,6 @@ import styles from './Login-form.module.css';
 import AuthForm from '../AuthForm';
 import vkIcon from '../../img/vk.png';
 import facebookIcon from '../../img/facebook.png';
-import jwt_decode from "jwt-decode";
 import { ILogingFormUser } from "../../common/types";
 import { ILoginFormProps, ILoginFormState } from "./types";
 

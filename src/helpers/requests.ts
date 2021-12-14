@@ -4,106 +4,104 @@ import decode from "jwt-decode";
 const cookies = new Cookies();
 
 export default class RequestService {
-	static getData(url: string, headers: HeadersInit = {}) {
-		return this.refreshToken().then(() => {
-			const token = cookies.get('AccessToken');
-			if (token) {
-				headers = {
-					...headers,
-					'Authorization': `Bearer ${token}`
-				}
+	static async getData(url: string, headers: HeadersInit = {}) {
+		await this.refreshToken()
+		const token = cookies.get('AccessToken');
+		if (token) {
+			headers = {
+				...headers,
+				'Authorization': `Bearer ${token}`
 			}
-			return fetch(url, {
-				method: 'GET',
-				headers: headers,
-			})
-				.then(response => {
-					if (response.status !== 200) {
-						throw `${response.status} ${response.statusText}`;
-					}
-
-					return response.json();
-				});
+		}
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: headers,
 		})
+		if (response.status === 401) {
+			// hmmm
+			window.location.pathname = '/login'
+		}
+		if (response.status !== 200) {
+			throw new Error(`${response.status} ${response.statusText}`)
+		}
+
+		return response.json();
 	}
 
 	// TODO: find а more specific type for body
-	static postData(url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
-		return this.refreshToken().then(() => {
-			const token = cookies.get('AccessToken');
-			if (token) {
-				headers = {
-					...headers,
-					'Authorization': `Bearer ${token}`
-				}
+	static async postData(url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
+		await this.refreshToken()
+		const token = cookies.get('AccessToken');
+		if (token) {
+			headers = {
+				...headers,
+				'Authorization': `Bearer ${token}`
 			}
-			return fetch(url, {
-				method: 'POST',
-				headers: headers,
-				body
-			})
-				.then(response => {
-					const passingStatuses = [200, 201];
+		}
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: headers,
+			body
+		})
 
-					if (!passingStatuses.includes(response.status)) {
-						throw `${response.status} ${response.statusText}`;
-					}
+		const passingStatuses = [200, 201];
+		if (!passingStatuses.includes(response.status)) {
+			throw new Error(`${response.status} ${response.statusText}`);
+		}
 
-					return response.json();
-				});
-		});
+		return response.json();
 	}
 
-	static putData(url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
-		return this.refreshToken().then(() => {
-			const token = cookies.get('AccessToken');
-			if (token) {
-				headers = {
-					...headers,
-					'Authorization': `Bearer ${token}`
-				}
+	static async putData(url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
+		await this.refreshToken()
+		const token = cookies.get('AccessToken');
+		if (token) {
+			headers = {
+				...headers,
+				'Authorization': `Bearer ${token}`
 			}
-			return fetch(url, {
-				method: 'PUT',
-				headers: headers,
-				body
-			})
-				.then(response => {
-					const passingStatuses = [200, 201];
+		}
+		const response = await fetch(url, {
+			method: 'PUT',
+			headers: headers,
+			body
+		})
+		const passingStatuses = [200, 201];
+		if (response.status === 401) {
+			// hmmm
+			window.location.pathname = '/login'
+		}
+		if (!passingStatuses.includes(response.status)) {
+			throw new Error(`${response.status} ${response.statusText}`);
+		}
 
-					if (!passingStatuses.includes(response.status)) {
-						throw `${response.status} ${response.statusText}`;
-					}
-
-					return true;
-				});
-		});
+		return true;
 	}
 
-	static deleteData(url: string, headers: HeadersInit = {}): Promise<boolean> {
-		return this.refreshToken().then(() => {
-			const token = cookies.get('AccessToken');
-			if (token) {
-				headers = {
-					...headers,
-					'Authorization': `Bearer ${token}`
-				}
+	static async deleteData(url: string, headers: HeadersInit = {}): Promise<boolean> {
+		await this.refreshToken()
+		const token = cookies.get('AccessToken');
+		if (token) {
+			headers = {
+				...headers,
+				'Authorization': `Bearer ${token}`
 			}
-			return fetch(url, {
-				method: 'DELETE',
-				headers: headers,
-			})
-				.then(response => {
-					if (response.status !== 200) {
-						throw `${response.status} ${response.statusText}`;
-						return false;
-					}
-
-					return true;
-				});
-		});
+		}
+		const response = await fetch(url, {
+			method: 'DELETE',
+			headers: headers,
+		})
+		if (response.status === 401) {
+			// hmmm
+			window.location.pathname = '/login'
+		}
+		if (response.status !== 200) {
+			throw new Error(`${response.status} ${response.statusText}`);
+		}
+		return true;
 	}
 
+	// seems strange but okay
 	static refreshToken (): Promise<any> {
 		const token = cookies.get('AccessToken');
 		const decoded_token: any = token ? decode(token) : null;

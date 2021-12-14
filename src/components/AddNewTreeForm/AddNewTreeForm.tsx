@@ -212,9 +212,13 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                 }
                 this.setState({modalShow: true, modalMessage: 'Дерево успешно добавлено!', successfullyAdded: true});
             })
-            .catch(error => {
-                this.setState({modalShow: true, modalMessage: 'Ошибка при добавлении дерева'});
-                console.error('Ошибка при добавлении дерева', error);
+            .catch((error: Error) => {
+                if (error.message?.split(' ')[0] === '401') {
+                    this.props.history.push('/login')
+                } else {
+                    this.setState({modalShow: true, modalMessage: 'Ошибка при добавлении дерева'});
+                    console.error('Ошибка при добавлении дерева', error);
+                }
             });
     }
 
@@ -384,7 +388,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                         throw `Произошла ошибка при получении загруженных файлов/картинок ${error}`;
                     })
             })
-            .catch(error => {
+            .catch((error : Error) => {
                 this.setState({
                     ...this.state,
                     modalShow: false,
@@ -426,7 +430,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
     }
 
     handleDeleteFile = (key: FileGroupType) => (id: string | number) => {
-        deleteFile(id).then((succ) => {
+        deleteFile(id).then(() => {
             this.setState({
                 ...this.state,
                 modalShow: false,
@@ -437,7 +441,10 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     fileIds: this.getFileIdsAfterDelete(id)
                 }
             });
-        });
+        }).catch((error : Error) => {
+            // todo history
+            console.error(error)
+        })
     }
 
     renderFiles () {

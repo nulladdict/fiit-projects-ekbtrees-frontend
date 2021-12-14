@@ -15,3 +15,7 @@ export const uploadFiles = (files: (string | Blob)[]) => {
 		return RequestService.postData(`${baseUrl}file/upload`, formData);
 	}))
 };
+
+export const deleteFile = (fileId: number | string) => {
+	return RequestService.deleteData(`${baseUrl}file/${fileId}`);
+}

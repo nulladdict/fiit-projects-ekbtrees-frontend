@@ -21,5 +21,6 @@ export interface IAddNewTreeFormState {
     modalShow: boolean;
     modalMessage?: string;
     successfullyAdded?: boolean;
+    errors: {[key: string]: string}
 }
 

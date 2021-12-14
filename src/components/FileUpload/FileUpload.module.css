@@ -69,7 +69,7 @@
 .wrapper,
 .linksWrapper,
 .linksWrapperImage {
-    background: #F3F6FA;
+    background: #fff;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
     margin: 15px 0;
     word-break: break-word;
@@ -100,7 +100,7 @@
 }
 
 .addBtn {
-    background-color: #F3F6FA;
+    background-color: #fff;
     border: 1px solid #e5e5e5;
     cursor: pointer;
     padding: 10px 20px;

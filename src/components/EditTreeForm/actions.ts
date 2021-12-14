@@ -23,7 +23,7 @@ export const uploadFilesByTree = (id: string | number, files: File[]): Promise<(
 		formData.append("file", file);
 
 		return RequestService.postData(`${baseUrl}tree/attachFile/${id}`, formData);
-	}))
+	}));
 };
 
 export const getFilesByIds = (filesIds: (string | number)[]): Promise<IFile[]> => {
@@ -36,10 +36,18 @@ export const getTypesOfTrees = (): Promise<ITreePropertyValue[]> => {
 	return RequestService.getData(`${baseUrl}species/get-all`)
 }
 
-
 export const editTree = (body: IJsonTree | IPostJsonTree) => {
-	return RequestService.postData(`${baseUrl}tree/save`, JSON.stringify(body), {
-	// return RequestService.postData(`${baseUrl}tree`, JSON.stringify(body), {
+	return RequestService.putData(`${baseUrl}tree/${body.id}`, JSON.stringify(body), {
 		'Content-Type': 'application/json'
 	})
+}
+
+export const deleteFile = (fileId: number | string) => {
+	return RequestService.deleteData(`${baseUrl}file/${fileId}`);
+}
+
+export const deleteFiles = (filesIds: (number | string)[]) => {
+	return Promise.all(filesIds.map((filesId: number | string) => {
+		return deleteFile(filesId);
+	}));
 }

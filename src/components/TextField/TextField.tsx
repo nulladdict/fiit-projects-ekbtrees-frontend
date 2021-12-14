@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent, ReactNode, useState} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import UITextField from '@material-ui/core/TextField';
 import {ITextFieldProps} from "./types";
@@ -11,10 +11,13 @@ const useStyles = makeStyles(() => ({
 			width: '100%',
 		},
 	},
+	errorMessage: {
+		color: "red",
+	},
 }));
 
 export const TextField = (props: ITextFieldProps) => {
-	const {id, item, onChange} = props;
+	const {id, item, onChange, errorMessage} = props;
 	const styles = useStyles();
 
 	return (
@@ -27,7 +30,9 @@ export const TextField = (props: ITextFieldProps) => {
 				id={id}
 				label={item.title}
 				value={item.value}
+				error={!!errorMessage}
 			/>
+			{errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 		</div>
 	)
 }

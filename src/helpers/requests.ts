@@ -54,6 +54,32 @@ export default class RequestService {
 		});
 	}
 
+	static putData(url: string, body: BodyInit | null | undefined, headers: HeadersInit = {}): Promise<any> {
+		return this.refreshToken().then(() => {
+			const token = cookies.get('AccessToken');
+			if (token) {
+				headers = {
+					...headers,
+					'Authorization': `Bearer ${token}`
+				}
+			}
+			return fetch(url, {
+				method: 'PUT',
+				headers: headers,
+				body
+			})
+				.then(response => {
+					const passingStatuses = [200, 201];
+
+					if (!passingStatuses.includes(response.status)) {
+						throw `${response.status} ${response.statusText}`;
+					}
+
+					return true;
+				});
+		});
+	}
+
 	static deleteData(url: string, headers: HeadersInit = {}): Promise<boolean> {
 		return this.refreshToken().then(() => {
 			const token = cookies.get('AccessToken');

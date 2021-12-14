@@ -1,6 +1,6 @@
 import cn from 'classnames';
-import React, { Component } from 'react';
-import {addTree, uploadFiles} from "./actions";
+import React, {Component} from 'react';
+import {addTree, deleteFile, uploadFiles} from "./actions";
 import FileUpload from "../FileUpload";
 import TextField from '../TextField';
 import Select from '../Select';
@@ -11,7 +11,10 @@ import {
     FileGroupType, IPostJsonTree, IGeographicalPoint, IFile
 } from "../../common/types";
 import {IAddNewTreeFormProps, IAddNewTreeFormState} from "./types";
-import {conditionAssessmentOptions, treePlantingTypeOptions, treeStatusOptions} from "../../common/treeForm";
+import {
+    conditionAssessmentOptions, treePlantingTypeOptions, treeStatusOptions,
+    validateIsNotNegativeNumber, validateLessThan, validateIsSet, validateGreaterThan,
+} from "../../common/treeForm";
 import Modal from "../Modal";
 
 
@@ -20,6 +23,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         super(props);
 
         this.state = {
+            errors: {},
             modalShow: false,
             successfullyAdded: false,
             tree: {
@@ -35,11 +39,13 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     value: this.props.match.params.lng,
                     type: 'string'
                 },
-                age: {
-                    title: 'Возраст (в годах)',
+                speciesId: {
+                    title: 'Порода',
+                    values: [],
                     value: '',
-                    type: 'number',
-                    parse: (value: string) => parseInt(value, 10)
+                    validate: validateIsSet,
+                    required: true,
+                    loading: false
                 },
                 conditionAssessment: {
                     title: 'Визуальная оценка состония',
@@ -51,32 +57,38 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     title: 'Диаметр кроны (в метрах)',
                     value: '',
                     type: 'number',
+                    validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 50),
                     parse: (value: string) => parseFloat(value)
                 },
                 heightOfTheFirstBranch: {
                     title: 'Высота первой ветви от земли (в метрах)',
                     value: '',
                     type: 'number',
+                    validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 100),
                     parse: (value: string) => parseFloat(value)
                 },
                 numberOfTreeTrunks: {
                     title: 'Число стволов',
                     value: '',
                     type: 'number',
+                    validate: (v) => validateGreaterThan(v, 0) || validateLessThan(v, 20),
                     parse: (value: string) => parseInt(value, 10)
                 },
                 treeHeight: {
                     title: 'Высота (в метрах)',
                     value: '',
                     type: 'number',
+                    validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 100),
                     parse: (value: string) => parseFloat(value)
                 },
-                speciesId: {
-                    title: 'Порода',
-                    values: [],
+                age: {
+                    title: 'Возраст (в годах)',
                     value: '',
-                    loading: false
+                    type: 'number',
+                    parse: (value: string) => parseInt(value, 10),
+                    validate: validateIsNotNegativeNumber,
                 },
+
                 status: {
                     title: 'Статус дерева',
                     values: treeStatusOptions,
@@ -94,6 +106,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     title: 'Обхват самого толстого ствола (в сантиметрах)',
                     value: '',
                     type: 'number',
+                    validate: (v) => validateIsNotNegativeNumber(v) || validateLessThan(v, 1600),
                     parse: (value: string) => parseFloat(value)
                 },
                 fileIds: [],
@@ -119,9 +132,24 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         return `${item ? item.title: ''}`;
     }
 
-    handleAddTree = () => {
-        const {tree} = this.state;
+    validateTree(tree: INewTree) {
+        const errors: {[key: string]: string} = {};
+        Object.keys(tree).forEach((key: string) => {
+            const newTreeKey = key as keyof INewTree;
+            const field = tree[newTreeKey];
+            if (Array.isArray(field)) return;
+            if (field.validate) {
+                const errorMessage = field.validate(field.value);
+                if (errorMessage !== null) {
+                    errors[newTreeKey] = errorMessage;
+                }
+            }
+        });
+        this.setState({errors: errors});
+        return Object.keys(errors).length === 0;
+    }
 
+    convertINewTreeToIPostJsonTree(tree: INewTree) {
         const data: IPostJsonTree = {
             geographicalPoint: {
                 latitude: null,
@@ -130,11 +158,9 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         }
 
         Object.keys(tree).forEach((key: string) => {
-            let treeKey = key as keyof INewTree;
-            // console.log(treeKey);
+            const treeKey = key as keyof INewTree;
 
             if (Object.prototype.hasOwnProperty.call(tree[treeKey], 'value')) {
-                // console.log(`${treeKey} has value`);
                 if (treeKey == 'fileIds') {
                     // should be in else branch
                     return;
@@ -142,6 +168,9 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                 // TODO: find other way to filter this case
 
                 const {parse, value, values} = tree[treeKey];
+                if (value === null || value === undefined || value === '') {
+                    return;
+                }
 
                 if (parse && !(treeKey === 'latitude' || treeKey === 'longitude')) {
                     data[treeKey] = parse(value, values);
@@ -162,23 +191,28 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                 }
             }
         });
-        // data.created = Date.now();
-        // console.log(data);
+        return data;
+    }
+
+    handleAddTree = () => {
+        const {tree} = this.state;
+
+        const isValid = this.validateTree(tree);
+        if (!isValid) {
+            return;
+        }
+
+        const data: IPostJsonTree = this.convertINewTreeToIPostJsonTree(tree);
         addTree(data as {geographicalPoint: {latitude: number | null, longitude: number | null}})
             .then(_ => {
-                // alert('Дерево успешно добавлено!');
-                let lat = data.geographicalPoint?.latitude;
-                let lon = data.geographicalPoint?.longitude;
-                // console.log(`added tree at: [${lat}, ${lon}]`);
+                const lat = data.geographicalPoint?.latitude;
+                const lon = data.geographicalPoint?.longitude;
                 if (lat && lon) {
                     this.props.setMapViewPosition([lat, lon]); // set map position on success
-                    // console.log(`SetMapViewPosition: [${lat}, ${lon}]`);
                 }
                 this.setState({modalShow: true, modalMessage: 'Дерево успешно добавлено!', successfullyAdded: true});
-                // this.props.history.goBack();
             })
             .catch(error => {
-                // alert('Ошибка при добавлении дерева');
                 this.setState({modalShow: true, modalMessage: 'Ошибка при добавлении дерева'});
                 console.error('Ошибка при добавлении дерева', error);
             });
@@ -192,7 +226,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         const {tree} = this.state;
         tree[fieldName].value = event.target.value as string;
 
-        this.setState({tree})
+        this.setState({tree});
     }
 
     handleOpenSelect = (fieldId: string) => () => {
@@ -245,12 +279,32 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         }
     }
 
+    renderErrors() {
+        const {errors} = this.state;
+        if (Object.keys(errors).length === 0) {
+            return null;
+        }
+        return Object.keys(errors).map(
+            (fieldName: string) => {
+                let title: string | undefined = fieldName;
+                const field = this.state.tree[fieldName as keyof INewTree];
+                if ("title" in field) {
+                    title = field.title;
+                }
+
+                return (
+                    <p className={styles.errorMessage} key={fieldName}>{title}: {errors[fieldName]}</p>
+                );
+            }
+        )
+    }
+
     renderItems () {
         const {tree} = this.state;
 
         const result: React.ReactNode[] = [];
         Object.keys(tree).forEach((key, index) => {
-            let treeKey = key as keyof INewTree;
+            const treeKey = key as keyof INewTree;
             // TODO: find other way to filter this case
             if (treeKey == 'fileIds') {
                 // should be in else branch
@@ -265,6 +319,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                                 onOpen={this.handleOpenSelect(key)}
                                 item={tree[treeKey]}
                                 id={key}
+                                required={tree[treeKey].required}
                             />
                         </div>
                     )
@@ -275,6 +330,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                                 item={tree[treeKey]}
                                 id={key}
                                 onChange={this.handleChange(treeKey)}
+                                errorMessage={this.state.errors[treeKey]}
                             />
                         </div>
                     )
@@ -301,19 +357,23 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
             .then(fileIds => {
                 getFilesByIds(fileIds)
                     .then(files => {
-                        let newState: IAddNewTreeFormState = {
+                        const newFileIds = (this.state.tree?.fileIds ?? []).concat(fileIds);
+                        const newState: IAddNewTreeFormState = {
+                            ...this.state,
                             modalShow: false,
                             [key]: (this.state[key] === undefined) ? files : (this.state[key] ?? []).concat(files),
                             tree: {
                                 ...this.state.tree,
-                                fileIds: this.state.tree.fileIds.concat(fileIds)
+                                fileIds: newFileIds
                             },
                             [`uploading${camelCaseKey}` as ResourceAction]: false
-                        }
+                        };
+
                         this.setState(newState)
                     })
                     .catch(error => {
                         this.setState({
+                            ...this.state,
                             modalShow: false,
                             tree: {
                                 ...this.state.tree,
@@ -326,6 +386,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
             })
             .catch(error => {
                 this.setState({
+                    ...this.state,
                     modalShow: false,
                     tree: {
                         ...this.state.tree,
@@ -340,6 +401,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         const camelCaseKey = key.charAt(0).toUpperCase() + key.slice(1);
 
         this.setState({
+            ...this.state,
             modalShow: false,
             tree: {
                 ...this.state.tree,
@@ -348,9 +410,14 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
         }, () => this.uploadFiles(files, key));
     }
 
-    getFilesAfterDelete (id: string | number) {
-        const {files} = this.state;
-        return files?.filter((file: IFile) => file.id !== id);
+    getFilesAfterDelete (id: string | number, key: FileGroupType = "images") {
+        const {images, files} = this.state;
+        switch (key) {
+            case "images":
+                return images?.filter((file: IFile) => file.id !== id);
+            case "files":
+                return files?.filter((file: IFile) => file.id !== id);
+        }
     }
 
     getFileIdsAfterDelete (id: string | number) {
@@ -359,14 +426,17 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
     }
 
     handleDeleteFile = (key: FileGroupType) => (id: string | number) => {
-        this.setState({
-            modalShow: false,
-            // Removed second parameter, func getFilesAfterDelete (id: any) uses only id
-            [key]: this.getFilesAfterDelete(id),
-            tree: {
-                ...this.state.tree,
-                fileIds: this.getFileIdsAfterDelete(id)
-            }
+        deleteFile(id).then((succ) => {
+            this.setState({
+                ...this.state,
+                modalShow: false,
+                // Removed second parameter, func getFilesAfterDelete (id: any) uses only id
+                [key]: this.getFilesAfterDelete(id, key),
+                tree: {
+                    ...this.state.tree,
+                    fileIds: this.getFileIdsAfterDelete(id)
+                }
+            });
         });
     }
 
@@ -432,6 +502,7 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                         {this.renderMainInformation()}
                         {this.renderImages()}
                         {this.renderFiles()}
+                        {this.renderErrors()}
                         {this.renderButtons()}
                     </div>
                 </div>

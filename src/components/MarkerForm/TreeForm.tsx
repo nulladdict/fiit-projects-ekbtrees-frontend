@@ -15,19 +15,19 @@ export const TreeForm = ({activeTree, onClose} : ITreeFormProps) => {
             <div className={styles.wrapperFlex}>
                 <div className={cn([styles.blockWrapper, styles.blockWrapperDesktop])}>
                     <span className={styles.blockPrefix}> Порода</span>
-                    <input className={styles.blockValue} type="text" disabled value={activeTree?.species?.title}/>
+                    <input className={styles.blockValue} type="text" disabled value={activeTree?.species?.title ?? ""}/>
                 </div>
                 <div className={cn([styles.blockWrapper, styles.blockWrapperDesktop])}>
                     <span className={styles.blockPrefix}>Визуальная  оценка состояния</span>
-                    <input className={styles.blockValue} type="text" disabled value = {activeTree?.conditionAssessment}/>
+                    <input className={styles.blockValue} type="text" disabled value = {activeTree?.conditionAssessment ?? ""}/>
                 </div>
                 <div className={cn([styles.blockWrapper, styles.blockWrapperDesktop])}>
                     <span className={styles.blockPrefix}> Высота (в метрах)</span>
-                    <input className={styles.blockValue} type="text" disabled value = {activeTree?.treeHeight} />
+                    <input className={styles.blockValue} type="text" disabled value = {activeTree?.treeHeight ?? ""} />
                 </div>
                 <div className={cn([styles.blockWrapper, styles.blockWrapperDesktop])}>
                     <span className={styles.blockPrefix}>Обхват самого толстого ствола (в сантиметрах)</span>
-                    <input className={styles.blockValue} type="text" disabled value = {activeTree?.trunkGirth} />
+                    <input className={styles.blockValue} type="text" disabled value = {activeTree?.trunkGirth ?? ""} />
                 </div>
             </div>
             <div className={styles.navigation}>

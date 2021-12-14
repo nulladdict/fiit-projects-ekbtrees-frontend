@@ -133,35 +133,17 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 		}
 
 		const containerLatLng = getMapContainerLatLng();
-		const dataIsClustered = map.getZoom() < 14;
+		const dataIsClustered = map.getZoom() <= 16;
 		waitingLoadData.current = true;
-		// console.log("Fetching not Clustered data");
-		fetchData(getTreeMapInfoUrl(containerLatLng))
-			.then((jsonData: IJsonMapTree[]) => {
-				if (!componentMounted.current) {
-					// console.log(" > fetch but component Unmounted");
-					return;
-				}
-				// console.log(`Fetched ${jsonData.length} trees`)
-				setMapData({isClusterData: false, json: jsonData});
-				setUpTreeCircles(mapState, {isClusterData: false, json: jsonData}, handleTreeClick, treesLayer);
-				if (!dataIsClustered) {
-					treesLayer.addTo(map);
-					waitingLoadData.current = false;
-					// console.log("> loadData: data is loaded!")
-				} else {
-					requestClusteredData(containerLatLng);
-				}
-			})
-			.catch(err => {
-				waitingLoadData.current = false;
-				alert("Возникла ошибка при загрузке деревьев");
-				console.error(err);
-			});
+		if (dataIsClustered) {
+			// console.log("Fetching Clustered data");
+			requestClusteredData(containerLatLng);
+		} else {
+			requestTreeData(containerLatLng);
+		}
 	};
 
 	const requestClusteredData = (containerLatLng: MapContainerCoords) => {
-		// console.log("Fetching Clustered data");
 		fetchData(getClusterMapInfoUrl(containerLatLng))
 			.then((jsonData: IJsonMapTreeCluster[]) => {
 				if (!componentMounted.current) {
@@ -173,6 +155,26 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 				setUpTreeCircles(mapState, {isClusterData: true, json: jsonData}, handleTreeClick, treesLayer);
 				treesLayer.addTo(map);
 				// console.log("> loadData: data is loaded!");
+				waitingLoadData.current = false;
+			})
+			.catch(err => {
+				waitingLoadData.current = false;
+				alert("Возникла ошибка при загрузке деревьев");
+				console.error(err);
+			});
+	};
+
+	const requestTreeData = (containerLatLng: MapContainerCoords) => {
+		fetchData(getTreeMapInfoUrl(containerLatLng))
+			.then((jsonData: IJsonMapTree[]) => {
+				if (!componentMounted.current) {
+					// console.log(" > fetch but component Unmounted");
+					return;
+				}
+				// console.log(`Fetched ${jsonData.length} trees`)
+				setMapData({isClusterData: false, json: jsonData});
+				setUpTreeCircles(mapState, {isClusterData: false, json: jsonData}, handleTreeClick, treesLayer);
+				treesLayer.addTo(map);
 				waitingLoadData.current = false;
 			})
 			.catch(err => {
@@ -247,6 +249,7 @@ const GeojsonLayer = ({map, mapState, setMapState, setMapViewOnUser, user} : IGe
 	}
 
 	const handleZoomEndMoveEnd = useCallback(() => {
+		if (waitingLoadData.current) return;
 		clearLayer(treesLayer);
 		map && loadData();
 	}, [map])
@@ -352,9 +355,10 @@ function setUpTreeCircles(state: number, data: IMapDataSeparateTrees | IMapDataC
 	if (data.isClusterData) {
 		data.json.forEach(item => {
 			const {latitude, longitude} = item.centre;
+			const size = 30;
 			const clusterMarkerDivStyle = `
-				width: 30px;
-				height: 30px;
+				width: ${size}px;
+				height: ${size}px;
 				margin: 5px;
 				border-radius: 20px;
 				background-color:rgba(110,204,57,0.6);
@@ -380,12 +384,25 @@ function setUpTreeCircles(state: number, data: IMapDataSeparateTrees | IMapDataC
 				color = TreeSpeciesColors[species];
 			}
 			let circleRadius = item.diameterOfCrown / 2;
-			circleRadius = circleRadius < 3 ? 3 : circleRadius;
-			// console.log(`tree radius is ${circleRadius}`);
-			DG.circle([latitude, longitude], circleRadius, {
-				color: color, fillColor: color, fill: true, fillOpacity: 1, weight: 1
-			}).addTo(layer)
-				.on('click', (e: any) => handleTreeClick(e, item));
+			const minCircleRadius = 2;
+			circleRadius = circleRadius < minCircleRadius ? minCircleRadius : circleRadius;
+
+			const treeCircle = DG.circle([latitude, longitude], {
+				radius: circleRadius, color: color, fillColor: color,
+				fill: true, fillOpacity: 1, weight: 0, opacity: 1.0
+			}).addTo(layer);
+
+			const touchCircleRadius = 9;
+			if (circleRadius >= touchCircleRadius) {
+				treeCircle.on('click', (e: any) => handleTreeClick(e, item));
+			} else {
+				DG.circle([latitude, longitude], {
+					radius: touchCircleRadius, fillColor: "yellow",
+					fill: true, weight: 0, fillOpacity: 0, opacity: 0
+				}).addTo(layer)
+					.on('click', (e: any) => handleTreeClick(e, item));
+			}
+
 		});
 	}
 }

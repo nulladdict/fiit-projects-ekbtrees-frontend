@@ -1,6 +1,6 @@
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
-import React from "react";
+import React, {ChangeEvent, ReactNode, useState} from "react";
 import {makeStyles} from '@material-ui/core/styles';
 import UISelect from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -18,8 +18,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const Select = (props: ISelectProps) => {
-    const {id, item, onChange, onOpen} = props;
+    const {id, item, onChange, onOpen, required} = props;
     const styles = useStyles();
+    const [selected, setSelected] = useState<boolean>(false);
+
+    const handleChange = (event: ChangeEvent<{ name?: string | undefined; value: unknown; }>, child?: ReactNode) => {
+        setSelected(true);
+        onChange(event, child);
+    }
 
     const renderOptions = (values: ISelectOption[]) => {
         if (item.loading) {
@@ -40,12 +46,12 @@ export const Select = (props: ISelectProps) => {
 
     return (
         <div className={styles.root}>
-            <FormControl variant="filled">
+            <FormControl variant="filled" required={required} error={required && !selected}>
                 <InputLabel htmlFor={id}>{item.title}</InputLabel>
                 <UISelect
                     onOpen={onOpen}
                     native={false}
-                    onChange={onChange}
+                    onChange={handleChange}
                     inputProps={{
                         name: item.title,
                         id,

@@ -98,7 +98,7 @@ export default class Main extends Component<IMainProps, IMainState> {
                                  render={(props) =>
                                      <MapContain {...props} user={user} mapViewPosition={this.state.mapViewPosition}
                                                  setMapViewPosition={this.setMapViewPosition} className='fullMap'/>}/>
-                          <Route exact path='/trees/tree=:id' render={(props) => <Tree {...props} user={user}/>}/>
+                          <Route exact path='/trees/tree=:id' render={(props) => <Tree {...props} setMapViewPosition={this.setMapViewPosition} user={user}/>}/>
                           <Route exact path='/passRecovery' component={PassRecovery}/>
                           <Route exact path='/aboutUs' component={AboutUs}/>
                           <Route path='/vk' component={this.vkAuth2}/>

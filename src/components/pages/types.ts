@@ -4,6 +4,7 @@ import * as H from "history";
 
 export interface ITreeProps {
     user: IUser | null;
+    setMapViewPosition: (position: [number, number]) => void;
     history: H.History;
 }
 

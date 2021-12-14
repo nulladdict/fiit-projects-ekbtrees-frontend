@@ -20,5 +20,6 @@ export interface IEditTreeFormState {
     modalShow: boolean;
     modalMessage?: string;
     successfullyEdited?: boolean;
+    errors: {[key: string]: string}
     [key: string]: any;
 }

@@ -15,16 +15,17 @@ import styles from './Main.module.css';
 import Tree from "../pages/Tree";
 import UserList from '../UserList';
 import {IMainProps, IMainState} from "./types";
+import {IMapPosition} from "../../common/types";
 
-export const setMapViewPositionContext = React.createContext<((viewPos: [number, number] | undefined) => void)>(() => {});
-export const mapViewPositionContext = React.createContext<[number, number] | undefined>(undefined);
+export const setMapViewPositionContext = React.createContext<((viewPos: IMapPosition | undefined) => void)>(() => {});
+export const mapViewPositionContext = React.createContext<IMapPosition | undefined>(undefined);
 
 export default class Main extends Component<IMainProps, IMainState> {
     constructor(props: IMainProps) {
         super(props);
         this.state = {};
     }
-    setMapViewPosition = (viewPos: [number, number] | undefined) => {
+    setMapViewPosition = (viewPos: IMapPosition | undefined) => {
         // console.log("Main: setMapViewPosition is changed");
         // console.log(viewPos);
         this.setState({mapViewPosition: viewPos});
@@ -40,11 +41,11 @@ export default class Main extends Component<IMainProps, IMainState> {
                      render={(props) => <AddNewTreeForm {...props} setMapViewPosition={this.setMapViewPosition}
                                                         user={user}/>}/>
               {/*<Route exact path='/trees/tree=:id/edit' component={EditTreeForm} />*/}
-              <Route exact path='/trees/tree=:id/edit' render={(props) => <EditTreeForm {...props} user={user}/>}/>
+              <Route exact path='/trees/tree=:id/edit' render={(props) => <EditTreeForm {...props} setMapViewPosition={this.setMapViewPosition} user={user}/>}/>
               <Route exact path='/trees' component={TreeLists}/>
               <Route exact path='/users' component={UserList}/>
               <Route exact path='/profileSettings'
-                     render={(props) => <ProfileSettings {...props} user={user}/>}/>
+                     render={(props) => <ProfileSettings {...props} updateUserByCookies={this.props.onCookie} user={user}/>}/>
               <Redirect to='/'/>
           </Switch>
       );

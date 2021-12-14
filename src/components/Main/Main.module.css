@@ -9,3 +9,9 @@
         margin-top: 0;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .mainWrapper {
+        margin-top: 0;
+    }
+}

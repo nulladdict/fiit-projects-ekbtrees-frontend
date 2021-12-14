@@ -17,10 +17,13 @@ export interface IEditUserInfo {
 
 export interface IProfileSettingsProps {
     user: IUser | null;
+    updateUserByCookies: () => void;
 }
 
 export interface IProfileSettingsState {
     requiredFields: (keyof IUserInfo)[];
     userInfo: IUserInfo;
     editUserInfo: IEditUserInfo | null;
+    newPassword: string | null;
+    modalShow: boolean;
 }

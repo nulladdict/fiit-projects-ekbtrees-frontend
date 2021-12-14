@@ -267,7 +267,13 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
         editTree(data)
             .then(_ => {
                 // alert('Дерево успешно изменено!');
-                this.props.history.push(`/trees/tree=${tree.id}`);
+                // this.props.history.push(`/trees/tree=${tree.id}`);
+                const lat = data.geographicalPoint?.latitude;
+                const lng = data.geographicalPoint?.longitude;
+                if (lat && lng) {
+                    this.props.setMapViewPosition({lat, lng, marker: true}); // set map position on success
+                }
+                this.props.history.push(`/map`);
             })
             .catch(error => {
                 // alert('Ошибка при изменении дерева');

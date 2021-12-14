@@ -1,4 +1,4 @@
-import {IUser} from "../../common/types";
+import {IMapPosition, IUser} from "../../common/types";
 
 
 export interface IMainProps {
@@ -7,5 +7,5 @@ export interface IMainProps {
 }
 
 export interface IMainState {
-    mapViewPosition?: [number, number];
+    mapViewPosition?: IMapPosition
 }

@@ -1,4 +1,4 @@
-import {IGeographicalPoint, ITreePropertyValue, IUser} from "../../common/types";
+import {IGeographicalPoint, IMapPosition, ITreePropertyValue, IUser} from "../../common/types";
 
 
 export interface ILatLng {
@@ -42,6 +42,7 @@ export interface IGeojsonLayerProps {
     setMapState: any; // 2-gis map setter
     // mapViewPosition?: [number, number];
     setMapViewOnUser: boolean;
+    pointerMarker?: IMapPosition;
 }
 
 export interface IGeojsonLayerState {}
@@ -62,8 +63,8 @@ export interface IMapContainProps {
     user: IUser | null;
     className?: string;
     styleName?: string;
-    mapViewPosition?: [number, number];
-    setMapViewPosition: (position: [number, number] | undefined) => void;
+    mapViewPosition?: IMapPosition;
+    setMapViewPosition: (position: IMapPosition | undefined) => void;
 }
 
 export interface IMapContainState { }

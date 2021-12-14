@@ -156,7 +156,8 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 						this.props.history.push('/login');
 					}
 					this.setState({
-						loading: false
+						loading: false,
+						loadingFiles: false
 					})
 				})
 		}
@@ -179,12 +180,12 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 	trySetMaoViewPosition = () => {
 		if (this.state.tree) {
 			const lat = this.state.tree.latitude.value;
-			const lon = this.state.tree.longitude.value;
+			const lng = this.state.tree.longitude.value;
 
-			if (lat && lon) {
+			if (lat && lng) {
 				const latNum = isNumber(lat) ? lat : parseFloat(lat.toString());
-				const lonNum = isNumber(lon) ? lon : parseFloat(lon.toString());
-				this.props.setMapViewPosition([latNum, lonNum]);
+				const lngNum = isNumber(lng) ? lng : parseFloat(lng.toString());
+				this.props.setMapViewPosition({lat: latNum, lng: lngNum});
 			}
 		}
 	}
@@ -333,6 +334,14 @@ export class Tree extends Component<ITreeProps, ITreeState> {
 
 		if (loading) {
 			return <Spinner />;
+		}
+
+		if (!this.state.tree) {
+			return (
+				<div className={styles.container}>
+					<h3 className={styles.title}> Дерево не найдено </h3>
+				</div>
+			)
 		}
 
 		return (

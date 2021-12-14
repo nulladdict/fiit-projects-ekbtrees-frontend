@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import UITextField from '@material-ui/core/TextField';
 import {ITextFieldProps} from "./types";
 
-
 const useStyles = makeStyles(() => ({
 	root: {
 		width: '100%',
@@ -26,7 +25,8 @@ export const TextField = (props: ITextFieldProps) => {
 				disabled={item.disabled ?? false}
 				type={item.type}
 				onChange={onChange}
-				variant="filled"
+				// variant="filled"
+				variant="outlined"
 				id={id}
 				label={item.title}
 				value={item.value}

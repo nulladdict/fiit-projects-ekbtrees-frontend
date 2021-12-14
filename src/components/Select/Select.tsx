@@ -7,7 +7,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Spinner from "../Spinner/Spinner";
 import {ISelectProps, ISelectOption} from "./types";
 
-
 const useStyles = makeStyles(() => ({
     root: {
         width: '100%',
@@ -15,6 +14,9 @@ const useStyles = makeStyles(() => ({
             width: '100%',
         },
     },
+    label: {
+        backgroundColor: "white"
+    }
 }));
 
 export const Select = (props: ISelectProps) => {
@@ -46,12 +48,14 @@ export const Select = (props: ISelectProps) => {
 
     return (
         <div className={styles.root}>
-            <FormControl variant="filled" required={required} error={required && !selected}>
-                <InputLabel htmlFor={id}>{item.title}</InputLabel>
+            <FormControl  required={required} error={required && !selected}>
+                <InputLabel className={styles.label} id={`label-for-select-${item.title}`} variant="outlined" htmlFor={id}>{item.title}</InputLabel>
                 <UISelect
+                    labelId={`label-for-select-${item.title}`}
                     onOpen={onOpen}
                     native={false}
                     onChange={handleChange}
+                    variant="outlined"
                     inputProps={{
                         name: item.title,
                         id,

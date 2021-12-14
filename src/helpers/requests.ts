@@ -119,4 +119,14 @@ export default class RequestService {
 			return Promise.resolve();
 		}
 	}
+
+	static refreshTokenForce (): Promise<any> {
+		const token = cookies.get('AccessToken');
+		return fetch("/auth/newTokens", {
+			method: 'POST',
+			headers: {
+				'Authorization': `Bearer ${token}`
+			},
+		})
+	}
 }

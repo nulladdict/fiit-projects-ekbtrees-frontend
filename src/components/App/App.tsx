@@ -11,7 +11,6 @@ import { withRouter, RouteComponentProps  } from 'react-router-dom';
 
 const cookies = new Cookies();
 
-
 class App extends Component<IAppProps & RouteComponentProps , IAppState> {
     constructor(props: IAppProps & RouteComponentProps ) {
         super(props);

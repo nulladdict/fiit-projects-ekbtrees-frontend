@@ -3,10 +3,14 @@ import styles from './ProfileSettings.module.css';
 import cn from "classnames";
 import {IProfileSettingsProps, IProfileSettingsState, IUserInfo} from "./types";
 import {getUser, updateUser, updateUserPassword} from "./actions";
+import Modal from "../Modal";
+import modalStyles from "../Modal/Modal.module.css";
+import RequestService from "../../helpers/requests";
 
 
 export default class ProfileSettings extends Component<IProfileSettingsProps, IProfileSettingsState> {
     public aboutUsLayoutAttrs = {cols: "25", rows: "10"};
+    public operationInProgress: boolean = false;
 
     constructor(props: IProfileSettingsProps) {
         super(props);
@@ -22,6 +26,8 @@ export default class ProfileSettings extends Component<IProfileSettingsProps, IP
                 phone: ""
             },
             editUserInfo: null,
+            newPassword: null,
+            modalShow: false,
         }
     }
 
@@ -42,9 +48,53 @@ export default class ProfileSettings extends Component<IProfileSettingsProps, IP
         this.setState({userInfo});
     }
 
-    handleChangePassword = () => {
-
+    openModelToChangePassword = () => {
+        this.setState({modalShow: true});
     }
+
+    handlePasswordChange = (event: ChangeEvent<{ name?: string | undefined; value: unknown; }>) => {
+        const newPassword = event.target.value as any;
+        this.setState({ newPassword: newPassword });
+    }
+
+    updatePassword = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (this.operationInProgress) return;
+        this.operationInProgress = true;
+        const {newPassword} = this.state;
+        if (newPassword) {
+            // console.log("just about to send password!");
+            // return;
+            updateUserPassword(newPassword).then(succ => {
+                // console.log(`updateUserPassword: ${succ}`);
+                this.operationInProgress = false;
+                this.closeModal();
+            }).catch(err => {
+                console.log("Error while submitting new password");
+            });
+        } else {
+            // console.log("password is null, won't send");
+        }
+    }
+
+    renderModalContent(){
+        return (
+            <form className={styles.profileChangePasswordContainer}  onSubmit={this.updatePassword as React.FormEventHandler<HTMLFormElement>}>
+                <p>Введите новый пароль</p>
+                <input required name="lastName" value={this.state.newPassword ?? ""}
+                       onChange={this.handlePasswordChange} type="password" className={styles.profileInput} />
+                <div className={modalStyles.buttonContainer}>
+                    <button type={"submit"} className={modalStyles.danger}>Изменить</button>
+                    <button className={modalStyles.success} onClick={this.closeModal}>Отмена</button>
+                </div>
+            </form>
+        )
+    }
+
+    closeModal = () => {
+        this.setState({modalShow: false});
+    }
+
 
     handleSubmit: React.FormEventHandler<HTMLFormElement> = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
@@ -54,6 +104,10 @@ export default class ProfileSettings extends Component<IProfileSettingsProps, IP
             // console.log("submitting user profile...");
             updateUser(this.props.user.id, this.state.userInfo).then(succ => {
                 // console.log(`updated: ${succ}`);
+                RequestService.refreshTokenForce().then(succ => {
+                    // console.log("refreshed cookies");
+                    this.props.updateUserByCookies();
+                });
             });
         }
     };
@@ -63,6 +117,9 @@ export default class ProfileSettings extends Component<IProfileSettingsProps, IP
 
         return (
             <Fragment>
+                <Modal show={this.state.modalShow} onClose={this.closeModal}>
+                    {this.renderModalContent()}
+                </Modal>
                 <h4 className={styles.profileHeading}>Редактирование профиля</h4>
                 <form className={styles.profileForm}
                       onSubmit={this.handleSubmit as React.FormEventHandler<HTMLFormElement>}>
@@ -105,7 +162,7 @@ export default class ProfileSettings extends Component<IProfileSettingsProps, IP
                         </label>
                         <label className={styles.profileFlex}>
                             <span>Изменить пароль</span>
-                            <button onClick={this.handleChangePassword} className={styles.profileInput}>Ввести новый пароль</button>
+                            <button onClick={this.openModelToChangePassword} className={`${styles.profileInput} ${styles.dimOnHover}`}>Ввести новый пароль</button>
                         </label>
                     </div>
                     <div className={styles.profileGroup}>

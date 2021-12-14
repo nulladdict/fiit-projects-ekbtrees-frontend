@@ -171,3 +171,9 @@ export interface IJsonTreeWithImage extends  IJsonTree {
 
 
 export type SimpleMathesSelectors =  'matches' | 'msMatchesSelector';
+
+export interface IMapPosition {
+    lat: number;
+    lng: number;
+    marker?: boolean;
+}

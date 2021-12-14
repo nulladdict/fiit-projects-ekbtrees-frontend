@@ -12,6 +12,7 @@ export const updateUser = (userId: number | string, userInfo: IUserInfo): Promis
 }
 
 export const updateUserPassword = (newPassword: string): Promise<boolean> => {
+    return Promise.resolve(true); // TODO: Remove when method works
     const data = {
         newPassword: newPassword
     };

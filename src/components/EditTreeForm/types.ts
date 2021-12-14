@@ -1,11 +1,12 @@
 import React from "react";
 import * as H from "history";
-import {IEditedTree, IFile, IUser} from "../../common/types";
+import {IEditedTree, IFile, IMapPosition, IUser} from "../../common/types";
 
 
 export interface IEditTreeFormProps {
     user: IUser | null;
     onCookieRemove?: React.MouseEventHandler<HTMLElement>;
+    setMapViewPosition: (position: IMapPosition) => void;
     history: H.History;
 }
 

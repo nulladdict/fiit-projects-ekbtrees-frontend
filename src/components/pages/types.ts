@@ -1,10 +1,10 @@
-import {IFile, ITreeModelConverted, IUser} from "../../common/types";
+import {IFile, IMapPosition, ITreeModelConverted, IUser} from "../../common/types";
 import * as H from "history";
 
 
 export interface ITreeProps {
     user: IUser | null;
-    setMapViewPosition: (position: [number, number]) => void;
+    setMapViewPosition: (position: IMapPosition) => void;
     history: H.History;
 }
 

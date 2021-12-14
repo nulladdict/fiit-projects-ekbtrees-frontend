@@ -55,6 +55,17 @@
 .profileBtn:hover{
     filter: brightness(80%);
 }
+
+.dimOnHover:hover{
+    filter: brightness(80%);
+}
+
+.profileChangePasswordContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
 @media screen and (min-width: 768px) {
     .profile-photo{
         flex-grow: 1;

@@ -43,8 +43,8 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     title: 'Порода',
                     values: [],
                     value: '',
-                    validate: validateIsSet,
-                    required: true,
+                    // validate: validateIsSet,
+                    // required: true,
                     loading: false
                 },
                 conditionAssessment: {

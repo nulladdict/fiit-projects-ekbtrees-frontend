@@ -408,9 +408,11 @@ function setUpTreeCircles(state: number, data: IMapDataSeparateTrees | IMapDataC
         data.json.forEach(item => {
             const {latitude, longitude} = item.geographicalPoint;
             let color: string = DefaultTreeColor;
-            const species = item.species.title;
-            if (species in TreeSpeciesColors) {
-                color = TreeSpeciesColors[species];
+            if (item.species) {
+                const species = item.species.title;
+                if (species in TreeSpeciesColors) {
+                    color = TreeSpeciesColors[species];
+                }
             }
             let circleRadius = item.diameterOfCrown / 2;
             const minCircleRadius = 2;

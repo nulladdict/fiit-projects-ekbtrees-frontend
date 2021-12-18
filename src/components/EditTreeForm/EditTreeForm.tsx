@@ -116,7 +116,7 @@ export class EditTreeForm extends Component<IEditTreeFormProps, IEditTreeFormSta
                 values: species && [species],
                 value: species?.id,
                 loading: false,
-                validate: validateIsSet,
+                // validate: validateIsSet,
             },
             status: {
                 title: 'Статус дерева',

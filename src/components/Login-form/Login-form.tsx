@@ -30,8 +30,9 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
     handleTouchEnd: React.TouchEventHandler<HTMLElement> = (e) => {
         // let difference = e.changedTouches[0].clientX - this.state.touchStart;
         let difference = e.changedTouches[0].clientX - (this.state.touchStart ?? 0);
-        if (difference < -40) {
-            this.pushSingUp()
+        var width = window.innerWidth;
+        if (-difference > width / 2) {
+            this.pushSingUp();
         }
     }
 

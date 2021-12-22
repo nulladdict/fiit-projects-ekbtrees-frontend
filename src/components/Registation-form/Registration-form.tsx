@@ -20,13 +20,14 @@ export default class RegistrationForm extends Component<IRegistrationFormProps, 
     }
     handleTouchEnd: React.TouchEventHandler<HTMLElement> = (e) => {
         let difference = e.changedTouches[0].clientX - this.state.touchStart;
-        if (difference > 40) {
-            this.pushLogin()
+        var width = window.innerWidth;
+        if (difference > width / 2) {
+            this.pushLogin();
         }
     }
 
     pushLogin() {
-        this.props.history.push('/');
+        this.props.history.push('/login');
     }
 
     checkPasswords: React.FormEventHandler<HTMLFormElement> = (e) => {

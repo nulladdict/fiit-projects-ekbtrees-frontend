@@ -19,6 +19,7 @@ import Modal from "../Modal";
 
 
 export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAddNewTreeFormState> {
+    private addTreeInProgress = false;
     constructor(props: IAddNewTreeFormProps) {
         super(props);
 
@@ -195,13 +196,14 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
     }
 
     handleAddTree = () => {
+        if (this.addTreeInProgress) return;
+        this.addTreeInProgress = true;
         const {tree} = this.state;
 
         const isValid = this.validateTree(tree);
         if (!isValid) {
             return;
         }
-
         const data: IPostJsonTree = this.convertINewTreeToIPostJsonTree(tree);
         addTree(data as {geographicalPoint: {latitude: number | null, longitude: number | null}})
             .then(_ => {
@@ -211,10 +213,12 @@ export default class AddNewTreeForm extends Component<IAddNewTreeFormProps, IAdd
                     this.props.setMapViewPosition({lat, lng}); // set map position on success
                 }
                 this.setState({modalShow: true, modalMessage: 'Дерево успешно добавлено!', successfullyAdded: true});
+                this.addTreeInProgress = false;
             })
             .catch(error => {
                 this.setState({modalShow: true, modalMessage: 'Ошибка при добавлении дерева'});
                 console.error('Ошибка при добавлении дерева', error);
+                this.addTreeInProgress = false;
             });
     }
 

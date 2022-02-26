@@ -58,9 +58,11 @@
 .map {
   height: 100%;
 }
+
 .mapContainer {
   height: 100%;
 }
+
 /* .page {
   display: flex;
   flex-direction: column;
@@ -71,16 +73,16 @@ main {
   height: 100%;
 } */
 
-  /* .leaflet-container {
+/* .leaflet-container {
     height: 100%;
   } */
 
 .flexSearchMap {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
   margin-bottom: 60px;
-  min-height: 400px;
+  min-height: 600px;
+  background-color: #0000;
 }
 
 .search {
@@ -88,14 +90,14 @@ main {
 }
 
 .desktopMap {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-    .slogan {
-      font-size: 24px;
-    }
+.slogan {
+  font-size: 24px;
+}
 
 .green {
   background-color: #50802c;
@@ -108,6 +110,7 @@ main {
 
 .mapBlock {
   height: 10px;
+  background-color: #000000;
 }
 
 .getStart {
@@ -287,7 +290,7 @@ main {
     display: none;
   }
 
-  .flexContainer2{
+  .flexContainer2 {
     flex-direction: column;
   }
 

@@ -1,8 +1,13 @@
 .mobileHeader {
-    position: fixed;
-    top: 0;
+    position: relative;
     width: 100%;
     z-index: 1000;
+}
+
+.mobileHeader img {
+    display: inline-block;
+    height: 100px;
+    width: 100px
 }
 
 .topNav {
@@ -39,6 +44,7 @@
 
 .logo {
     color: #ffffff;
+    flex-shrink: 0;
 }
 
 @media screen and (min-width: 768px) {

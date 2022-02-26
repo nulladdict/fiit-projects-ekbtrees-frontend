@@ -1,4 +1,14 @@
 .headerWrapper {
     flex-shrink: 0;
-    height: 80px;
+    height: fit-content;
+    position: fixed;
+    top: 0;
+    z-index: 99999;
+    width: 100%;
 }
+
+ @media screen and (min-width: 768px){
+    .headerWrapper {
+        position: relative;
+    }
+} 

@@ -1,7 +1,80 @@
 .footerWrapper {
-    display: none;
-    flex-shrink: 0;
-    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--first-color);
+    color: white;
+    font-family: "Segou UI", sans-serif;
+}
+
+
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    margin-right: auto;
+}
+
+.slogan {
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.slogan span {
+    font-weight: 700;
+    font-family: "Segou UI", sans-serif;
+    margin-bottom: 10px;
+}
+
+.slogan :last-child {
+    color: #aec400;
+}
+
+.company, .support, .email {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 50px;
+}
+
+.company a{
+    color: #d9dbe1
+}
+
+.company :first-child {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
+}
+
+.email input[type=text] {
+    padding-left: 24px;
+}
+
+.images {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.image {
+    width: 25px;
+    height: 25px;
+}
+
+.email {
+    display: flex;
+    flex-direction: column;
+}
+
+.email input {
+    background-color: var(--email-input);
+    height: 50px;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
 }
 
 .footerMenu {
@@ -58,24 +131,56 @@
     justify-content: center;
 }
 
-.underLine{
+.underLine {
     padding: 30px 20%;
 }
-@media screen and (min-width: 768px){
-    .footerWrapper {
-        display: block;
-    }
+
+.copyright {
+    margin-top: 10px;
 }
+
 @media screen and (min-width: 1024px) {
     .footerMenu a {
         font-size: 14px;
     }
+
     /* .underLine{
         padding: 30px 30%;
     } */
 }
-@media screen and (min-width: 2000px){
+
+@media screen and (min-width: 2000px) {
     .footerWrapper {
         padding: 0 10%;
     }
+}
+
+@media screen and (max-width: 830px) {
+    .email{
+        display: none;
+    }
+
+    .footerWrapper{
+        flex-direction: column;
+    }
+
+    .company{
+        align-items: center;
+        padding: 25px;
+    }
+    
+    .company span{
+        font-weight: 500px;
+    }
+
+    .info{
+        padding: 30px 0 0 0;
+        align-items: center;
+        margin-right: 0;
+    }
+
+    .images a{
+        padding: 0px 7px;
+    }
+
 }

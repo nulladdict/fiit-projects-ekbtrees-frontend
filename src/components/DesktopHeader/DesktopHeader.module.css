@@ -2,22 +2,30 @@
     color: #50802c;
     font-weight: 400;
     padding: 10px 0;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.logo {
+    color: #50802c;
 }
 
 .activeLink {
-    border-bottom: 3px solid #fb8f07;
-    color: #fb8f07;
+    border-bottom: 3px solid #aec400;
+    color: #aec400;
 }
 
 .desktopHeader {
+    background-color: var(--first-color);
     display: none;
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
 }
 
-.logo {
-    color: #50802c;
+.desktopHeader img {
+    width: 100px;
+    margin: 10px;
 }
 
 .menu {
@@ -28,28 +36,34 @@
 .menu a {
     letter-spacing: 0.05vw;
     font-weight: bold;
-    color: rgb(0, 92, 92);
+    color: #ffff;
     margin: 0 10px;
     font-size: 12px;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .menu a:hover {
-    color: #3e69b6;
+    color: #aec400;
 }
 
 .signLinks {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
 }
 
 .signLinks a {
     margin-left: 10px;
-    color: #3e69b6;
+    color: #ffff;
     padding: 10px 15px;
+}
+
+.signLinks :last-child {
+    border-radius: 10px;
+    background-color: #aec400;
 }
 
 .activeSignLinks {
@@ -58,9 +72,20 @@
     color: white !important;
 }
 
-@media screen and (min-width: 768px) {
+/* @media screen and (min-width: 768px) {
     .desktopHeader {
+        position: relative;
+        
+    }
+
+    
+} */
+
+@media screen and (min-width: 1024px) {
+    .desktopHeader {
+        position: static;
         display: flex;
+        padding: 0 2% 0 5px;
     }
 
     .menu {
@@ -68,14 +93,16 @@
         width: unset;
         align-items: unset;
     }
-}
-@media screen and (min-width: 1024px) {
-    .desktopHeader {
-        padding: 0 10%;
-    }
 
     .menu a {
-        font-size: 14px;
+        font-size: 18px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .desktopHeader img {
+        display: block;
+
     }
 }
 

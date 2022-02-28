@@ -5,7 +5,7 @@
 }
 
 body {
-    background-color: #F3F6FA;
+  background-color: #F3F6FA;
 }
 
 @font-face {
@@ -27,7 +27,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  background-color: var(--background-color);
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+[data-theme='dark'] {
+  --first-color: #111111;
+  --second-color: #2c2c2c;
+  --third-color: #AEC400;
+  --black-white-color: #FFFFFF;
+  --background-color: #2C2C2C;
+  --email-input: #4f5150;
+  --button-login: #aec400;
+  --button-signup: #2c2c2c;
+  --black-white: #2c2c2c;
+  --black-white-text: white;
+}
+
+:root {
+  --first-color: #02390b;
+  --second-color: #aec400;
+  --third-color: #FFFFFF;
+  --black-white-color: #111111;
+  --background-color: #FFFFFF;
+  --email-input: #35613c;
+  --button-login: #02390b;
+  --button-signup: #ffffff;
+  --black-white: #ffffff;
+  --black-white-text: black;
 }

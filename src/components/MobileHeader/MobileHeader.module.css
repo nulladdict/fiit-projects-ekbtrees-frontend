@@ -1,16 +1,37 @@
 .mobileHeader {
-    position: fixed;
-    top: 0;
+
+    position: relative;
     width: 100%;
     z-index: 1000;
 }
 
+.mobileHeader img {
+    height: 60px;
+    width: 90px;
+    margin: 10px;
+}
+
+.mapLink {
+    font-size: 18px;
+    letter-spacing: 0.05vw;
+    font-weight: bold;
+    color: #ffff;
+    margin: 0 10px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.links {
+    display: none;
+}
+
 .topNav {
-    background-color: #50802c;
+    height: 110px;
+    background-color: var(--first-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 10px;
 }
 
 .burgerBtn {
@@ -19,6 +40,10 @@
     font-size: 25px;
     padding: 15px 20px;
     cursor: pointer;
+}
+
+.burgerBtn {
+    color: #aec400;
 }
 
 .menu {
@@ -39,10 +64,17 @@
 
 .logo {
     color: #ffffff;
+    flex-shrink: 0;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
     .mobileHeader {
         display: none;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .links {
+        display: block;
     }
 }

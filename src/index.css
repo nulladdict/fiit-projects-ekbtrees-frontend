@@ -31,3 +31,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+[data-theme='dark'] {
+  --first-color: #2c2c2c
+}
+
+[data-theme='ligth'] {
+  --first-color:#aec400;
+}

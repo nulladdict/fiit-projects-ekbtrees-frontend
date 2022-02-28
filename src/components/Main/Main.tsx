@@ -26,8 +26,6 @@ export default class Main extends Component<IMainProps, IMainState> {
         this.state = {};
     }
     setMapViewPosition = (viewPos: IMapPosition | undefined) => {
-        // console.log("Main: setMapViewPosition is changed");
-        // console.log(viewPos);
         this.setState({mapViewPosition: viewPos});
     }
 
@@ -91,7 +89,7 @@ export default class Main extends Component<IMainProps, IMainState> {
       return (
           <setMapViewPositionContext.Provider value={this.setMapViewPosition}>
               <mapViewPositionContext.Provider value={this.state.mapViewPosition}>
-                  <main className={styles.mainWrapper}>
+                  <main className={styles.mainWrapper} data-theme={this.props.theme}>
                       <Switch>
                           <Route exact path='/' render={(props) => <Home {...props} user={user}/>}/>
 

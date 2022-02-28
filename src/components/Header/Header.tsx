@@ -10,7 +10,7 @@ export default class Header extends Component<IHeaderProps, IHeaderState> {
         const {onCookieRemove} = this.props;
 
         return (
-            <header className={styles.headerWrapper}>
+            <header className={styles.headerWrapper} data-theme={this.props.theme}>
                 <MobileHeader onCookieRemove={onCookieRemove} user = {this.props.user}/>
                 <DesktopHeader onCookieRemove={onCookieRemove} user={this.props.user}/>
             </header>

@@ -7,7 +7,6 @@ import { ICookieAccess, IUser } from '../../common/types';
 import { IAppProps, IAppState } from './types';
 import RequestService from "../../helpers/requests";
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import styles from './App.module.css'
 
 
 const cookies = new Cookies();
@@ -18,13 +17,17 @@ class App extends Component<IAppProps & RouteComponentProps, IAppState> {
 
         this.state = {
             user: null,
-            theme: "light",
+            theme: "ligth",
         }
     }
 
     componentDidMount() {
         cookies.addChangeListener(this.handleCookie);
         this.handleCookie();
+        const theme = localStorage.getItem("theme");
+        if (theme) {
+            this.setState({ theme: theme });
+        }
     }
 
     clearUserAndRedirect = () => {
@@ -64,7 +67,9 @@ class App extends Component<IAppProps & RouteComponentProps, IAppState> {
     }
 
     switchTheme = () => {
-        this.setState({ theme: this.state.theme === "ligth" ? "dark" : "ligth" });
+        const newTheme = this.state.theme === "ligth" ? "dark" : "ligth";
+        this.setState({ theme: newTheme });
+        window.localStorage.setItem("theme", newTheme);
     }
 
     render() {
@@ -72,12 +77,8 @@ class App extends Component<IAppProps & RouteComponentProps, IAppState> {
 
         return (
             <>
-                <label className={styles.switch}>
-                    <input type="checkbox" onClick={this.switchTheme} />
-                    <span className={styles.slider}></span>
-                </label>
-                <Header user={user} onCookieRemove={this.removeCookie} theme={this.state.theme} />
-                <Main user={user} onCookie={this.handleCookie} theme={this.state.theme}/>
+                <Header user={user} onCookieRemove={this.removeCookie} switchTheme={this.switchTheme} theme={this.state.theme} />
+                <Main user={user} onCookie={this.handleCookie} theme={this.state.theme} />
             </>
         )
     }

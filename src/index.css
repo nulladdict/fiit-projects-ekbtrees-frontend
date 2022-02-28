@@ -5,21 +5,24 @@
 }
 
 body {
-    background-color: #F3F6FA;
+  background-color: #F3F6FA;
 }
 
 @font-face {
   font-family: "Merriweather";
   src: local("Merriweather"), url("./fonts/Merriweather-Regular.ttf");
 }
+
 @font-face {
   font-family: "Recursive";
   src: local("Recursive"), url("./fonts/Recursive-Regular.ttf");
 }
+
 @font-face {
   font-family: "Oswald";
   src: local("Oswald"), url("./fonts/Oswald-Regular.ttf");
 }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
@@ -33,9 +36,11 @@ code {
 }
 
 [data-theme='dark'] {
-  --first-color: #2c2c2c
+  --first-color: #111111;
+  --second-color: #2c2c2c;
 }
 
-[data-theme='ligth'] {
-  --first-color:#aec400;
+:root {
+  --first-color: #02390b;
+  --second-color: #aec400;
 }

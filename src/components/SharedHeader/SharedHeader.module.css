@@ -1,0 +1,91 @@
+.sharedHeader {
+    position: relative;
+    background-color: var(--second-color);
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
+    margin: 0;
+}
+
+.selectLanguage {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 145px;
+    margin-right: 5px;
+    outline: 0;
+    border: 0;
+    background-color: var(--second-color);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.links {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.images {
+    width: 50px;
+    height: 50px;
+}
+
+.switch {
+    position: relative;
+    width: 60px;
+    height: 34px;
+    margin-right: auto;
+    margin-top: 18px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gray;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 28px;
+    width: 28px;
+    left: 4px;
+    bottom: 3px;
+    background-color: black;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(24px);
+    -ms-transform: translateX(24px);
+    transform: translateX(24px);
+}
+
+
+@media screen and (max-width: 768px) {
+    .selectLanguage {
+        margin-left: 15px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .sharedHeader {
+        position: static;
+    }
+}

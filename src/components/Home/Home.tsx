@@ -13,13 +13,6 @@ export default class Home extends Component<IHomeProps, IHomeState> {
     return (
       <section className={styles.desktop}>
         <div className={styles.flexSearchMap}>
-          <div className={styles.search}>
-            <div className={cn([styles.green, styles.searchBlock])} />
-            <p className={styles.slogan}>Защитим деревья вместе</p>
-            <p className={styles.regular2}>
-              Нанесите любимые деревья на карту, чтобы документировать их количество и реальное состояние. Объединяйтесь с волонтёрами из вашего района для совместной защиты зелёных насаждений, используя карту, как единый источник информации.
-            </p>
-          </div>
           <div className={styles.desktopMap}>
             <div className={cn([styles.green, styles.mapBlock])} />
               <div className={styles.mapContainer}>

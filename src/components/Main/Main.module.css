@@ -1,16 +1,10 @@
 .mainWrapper {
     flex: 1 0 auto;
-    margin-top: 60px;
+    margin-top: 170px;
     height: calc(100vh - 80px);
 }
 
 @media screen and (min-width: 768px) {
-    .mainWrapper {
-        margin-top: 0;
-    }
-}
-
-@media screen and (max-width: 600px) {
     .mainWrapper {
         margin-top: 0;
     }

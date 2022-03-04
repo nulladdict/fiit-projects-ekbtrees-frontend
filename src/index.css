@@ -38,9 +38,11 @@ code {
 [data-theme='dark'] {
   --first-color: #111111;
   --second-color: #2c2c2c;
+  --email-input: #4f5150;
 }
 
 :root {
   --first-color: #02390b;
   --second-color: #aec400;
+  --email-input: #35613c;
 }

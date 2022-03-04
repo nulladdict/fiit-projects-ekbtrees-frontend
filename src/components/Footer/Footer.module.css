@@ -1,7 +1,78 @@
 .footerWrapper {
-    display: none;
-    flex-shrink: 0;
-    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--first-color);
+    color: white;
+    font-family: "Segou UI", sans-serif;
+}
+
+
+.info {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    margin-right: auto;
+}
+
+.slogan {
+    margin-bottom: 10px;
+    font-size: 40px;
+}
+
+.slogan span {
+    font-family: "Segou UI", sans-serif;
+    margin-bottom: 10px;
+    font-size: 40px;
+}
+
+.slogan :last-child {
+    color: #aec400;
+}
+
+.company, .support, .email {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 50px;
+}
+
+.company :first-child {
+    margin-bottom: 10px;
+}
+
+.support :first-child {
+    margin-bottom: 10px;
+
+}
+
+.email input[type=text] {
+    padding-left: 24px;
+}
+
+.images {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.image {
+    width: 25px;
+    height: 25px;
+}
+
+.email {
+    display: flex;
+    flex-direction: column;
+}
+
+.email input {
+    background-color: var(--email-input);
+    height: 50px;
+    outline: none;
+    border: 0;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
 }
 
 .footerMenu {
@@ -58,23 +129,22 @@
     justify-content: center;
 }
 
-.underLine{
+.underLine {
     padding: 30px 20%;
 }
-@media screen and (min-width: 768px){
-    .footerWrapper {
-        display: block;
-    }
-}
+
+
 @media screen and (min-width: 1024px) {
     .footerMenu a {
         font-size: 14px;
     }
+
     /* .underLine{
         padding: 30px 30%;
     } */
 }
-@media screen and (min-width: 2000px){
+
+@media screen and (min-width: 2000px) {
     .footerWrapper {
         padding: 0 10%;
     }

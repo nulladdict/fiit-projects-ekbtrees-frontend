@@ -12,9 +12,3 @@
         height: 500px;
     }
 }
-
-@media screen and (min-width: 768px) {
-    .leaflet-container {
-        height: 100%;
-    }
-}

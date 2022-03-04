@@ -1,7 +1,7 @@
 .mainWrapper {
     flex: 1 0 auto;
     margin-top: 170px;
-    height: calc(100vh - 80px);
+    height: fit-content;
 }
 
 @media screen and (min-width: 768px) {

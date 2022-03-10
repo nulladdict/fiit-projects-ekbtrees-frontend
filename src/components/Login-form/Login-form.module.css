@@ -7,14 +7,13 @@
   display: flex;
   flex-direction: column;
   width: 80%;
-  margin: 0 auto;
-  padding: 10% 0;
-  padding-bottom: 0;
+  margin-top: 40px;
+  padding: 10% 0 0;
 }
 
 .loginContainer {
   box-shadow: 0px 0px 15px -5px rgba(34, 60, 80, 0.57);
-  background-color: white;
+  background-color: var(--third-color);
 }
 
 .wrapper input {
@@ -42,7 +41,7 @@
   border: none;
   color: white;
   text-transform: uppercase;
-  background-color: #50802c;
+  background-color: var(--first-color);
   cursor: pointer;
   margin: 15px 0px;
 }
@@ -78,11 +77,11 @@
 }
 
 .flexRegister .yellow {
-  color: #fb8f07;
+  color: #aec400;
 }
 
 .flexRegister .yellow a {
-  color: #fb8f07;
+  color: #aec400;
   text-decoration: none;
   padding-left: 3px;
 }
@@ -104,14 +103,14 @@
 
 .login-checkbox {
   position: relative;
-  color: #fb8f07;
+  color: #aec400;
   padding-left: 30px;
   cursor: pointer;
 }
 
 .login-checkbox:hover,
 .login-checkbox:focus {
-  color: #fb8f07;
+  color: #aec400;
 }
 
 .login-checkbox input[type="checkbox"] + .checkbox-indicator {
@@ -132,7 +131,7 @@
 }
 
 .restore {
-  color: #fb8f07;
+  color: #aec400;
   text-decoration: none;
   font-size: 14px;
 }
@@ -161,7 +160,7 @@
 
 .title {
   display: none;
-  color: #fb8f07;
+  color: var(--first-color); /* Вход в аккаунт */
   font-size: 20px;
   text-align: center;
   padding: 30px 0px;
@@ -174,7 +173,7 @@
 .loginAside {
   display: none;
   flex-basis: 50%;
-  background-color: #4f802c;
+  background-color: var(--first-color);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -183,11 +182,12 @@
 
 .loginAside .title {
   color: white;
-  font-size: 25px;
+  font-size: 35px;
 }
 
 .loginAside p {
   padding: 10px 0px;
+  color: var(--second-color);
 }
 .flexSocial{
   display: flex;
@@ -254,6 +254,7 @@
 @media screen and (min-width: 1440px) {
   .loginContainer {
     width: 1000px;
-    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
 }

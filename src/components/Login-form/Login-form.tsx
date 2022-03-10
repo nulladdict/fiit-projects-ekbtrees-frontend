@@ -6,9 +6,11 @@ import styles from './Login-form.module.css';
 import AuthForm from '../AuthForm';
 import vkIcon from '../../img/vk.png';
 import facebookIcon from '../../img/facebook.png';
+import twitterIcon from '../../img/twitter.png';
 import jwt_decode from "jwt-decode";
 import { ILogingFormUser } from "../../common/types";
 import { ILoginFormProps, ILoginFormState } from "./types";
+import {Checkbox} from "@material-ui/core";
 
 
 export default class LoginForm extends Component<ILoginFormProps, ILoginFormState> {
@@ -80,7 +82,7 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
 
     renderAuthTitle () {
         return (
-            <h2 className={styles.title}>Вход в аккаунт</h2>
+            <h2 className={styles.title}>Войдите в аккаунт</h2>
         );
     }
 
@@ -111,6 +113,10 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
                 <div className={styles.social}>
                     <NavLink to="/fb"><img src={facebookIcon} alt="facebook-link" /></NavLink>
                 </div>
+
+                <div className={styles.social}>
+                    <NavLink to="/fb"><img src={twitterIcon} alt="twitter-link" /></NavLink>
+                </div>
             </div>
         );
     }
@@ -127,9 +133,9 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
     renderLoginHelp () {
         return (
             <>
-                {/*<p className={styles.loginHelp}>*/}
-                {/*    <NavLink className={styles.restore} exact to='/passRecovery'>Забыли пароль?</NavLink>*/}
-                {/*</p>*/}
+                <p className={styles.loginHelp}>
+                    <NavLink className={styles.restore} exact to='/passRecovery'>Забыли пароль?</NavLink>
+                </p>
                 <p className={styles.loginMessage}>или войдите с</p>
             </>
         );

@@ -109,9 +109,6 @@ export default class RegistrationForm extends Component<IRegistrationFormProps, 
                             <div className={styles.social}>
                                 <NavLink to="/fb"><img src={facebookIcon} alt="facebook-link"/></NavLink>
                             </div>
-                            <div className={styles.social}>
-                                <NavLink to="/fb"><img src={twitterIcon} alt="twitter-link"/></NavLink>
-                            </div>
                         </div>
                         <p className={styles.privacyTerms}>© 2020 — 2021 Privacy-Terms</p>
                     </form>

@@ -18,7 +18,7 @@ class App extends Component<IAppProps & RouteComponentProps, IAppState> {
 
         this.state = {
             user: null,
-            theme: "ligth",
+            theme: "light",
         }
     }
 
@@ -68,7 +68,7 @@ class App extends Component<IAppProps & RouteComponentProps, IAppState> {
     }
 
     switchTheme = () => {
-        const newTheme = this.state.theme === "ligth" ? "dark" : "ligth";
+        const newTheme = this.state.theme === "light" ? "dark" : "light";
         this.setState({ theme: newTheme });
         window.localStorage.setItem("theme", newTheme);
     }
@@ -80,7 +80,7 @@ class App extends Component<IAppProps & RouteComponentProps, IAppState> {
             <>
                 <Header user={user} onCookieRemove={this.removeCookie} switchTheme={this.switchTheme} theme={this.state.theme} />
                 <Main user={user} onCookie={this.handleCookie} theme={this.state.theme} />
-                <Footer theme={this.state.theme} ></Footer>
+                <Footer theme={this.state.theme} />
             </>
         )
     }

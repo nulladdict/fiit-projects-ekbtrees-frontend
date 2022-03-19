@@ -31,10 +31,10 @@ export class DesktopHeader extends Component<IDesktopHeaderProps, IDesktopHeader
 			<div className={styles.desktopHeader}>
 				<Logo className={styles.logo} />
 				<div className={styles.menu}>
-					<NavLink exact to='/map' activeClassName={styles.activeLink}>КАРТА</NavLink>
-					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>О НАС</NavLink>
-					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>ИНСТРУКЦИИ</NavLink>
-					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>КОНТАКТЫ</NavLink>
+					<NavLink exact to='/map' activeClassName={styles.activeLink}>Карта</NavLink>
+					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>О нас</NavLink>
+					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>Инструкции</NavLink>
+					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>Контакты</NavLink>
 					{this.renderUserLinks()}
 				</div>
 				{this.renderUserInfo()}

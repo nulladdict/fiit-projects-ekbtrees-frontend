@@ -2,13 +2,10 @@ import cn from 'classnames';
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Footer.module.css';
-import facebookIcon from '../../img/facebook.png';
 import twitterIcon from '../../img/twitter.png';
-import instagramIcon from '../../img/instagram.png';
 import youtubeIcon from '../../img/youtube.png';
 import pinterestIcon from '../../img/pinterest.png';
 import {IFooterProps, IFooterState} from "./types";
-
 
 export default class Footer extends Component<IFooterProps, IFooterState> {
     render() {
@@ -33,9 +30,7 @@ export default class Footer extends Component<IFooterProps, IFooterState> {
                     {/* <NavLink exact to='/aboutUs' activeclassname="active">О нас</NavLink> */}
                 </div>
                 <div className={styles.social}>
-                    <img src={facebookIcon} alt="facebook" />
                     <img src={twitterIcon} alt="twitter" />
-                    <img src={instagramIcon} alt="instagram" />
                     <img src={youtubeIcon} alt="youtube" />
                     <img src={pinterestIcon} alt="pinterest" />
                 </div>

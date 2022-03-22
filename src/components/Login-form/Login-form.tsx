@@ -5,8 +5,6 @@ import utf8 from 'utf8';
 import styles from './Login-form.module.css';
 import AuthForm from '../AuthForm';
 import vkIcon from '../../img/vk.png';
-import facebookIcon from '../../img/facebook.png';
-import jwt_decode from "jwt-decode";
 import { ILogingFormUser } from "../../common/types";
 import { ILoginFormProps, ILoginFormState } from "./types";
 
@@ -107,9 +105,6 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
             <div className={styles.flexSocial}>
                 <div className={styles.social}>
                     <NavLink to="/vk"><img src={vkIcon} alt="google-link" /></NavLink>
-                </div>
-                <div className={styles.social}>
-                    <NavLink to="/fb"><img src={facebookIcon} alt="facebook-link" /></NavLink>
                 </div>
             </div>
         );

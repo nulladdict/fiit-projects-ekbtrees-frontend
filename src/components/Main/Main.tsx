@@ -78,11 +78,6 @@ export default class Main extends Component<IMainProps, IMainState> {
         window.location.href = 'https://ekb-trees-help.ru/auth/oauth2/vk'
     };
 
-  // FIXME: What types should these properties have
-    fbAuth2: any = () => {
-        window.location.href = 'https://ekb-trees-help.ru/auth/oauth2/fb'
-    };
-
   render () {
       const {user} = this.props;
 
@@ -101,7 +96,6 @@ export default class Main extends Component<IMainProps, IMainState> {
                           <Route exact path='/passRecovery' component={PassRecovery}/>
                           <Route exact path='/aboutUs' component={AboutUs}/>
                           <Route path='/vk' component={this.vkAuth2}/>
-                          <Route path='/fb' component={this.fbAuth2}/>
                           <Route exact path='/image/:id' component={ImageView}/>
                           {this.renderRoutes()}
                           <Redirect to='/'/>

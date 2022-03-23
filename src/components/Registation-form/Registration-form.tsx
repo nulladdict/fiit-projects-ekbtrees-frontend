@@ -3,8 +3,6 @@ import {NavLink} from 'react-router-dom';
 import styles from './Registration-form.module.css';
 import FormHeader from '../AuthForm';
 import vkIcon from '../../img/vk.png';
-import facebookIcon from '../../img/facebook.png';
-import twitterIcon from '../../img/twitter.png';
 import { IRegistrationFormInput, IRegistrationFormProps, IRegistrationFormState } from "./types";
 
 
@@ -105,9 +103,6 @@ export default class RegistrationForm extends Component<IRegistrationFormProps, 
                         <div className={styles.flexSocial}>
                             <div className={styles.social}>
                                 <NavLink to="/vk"><img src={vkIcon} alt="google-link"/></NavLink>
-                            </div>
-                            <div className={styles.social}>
-                                <NavLink to="/fb"><img src={facebookIcon} alt="facebook-link"/></NavLink>
                             </div>
                         </div>
                         <p className={styles.privacyTerms}>© 2020 — 2021 Privacy-Terms</p>

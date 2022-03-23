@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Footer.module.css';
+import twitterIcon from '../../img/twitter.png';
 import youtubeIcon from '../../img/youtube.png';
 import { IFooterProps, IFooterState } from './types';
-
 
 export default class Footer extends Component<IFooterProps, IFooterState> {
     render() {
@@ -29,13 +29,10 @@ export default class Footer extends Component<IFooterProps, IFooterState> {
                     <NavLink exact to='/aboutUs' activeClassName="active">About us</NavLink>
 
                 </div>
-                <div className={styles.support}>
-                    <span>Support</span>
-                    <NavLink exact to='/aboutUs' activeClassName="active">Help center</NavLink>
-                    <NavLink exact to='/aboutUs' activeClassName="active">Terms of services</NavLink>
-                    <NavLink exact to='/aboutUs' activeClassName="active">Legal</NavLink>
-                    <NavLink exact to='/aboutUs' activeClassName="active">Privacy policy</NavLink>
-                    <NavLink exact to='/aboutUs' activeClassName="active">Status</NavLink>
+                <div className={styles.social}>
+                    <img src={twitterIcon} alt="twitter" />
+                    <img src={youtubeIcon} alt="youtube" />
+                    <img src={pinterestIcon} alt="pinterest" />
                 </div>
                 <div className={styles.email}>
                     <span>Stay up to date</span>

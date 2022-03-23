@@ -17,9 +17,8 @@ export class SharedHeader extends Component<ISharedHeaderProps> {
 						<input type="checkbox" onClick={this.props.switchTheme} />
 						<span className={styles.slider}/>
 					</label>
-					<a className={styles.links} href='http://facebook.com' target="_blank"><img className={styles.images} src={vkLogo} /></a>
-					<a className={styles.links} href='http://instagram.com' target="_blank"><img className={styles.images} src={instagramHeaderLogo} /></a>
-					<a className={styles.links} href='http://youtube.com' target="_blank"><img className={styles.images} src={youtubeHeaderLogo} /></a>
+					<a className={styles.links} href='https://vk.com' target="_blank"><img className={styles.images} src={vkLogo} /></a>
+					<a className={styles.links} href='https://youtube.com' target="_blank"><img className={styles.images} src={youtubeHeaderLogo} /></a>
 					<select className={styles.selectLanguage}>
 						<option value="Русский">Русский</option>
 					</select>

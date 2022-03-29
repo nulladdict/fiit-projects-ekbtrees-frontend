@@ -4,22 +4,23 @@
   padding: 0;
 }
 
-body {
-    background-color: #F3F6FA;
-}
+
 
 @font-face {
   font-family: "Merriweather";
   src: local("Merriweather"), url("./fonts/Merriweather-Regular.ttf");
 }
+
 @font-face {
   font-family: "Recursive";
   src: local("Recursive"), url("./fonts/Recursive-Regular.ttf");
 }
+
 @font-face {
   font-family: "Oswald";
   src: local("Oswald"), url("./fonts/Oswald-Regular.ttf");
 }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
     "Droid Sans", "Helvetica Neue", sans-serif;
@@ -27,7 +28,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  background-color: var(--background-color);
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+[data-theme='dark'] {
+  --first-color: #111111;
+  --second-color: #2c2c2c;
+  --third-color: #AEC400;
+  --black-white-color: #FFFFFF;
+  --background-color: #2C2C2C;
+  --email-input: #4f5150;
+  --button-login: #aec400;
+  --button-signup: #2c2c2c;
+  --black-white: #2c2c2c;
+  --black-white-text: white;
+}
+
+:root {
+  --first-color: #02390b;
+  --second-color: #aec400;
+  --third-color: #FFFFFF;
+  --black-white-color: #111111;
+  --background-color: #FFFFFF;
+  --email-input: #35613c;
+  --button-login: #02390b;
+  --button-signup: #ffffff;
+  --black-white: #ffffff;
+  --black-white-text: black;
 }

@@ -1,41 +1,39 @@
-import cn from 'classnames';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Footer.module.css';
 import twitterIcon from '../../img/twitter.png';
 import youtubeIcon from '../../img/youtube.png';
-import pinterestIcon from '../../img/pinterest.png';
-import {IFooterProps, IFooterState} from "./types";
+import { IFooterProps, IFooterState } from './types';
 
 export default class Footer extends Component<IFooterProps, IFooterState> {
     render() {
         return (
-            <footer className={styles.footerWrapper}>
-                <div className={styles.footerMenu}>
-                    <NavLink exact to='/map' activeClassName="active">Карта</NavLink>
-                    <NavLink exact to='/aboutUs' activeClassName="active">О нас</NavLink>
-                    {/* <NavLink exact to='/trees' activeclassname="active">Список деревьев</NavLink> */}
-                    <div className={styles.logo}>
-                        <h1 className={styles.bigHeader}>Ekb <span className={styles.smallHeader}>Trees</span></h1>
+            <footer className={styles.footerWrapper} data-theme={this.props.theme}>
+                <div className={styles.info}>
+                    <div className={styles.slogan}><span>Ekb</span><span>Trees</span></div>
+                    <span>Copyrights EkbTrees</span>
+                    <span className={styles.copyright}>All rights reserved.</span>
+                    <div className={styles.images}>
+                        <a><img className={styles.image} src={youtubeIcon} /></a>
+                        <a><img className={styles.image} src={youtubeIcon} /></a>
+                        <a><img className={styles.image} src={youtubeIcon} /></a>
+                        <a><img className={styles.image} src={youtubeIcon} /></a>
                     </div>
-                    {/* <NavLink exact to='/users' activeclassname="active">Список пользователей</NavLink> */}
 
-                    <a href="#!">Контакты</a>
-                    <a href="#!">Помощь</a>
                 </div>
-                <div className={styles.line} />
-                <div className={cn([styles.footerMenu, styles.underLine])}>
-                    <NavLink exact to='/trees' activeClassName="active">Список деревьев</NavLink>
-                    <NavLink exact to='/users' activeClassName="active">Список пользователей</NavLink>
-                    {/* <NavLink exact to='/aboutUs' activeclassname="active">О нас</NavLink> */}
+                <div className={styles.company}>
+                    <span>Company</span>
+                    <NavLink exact to='/aboutUs' activeClassName="active">About us</NavLink>
+                    <NavLink exact to='/aboutUs' activeClassName="active">What we do?</NavLink>
+                    <NavLink exact to='/aboutUs' activeClassName="active">News</NavLink>
+                    <NavLink exact to='/aboutUs' activeClassName="active">About us</NavLink>
+
                 </div>
-                <div className={styles.social}>
-                    <img src={twitterIcon} alt="twitter" />
-                    <img src={youtubeIcon} alt="youtube" />
-                    <img src={pinterestIcon} alt="pinterest" />
+                <div className={styles.email}>
+                    <span>Stay up to date</span>
+                    <input type="text" placeholder="  Your email address" />
                 </div>
-                <p className={styles.privacyTerms}>© 2020 — 2021 Privacy-Terms</p>
-            </footer>
+            </footer >
         )
     }
 }

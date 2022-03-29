@@ -7,4 +7,5 @@ export interface IAppProps {
 
 export interface IAppState {
     user: IUser | null;
+    theme: string;
 }

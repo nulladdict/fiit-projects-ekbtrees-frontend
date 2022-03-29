@@ -1,18 +1,21 @@
-.logo h1 {
+.logo {
+    display: flex;
+    align-items: center;
     font-weight: 400;
-    padding: 10px 0;
+    font-family: "Merriweather", serif;
+    margin-bottom: 0px;
 }
 
-.logo .smallHeader {
-    font-family: "Merriweather", serif;
-    font-size: 20px;
-    display: block;
-    text-align: center;
+.firstPart {
+    color: #ffffff;
 }
 
-.logo .bigHeader {
-    font-family: "Merriweather", serif;
-    font-size: 40px;
-    line-height: 30px;
-    margin-bottom: 0;
+.secondPart {
+    color: #aec400;
+}
+
+@media screen and (max-width: 480px) {
+    .logo {
+        font-size: 30px;
+    }
 }

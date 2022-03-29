@@ -1,51 +1,60 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import styles from  './Menu.module.css';
-import {IMenuProps, IMenuState, IMenuLink } from "./types";
+import styles from './Menu.module.css';
+import { IMenuProps, IMenuState, IMenuLink } from "./types";
 
 
 export default class Menu extends Component<IMenuProps, IMenuState> {
-    renderLinks () {
-        const {user} = this.props;
-
-        let links: IMenuLink[] = [{
+    renderLinks() {
+        const { user } = this.props;
+        const availWidth = window.screen.availWidth;
+        let links: IMenuLink[] = availWidth > 480 ? [{
             activeClassName: styles.active,
             exact: true,
             onClick: this.props.onClick,
-            title: 'Карта',
-            to: '/map',
+            title: 'О нас',
+            to: '/aboutUs',
             className: styles.visibleMenuLink,
-        }]
+        },
+        {
+            activeClassName: styles.active,
+            exact: true,
+            onClick: this.props.onClick,
+            title: 'Инструкции',
+            to: '/aboutUs',
+            className: styles.visibleMenuLink,
+        }] : [];
 
 
-        const authLinks : IMenuLink[] = [];
+        const authLinks: IMenuLink[] = [];
 
         if (user) {
+            authLinks.push(
+                {
+                    activeClassName: styles.active,
+                    exact: true,
+                    onClick: this.props.onClick,
+                    title: 'Список деревьев',
+                    to: '/trees',
+                    className: styles.visibleMenuLink
+                },
+                {
+                    activeClassName: styles.active,
+                    exact: true,
+                    onClick: this.props.onCookieRemove,
+                    title: 'Выйти',
+                    to: '/',
+                    className: styles.visibleMenuLink
+                })
+        } else {
             authLinks.push({
                 activeClassName: styles.active,
                 exact: true,
                 onClick: this.props.onClick,
-                title: 'Список деревьев',
-                to: '/trees',
+                title: 'Войти',
+                to: '/login',
                 className: styles.visibleMenuLink
             },
-            {
-                activeClassName: styles.active,
-                exact: true,
-                onClick: this.props.onCookieRemove,
-                title: 'Выйти',
-                to: '/',
-                className: styles.visibleMenuLink
-            })
-        } else {
-            authLinks.push({
-                    activeClassName: styles.active,
-                    exact: true,
-                    onClick: this.props.onClick,
-                    title: 'Войти',
-                    to: '/login',
-                    className: styles.visibleMenuLink
-                },
                 {
                     activeClassName: styles.active,
                     exact: true,

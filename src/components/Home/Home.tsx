@@ -4,36 +4,42 @@ import { NavLink } from 'react-router-dom';
 import MapContain from '../Map/MapContain';
 import styles from './Home.module.css';
 import './Map.css';
-import {IHomeProps, IHomeState} from "./types";
-import {mapViewPositionContext, setMapViewPositionContext} from "../Main/Main";
+import { IHomeProps, IHomeState } from "./types";
+import { mapViewPositionContext, setMapViewPositionContext } from "../Main/Main";
+import volontary from '../../img/volontary.jpg';
+import tree from '../../img/image2_large.jpg';
 
 
 export default class Home extends Component<IHomeProps, IHomeState> {
+  constructor(props: IHomeProps) {
+    super(props);
+
+    this.state = { isHideText: true };
+  }
+
+
+  hideText = () => {
+    this.setState({ isHideText: !this.state.isHideText });
+  }
+
   renderDesktopSection() {
     return (
       <section className={styles.desktop}>
         <div className={styles.flexSearchMap}>
-          <div className={styles.search}>
-            <div className={cn([styles.green, styles.searchBlock])} />
-            <p className={styles.slogan}>Защитим деревья вместе</p>
-            <p className={styles.regular2}>
-              Нанесите любимые деревья на карту, чтобы документировать их количество и реальное состояние. Объединяйтесь с волонтёрами из вашего района для совместной защиты зелёных насаждений, используя карту, как единый источник информации.
-            </p>
-          </div>
           <div className={styles.desktopMap}>
             <div className={cn([styles.green, styles.mapBlock])} />
-              <div className={styles.mapContainer}>
-                <div className={styles.map}>
-                  <setMapViewPositionContext.Consumer>
-                    { setMapViewPosition => (
-                        <mapViewPositionContext.Consumer>
-                          { mapViewPosition => (
-                            <MapContain user={this.props.user} mapViewPosition={mapViewPosition} setMapViewPosition={setMapViewPosition} />
-                          )}
-                        </mapViewPositionContext.Consumer>
-                    )}
-                  </setMapViewPositionContext.Consumer>
-                </div>
+            <div className={styles.mapContainer}>
+              <div className={styles.map}>
+                <setMapViewPositionContext.Consumer>
+                  {setMapViewPosition => (
+                    <mapViewPositionContext.Consumer>
+                      {mapViewPosition => (
+                        <MapContain user={this.props.user} mapViewPosition={mapViewPosition} setMapViewPosition={setMapViewPosition} />
+                      )}
+                    </mapViewPositionContext.Consumer>
+                  )}
+                </setMapViewPositionContext.Consumer>
+              </div>
             </div>
           </div>
         </div>
@@ -43,42 +49,56 @@ export default class Home extends Component<IHomeProps, IHomeState> {
 
   renderGetStartSection() {
     return (
-      <section className={cn([styles.green, styles.getStart, styles.desktop])}>
-        <div className={styles.getStartLeft}>
-          <p className={cn([styles.regular, styles.bold])}>Готовы начать?</p>
-          <p className={cn([styles.regular, styles.inOrReg])}>Войдите или зарегистрируйтесь</p>
-        </div>
-        <div className={styles.getStartRight}>
-          <NavLink className={styles.logInDesktop} exact to='/login' activeClassName="active">Войти</NavLink>
-          <NavLink className={styles.signUpDesktop} exact to='/registration' activeClassName="active">Зарегистрироваться</NavLink>
+      <>
+
+        <section style={{ display: "flex" }}>
+          <div style={{ display: "flex", padding: "0 20px", backgroundColor: "saddlebrown", position: "relative" }}>
+            <div className={this.state.isHideText ? styles.hidden : styles.unhidden} style={{ position: "absolute", zIndex: 1, width: "300px", height: "300px", backgroundColor: "green", bottom: "100%" }} >fgfffffffffffffffffffffffff
+              ffffffffffffffffffffffffffff
+              fffffffffffffffffffff
+            </div>
+            <div className={cn([styles.regular, styles.bold])} style={{}}>ЗАЩИТИМ ДЕРЕВЬЯ ВМЕСТЕ</div>
+            <button style={{ width: "50px", height: "50px" }} onClick={this.hideText}>Жми меня</button>
+          </div>
+
+          <div>
+            <h1 className={cn([styles.regular, styles.bold])}>Ежегодно Екатеринбург теряет сотни взрослых деревьев. Пора действовать!</h1>
+            <h2 className={cn([styles.regular])}>Городские деревья часто страдают при строительстве...
+              <a> Читать дальше</a></h2>
+
+          </div>
+
+        </section>
+      </>
+    )
+  }
+
+  renderInvitationSection() {
+    return (
+      <section className={styles.theme}>
+        <img src={volontary} width="700px" height="700px"/>
+        <div className={styles.volontary}>
+          <h1 className={cn([styles.regular2, styles.bold, styles.volontaryQuestion])} >Как&nbsp;стать&nbsp;волонтером&nbsp;?</h1>
+          <p className={styles.regular2}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p className={styles.regular2}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div style={{ display: "flex", marginTop: "55px" }}>
+            <a className={styles.login} href="/login">Войти</a>
+            <a className={styles.signup} href="/registration"> Зарегистрироваться</a>
+          </div>
         </div>
       </section>
     )
   }
 
-  renderLastPartSection() {
+  renderWhatWeDoSection() {
     return (
-      <section className={cn([styles.desktop, styles.lastPart])}>
-        <div className={styles.flexContainer}>
-          <div className={styles.leftPart}>
-            <h3 className={cn([styles.aboutTrees, styles.regular, styles.bold])}>
-              Ежегодно Екатеринбург теряет сотни взрослых деревьев. Пора&nbsp;действовать!
-            </h3>
-            <div className={styles.flexContainer2}>
-              <div className={styles.leftPart}>
-                <p className={styles.regularSmall}>
-                  Городские деревья часто страдают при строительстве. Лишь немногие застройщики осознают ценность уличного озеленения и высаживают крупномеры вдоль фасадов. Большинство же компаний экономит на озеленении, в результате чего качество среды снижается. С помощью этой карты волонтёры смогут требовать сохранения или, как минимум, эквивалентного восстановления зелёной массы уже на стадии общественного обсуждения проекта.
-                </p>
-              </div>
-              <div className={styles.rightPart}>
-                <p className={styles.regularSmall}>
-                Ежегодно в результате жестокой обрезки и некомпетентого ухода в городе страдают тысячи деревьев. Многие из них долго болеют и умирают. Из-за отсутствия комплексного подхода, никто не занимается их восстановлением. Карта деревьев даст волонтёрам фактологическую основу для контроля нерадивых исполнителей. Ответственные подрядчики, напротив, снизят потери при помощи актуальных данных.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className={styles.rightPartImg}>
-            <img src="https://i.artfile.ru/1600x1200_601604_[www.ArtFile.ru].jpg" alt="" width="100%" />
+      <section>
+        <h1>&mdash;&mdash;Что мы делаем ?</h1>
+        <div style={{ backgroundColor: "#eef0f2" }}>
+          <div style={{ margin: "50px", backgroundColor: "black", color: "white", display: "flex" }}>
+            <p style={{ padding: "50px" }}>Мы заботимся о деревьях в нашем городе. Городские деревья часто страдают при строительстве. Карта деревьев Екатеринбурга - это инструмент для регистрации городских деревьев...</p>
+            <img width="47%" src={tree} style={{ float: "right", overflow: "hidden" }} />
+
           </div>
         </div>
       </section>
@@ -90,7 +110,8 @@ export default class Home extends Component<IHomeProps, IHomeState> {
       <>
         {this.renderDesktopSection()}
         {this.props.user ? null : this.renderGetStartSection()}
-        {this.renderLastPartSection()}
+        {this.renderInvitationSection()}
+        {this.renderWhatWeDoSection()}
       </>
     )
   }

@@ -1,24 +1,23 @@
-import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
+import React, {Component} from 'react';
+import {NavLink} from "react-router-dom";
 import styles from './Logo.module.css';
 import cn from "classnames";
-import logoImage from "../../img/logoHeader.png";
+import {ILogoProps, ILogoState} from "./types";
 
 
-export class Logo extends Component {
+export class Logo extends Component<ILogoProps, ILogoState> {
 
-	render() {
+	render () {
+		const logoCN = cn({
+			[styles.logo]: true,
+			[this.props.className]: Boolean(this.props.className)
+		})
 
 		return (
-			<NavLink exact to='/'>
-
-				<h1 className={styles.logo}>
-					<img height="80px" width="120px" src={logoImage} />
-					<span className={styles.firstPart}>Ekb</span>
-					<span className={styles.secondPart}>Trees</span>
+			<NavLink exact to='/' className={logoCN}>
+				<h1 className={styles.bigHeader}>Ekb
+					<span className={styles.smallHeader}>Trees</span>
 				</h1>
-
-
 			</NavLink>
 		);
 	}

@@ -1,8 +1,4 @@
-.theme {
-  background-color: var(--black-white);
-}
-
-.logi .container {
+.container {
   margin: 10px;
 }
 
@@ -30,13 +26,12 @@
   justify-content: space-between;
 }
 
-.login,
-.signup {
-  height: 60px;
-  min-width: 200px;
-
+.log-in,
+.sign-up {
+  width: 49%;
+  height: 50px;
   border-radius: 5px;
-  font-family: sans-serif;
+  font-family: "Oswald", sans-serif;
   text-transform: uppercase;
   font-size: 16px;
   cursor: pointer;
@@ -46,35 +41,46 @@
   align-items: center;
 }
 
-.login {
-  background-color: var(--button-login);
-  color: white;
+.log-in {
+  background-color: white;
+  border: 2px solid #edad08;
+  color: #edad08;
   font-weight: 600;
 }
 
-.signup {
-  margin-left: 15px;
-  background-color: var(--button-signup);
-  border: 1px solid;
-  border-color: var(--button-login);
-  color: var(--button-login);
+.sign-up {
+  background-color: #50802c;
+  border: none;
+  color: white;
   font-weight: 300;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 .map {
   height: 100%;
 }
-
 .mapContainer {
   height: 100%;
 }
+/* .page {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+main {
+  flex: 1 1 0;
+  height: 100%;
+} */
+
+  /* .leaflet-container {
+    height: 100%;
+  } */
 
 .flexSearchMap {
   display: flex;
   justify-content: space-around;
-  background-color: #0000;
+  margin-top: 20px;
+  margin-bottom: 60px;
+  min-height: 400px;
 }
 
 .search {
@@ -82,14 +88,14 @@
 }
 
 .desktopMap {
-  width: 100%;
+  width: 70%;
   display: flex;
   flex-direction: column;
 }
 
-.slogan {
-  font-size: 24px;
-}
+    .slogan {
+      font-size: 24px;
+    }
 
 .green {
   background-color: #50802c;
@@ -102,35 +108,25 @@
 
 .mapBlock {
   height: 10px;
-  background-color: #000000;
 }
 
-.getStart {}
-
-.volontary {
-  min-height: 800px;
-  height: fit-content;
-  padding: 75px 0;
+.getStart {
   display: flex;
-  flex-direction: column;
-  padding-left: 100px;
-  padding-right: 150px;
-  color: var(--black-white-text);
-}
-
-.volontaryQuestion {
-  text-transform: uppercase;
-  color: #aec400;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 20px;
 }
 
 .regular {
   font-family: "Recursive", sans-serif;
+  margin: 40px 0;
   font-size: 20px;
   font-weight: 400;
 }
 
 .regular2 {
   font-family: "Recursive", sans-serif;
+  margin-top: 40px;
   font-size: 20px;
   font-weight: 400;
 }
@@ -141,12 +137,8 @@
   font-size: 26px;
 }
 
-.hidden {
-  display: none;
-}
-
-.unhidden {
-  display: block;
+.get-start-left {
+  width: 30%;
 }
 
 .getStartRight {
@@ -246,7 +238,9 @@
   align-items: center;
 }
 
-.lastPart {}
+.lastPart {
+  margin: 70px 0;
+}
 
 .aboutTrees {
   align-items: center;
@@ -273,6 +267,9 @@
 }
 
 @media screen and (max-width: 769px) {
+  .desktopMap {
+    display: none;
+  }
 
   .searchBlock {
     display: none;
@@ -290,7 +287,7 @@
     display: none;
   }
 
-  .flexContainer2 {
+  .flexContainer2{
     flex-direction: column;
   }
 
@@ -306,6 +303,10 @@
 
   .getStartRight {
     margin-bottom: 40px;
+  }
+
+  .flexSearchMap {
+    padding: 0px 7px;
   }
 
   .slogan {

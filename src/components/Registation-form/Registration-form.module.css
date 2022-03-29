@@ -2,20 +2,18 @@
   font-family: "Recursive", sans-serif;
 }
 
-
 .registrationForm {
     display: flex;
     flex-direction: column;
     width: 80%;
     margin: 0 auto;
-    padding: 10% 0 0;
+    padding: 10% 0;
+    padding-bottom: 0;
 }
 
 .registrationContainer{
     box-shadow: 0px 0px 15px -5px rgba(34, 60, 80, 0.57);
-    background-color: var(--third-color);
-    margin-top: 40px !important;
-    margin-bottom: 40px !important;
+    background-color: white;
 }
 
 .registrationForm input {
@@ -44,7 +42,7 @@
     border: none;
     color: white;
     text-transform: uppercase;
-    background-color: var(--first-color);
+    background-color: #50802C;
     cursor: pointer;
 }
 
@@ -93,7 +91,7 @@
     width: 40px;
     height: 40px;
     float: left;
-    /*background: #fff;*/
+    background: #fff;
     margin: 0 10px 10px 0;
 }
 
@@ -104,8 +102,8 @@
 
 .title {
     display: none;
-    color: var(--first-color);
-    font-size: 30px;
+    color: #FB8F07;
+    font-size: 20px;
     text-align: center;
     padding: 30px 0px;
 }
@@ -117,7 +115,7 @@
 .registrationAside{
     display: none;
     flex-basis: 50%;
-    background-color: var(--first-color);
+    background-color: #4F802C;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -134,8 +132,7 @@
 }
 
 .registrationAside p{
-    color: #AEC400;
-    padding: 10px 0px;
+     padding: 10px 0px;
 }
 
 .registrationAside .linkLogin{

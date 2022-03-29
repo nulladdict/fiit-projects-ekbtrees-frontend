@@ -1,5 +1,2 @@
-export interface IFooterProps {
-    theme: string;
-}
-
+export interface IFooterProps { }
 export interface IFooterState { }

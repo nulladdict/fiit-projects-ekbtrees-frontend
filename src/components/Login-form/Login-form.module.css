@@ -3,24 +3,18 @@
   font-family: "Recursive", sans-serif;
 }
 
-body{
-  background-color: var(--background-color) !important;
-}
-
-
 .wrapper {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
-  padding: 10% 0 0;
+  padding: 10% 0;
+  padding-bottom: 0;
 }
 
 .loginContainer {
   box-shadow: 0px 0px 15px -5px rgba(34, 60, 80, 0.57);
-  background-color: var(--third-color);
-  margin-top: 40px !important;
-  margin-bottom: 40px !important;
+  background-color: white;
 }
 
 .wrapper input {
@@ -48,7 +42,7 @@ body{
   border: none;
   color: white;
   text-transform: uppercase;
-  background-color: var(--first-color);
+  background-color: #50802c;
   cursor: pointer;
   margin: 15px 0px;
 }
@@ -81,22 +75,16 @@ body{
 .flexRegister p {
   font-weight: 500;
   font-size: 14px;
-  color: var(--black-white-color);
 }
 
-
 .flexRegister .yellow {
-  color: var(--second-color);
+  color: #fb8f07;
 }
 
 .flexRegister .yellow a {
-  color: var(--second-color);
+  color: #fb8f07;
   text-decoration: none;
   padding-left: 3px;
-}
-
-.flexRegister .yellow a:hover {
-  color: #1d53aa;
 }
 
 .privacyTerms {
@@ -116,14 +104,14 @@ body{
 
 .login-checkbox {
   position: relative;
-  color: #aec400;
+  color: #fb8f07;
   padding-left: 30px;
   cursor: pointer;
 }
 
 .login-checkbox:hover,
 .login-checkbox:focus {
-  color: #aec400;
+  color: #fb8f07;
 }
 
 .login-checkbox input[type="checkbox"] + .checkbox-indicator {
@@ -144,7 +132,7 @@ body{
 }
 
 .restore {
-  color: var(--second-color);
+  color: #fb8f07;
   text-decoration: none;
   font-size: 14px;
 }
@@ -173,7 +161,7 @@ body{
 
 .title {
   display: none;
-  color: var(--first-color); /* Вход в аккаунт */
+  color: #fb8f07;
   font-size: 20px;
   text-align: center;
   padding: 30px 0px;
@@ -186,7 +174,7 @@ body{
 .loginAside {
   display: none;
   flex-basis: 50%;
-  background-color: var(--first-color);
+  background-color: #4f802c;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -195,12 +183,11 @@ body{
 
 .loginAside .title {
   color: white;
-  font-size: 35px;
+  font-size: 25px;
 }
 
 .loginAside p {
   padding: 10px 0px;
-  color: #AEC400;
 }
 .flexSocial{
   display: flex;
@@ -267,7 +254,6 @@ body{
 @media screen and (min-width: 1440px) {
   .loginContainer {
     width: 1000px;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 0 auto;
   }
 }

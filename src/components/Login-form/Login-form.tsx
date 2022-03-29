@@ -78,7 +78,7 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
 
     renderAuthTitle () {
         return (
-            <h2 className={styles.title}>Войдите в аккаунт</h2>
+            <h2 className={styles.title}>Вход в аккаунт</h2>
         );
     }
 
@@ -122,9 +122,9 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
     renderLoginHelp () {
         return (
             <>
-                <p className={styles.loginHelp}>
-                    <NavLink className={styles.restore} exact to='/passRecovery'>Забыли пароль?</NavLink>
-                </p>
+                {/*<p className={styles.loginHelp}>*/}
+                {/*    <NavLink className={styles.restore} exact to='/passRecovery'>Забыли пароль?</NavLink>*/}
+                {/*</p>*/}
                 <p className={styles.loginMessage}>или войдите с</p>
             </>
         );
@@ -167,6 +167,7 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
                     <aside className={styles.loginAside}>
                         <h2 className={styles.title}>С возвращением!</h2>
                         <p>Войдите в аккаунт, чтобы продолжить</p>
+                        {/*<NavLink className={styles.linkRegister} exact to='/registration' activeclassname="active">Зарегистрироваться</NavLink>*/}
                         <NavLink className={styles.linkRegister} exact to='/registration' activeClassName="active">Зарегистрироваться</NavLink>
                     </aside>
                     {this.renderAuthForm()}

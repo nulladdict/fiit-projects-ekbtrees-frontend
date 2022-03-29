@@ -26,6 +26,8 @@ export default class Main extends Component<IMainProps, IMainState> {
         this.state = {};
     }
     setMapViewPosition = (viewPos: IMapPosition | undefined) => {
+        // console.log("Main: setMapViewPosition is changed");
+        // console.log(viewPos);
         this.setState({mapViewPosition: viewPos});
     }
 
@@ -84,14 +86,14 @@ export default class Main extends Component<IMainProps, IMainState> {
       return (
           <setMapViewPositionContext.Provider value={this.setMapViewPosition}>
               <mapViewPositionContext.Provider value={this.state.mapViewPosition}>
-                  <main className={styles.mainWrapper} data-theme={this.props.theme}>
+                  <main className={styles.mainWrapper}>
                       <Switch>
                           <Route exact path='/' render={(props) => <Home {...props} user={user}/>}/>
 
                           <Route exact path='/map'
                                  render={(props) =>
                                      <MapContain {...props} user={user} mapViewPosition={this.state.mapViewPosition}
-                                                 setMapViewPosition={this.setMapViewPosition} className={styles.fullMap} />}/>
+                                                 setMapViewPosition={this.setMapViewPosition} className='fullMap'/>}/>
                           <Route exact path='/trees/tree=:id' render={(props) => <Tree {...props} setMapViewPosition={this.setMapViewPosition} user={user}/>}/>
                           <Route exact path='/passRecovery' component={PassRecovery}/>
                           <Route exact path='/aboutUs' component={AboutUs}/>

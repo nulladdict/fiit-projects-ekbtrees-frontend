@@ -75,9 +75,7 @@ class App extends Component<IAppProps & RouteComponentProps, IAppState> {
 
     render() {
         const { user } = this.state;
-        console.log(this.state['theme']);
         
-
         return (
             <>
             <div className={this.state['theme'] === 'light' ? 'background-white' : 'background-gray'}>

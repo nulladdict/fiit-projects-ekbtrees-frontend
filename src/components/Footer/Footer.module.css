@@ -16,13 +16,13 @@
 
 .slogan {
     margin-bottom: 10px;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .slogan span {
+    font-weight: 700;
     font-family: "Segou UI", sans-serif;
     margin-bottom: 10px;
-    font-size: 40px;
 }
 
 .slogan :last-child {
@@ -36,13 +36,15 @@
     padding: 50px;
 }
 
-.company :first-child {
-    margin-bottom: 10px;
+.company a{
+    color: #d9dbe1
 }
 
-.support :first-child {
-    margin-bottom: 10px;
-
+.company :first-child {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 500;
+    color: white;
 }
 
 .email input[type=text] {
@@ -50,7 +52,7 @@
 }
 
 .images {
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-around;
 }
@@ -133,6 +135,9 @@
     padding: 30px 20%;
 }
 
+.copyright {
+    margin-top: 10px;
+}
 
 @media screen and (min-width: 1024px) {
     .footerMenu a {
@@ -148,4 +153,34 @@
     .footerWrapper {
         padding: 0 10%;
     }
+}
+
+@media screen and (max-width: 830px) {
+    .email{
+        display: none;
+    }
+
+    .footerWrapper{
+        flex-direction: column;
+    }
+
+    .company{
+        align-items: center;
+        padding: 25px;
+    }
+    
+    .company span{
+        font-weight: 500px;
+    }
+
+    .info{
+        padding: 30px 0 0 0;
+        align-items: center;
+        margin-right: 0;
+    }
+
+    .images a{
+        padding: 0px 7px;
+    }
+
 }

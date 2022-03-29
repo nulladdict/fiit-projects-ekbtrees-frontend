@@ -12,7 +12,7 @@ export default class Footer extends Component<IFooterProps, IFooterState> {
                 <div className={styles.info}>
                     <div className={styles.slogan}><span>Ekb</span><span>Trees</span></div>
                     <span>Copyrights EkbTrees</span>
-                    <span>All rights reserved</span>
+                    <span className={styles.copyright}>All rights reserved.</span>
                     <div className={styles.images}>
                         <a><img className={styles.image} src={youtubeIcon} /></a>
                         <a><img className={styles.image} src={youtubeIcon} /></a>
@@ -28,11 +28,6 @@ export default class Footer extends Component<IFooterProps, IFooterState> {
                     <NavLink exact to='/aboutUs' activeClassName="active">News</NavLink>
                     <NavLink exact to='/aboutUs' activeClassName="active">About us</NavLink>
 
-                </div>
-                <div className={styles.social}>
-                    <img src={twitterIcon} alt="twitter" />
-                    <img src={youtubeIcon} alt="youtube" />
-                    <img src={pinterestIcon} alt="pinterest" />
                 </div>
                 <div className={styles.email}>
                     <span>Stay up to date</span>

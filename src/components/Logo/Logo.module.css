@@ -1,22 +1,21 @@
-.logo h1 {
+.logo {
+    display: flex;
+    align-items: center;
     font-weight: 400;
-    padding: 10px 0;
-    display: inline;
-    margin-left: 10px;
+    font-family: "Merriweather", serif;
+    margin-bottom: 0px;
 }
 
-.logo h1 span {
-    font-family: "Segou UI", sans-serif;
+.firstPart {
     color: #ffffff;
 }
 
-.logo h1 span:last-child {
+.secondPart {
     color: #aec400;
 }
 
-.logo .bigHeader {
-    font-family: "Merriweather", serif;
-    font-size: 40px;
-    line-height: 40px;
-    margin-bottom: 0;
+@media screen and (max-width: 480px) {
+    .logo {
+        font-size: 30px;
+    }
 }

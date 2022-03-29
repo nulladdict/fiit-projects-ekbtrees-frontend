@@ -44,6 +44,10 @@ code {
   --black-white-color: #FFFFFF;
   --background-color: #2C2C2C;
   --email-input: #4f5150;
+  --button-login: #aec400;
+  --button-signup: #2c2c2c;
+  --black-white: #2c2c2c;
+  --black-white-text: white;
 }
 
 :root {
@@ -53,4 +57,8 @@ code {
   --black-white-color: #111111;
   --background-color: #FFFFFF;
   --email-input: #35613c;
+  --button-login: #02390b;
+  --button-signup: #ffffff;
+  --black-white: #ffffff;
+  --black-white-text: black;
 }

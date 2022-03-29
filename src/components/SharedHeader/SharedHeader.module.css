@@ -5,24 +5,34 @@
     justify-content: flex-end;
     padding: 0 20px;
     margin: 0;
+    align-items: center;
 }
 
-.selectLanguage {
-    margin: 10px 5px 10px 145px;
+.select {
     outline: 0;
     border: 0;
-    background-color: var(--second-color);
+    background-color: transparent;
     color: #ffffff;
     font-weight: bold;
 }
 
+.selectLanguage {
+    margin: 10px 5px 10px 0px;
+}
+
+.russianFlag,
 .links {
-    margin: 10px 5px;
+    margin: 7px 5px;
+}
+
+.russianFlag{
+    height: 40px;
+    margin-left: 60px;
 }
 
 .images {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
 }
 
 .switch {
@@ -30,7 +40,7 @@
     width: 60px;
     height: 34px;
     margin-right: auto;
-    margin-top: 18px;
+    margin-top: .5rem;
 }
 
 .switch input {
@@ -65,20 +75,41 @@
     border-radius: 50%;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     -webkit-transform: translateX(24px);
     -ms-transform: translateX(24px);
     transform: translateX(24px);
 }
 
+@media screen and (max-width: 480px) {
 
-@media screen and (max-width: 768px) {
+    .sharedHeader{
+        padding: 0 10px;
+        height: 60px;
+    }
     .selectLanguage {
-        margin-left: 15px;
+        margin: 0 0 0 10px;
+
+    }
+    
+    .russianFlag {
+        width: 50px;
+        height: 40px;
+        margin-left: 5px;
+    }
+
+    .select {
+        font-size: 15px;
+    }
+
+    .links {
+        margin: 0;
+        ;
     }
 }
 
-@media screen and (min-width: 768px) {
+
+@media screen and (min-width: 1024px) {
     .sharedHeader {
         position: static;
     }

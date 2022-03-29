@@ -4,10 +4,7 @@ import styles from './DesktopHeader.module.css';
 import UserInfo from '../UserInfo';
 import { Logo } from "../Logo/Logo";
 import { IDesktopHeaderProps, IDesktopHeaderState } from "./types";
-import Select from '../Select';
-import vkLogo from "../../img/vk.png"
-import instagramHeaderLogo from "../../img/instagramHeaderLogo.png"
-import yotubeHeaderLogo from "../../img/youtubeHeaderLogo.png"
+
 
 
 export class DesktopHeader extends Component<IDesktopHeaderProps, IDesktopHeaderState> {
@@ -29,10 +26,10 @@ export class DesktopHeader extends Component<IDesktopHeaderProps, IDesktopHeader
 	renderContent() {
 		return (
 			<div className={styles.desktopHeader}>
-				<Logo className={styles.logo} />
+				<Logo />
 				<div className={styles.menu}>
 					<NavLink exact to='/map' activeClassName={styles.activeLink}>Карта</NavLink>
-					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>О нас</NavLink>
+					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>О&nbsp;нас</NavLink>
 					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>Инструкции</NavLink>
 					<NavLink exact to='/aboutUs' activeClassName={styles.activeLink}>Контакты</NavLink>
 					{this.renderUserLinks()}

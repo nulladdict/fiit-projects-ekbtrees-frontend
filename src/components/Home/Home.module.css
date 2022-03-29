@@ -1,4 +1,8 @@
-.container {
+.theme {
+  background-color: var(--black-white);
+}
+
+.logi .container {
   margin: 10px;
 }
 
@@ -26,12 +30,13 @@
   justify-content: space-between;
 }
 
-.log-in,
-.sign-up {
-  width: 49%;
-  height: 50px;
+.login,
+.signup {
+  height: 60px;
+  min-width: 200px;
+
   border-radius: 5px;
-  font-family: "Oswald", sans-serif;
+  font-family: sans-serif;
   text-transform: uppercase;
   font-size: 16px;
   cursor: pointer;
@@ -41,18 +46,21 @@
   align-items: center;
 }
 
-.log-in {
-  background-color: white;
-  border: 2px solid #edad08;
-  color: #edad08;
+.login {
+  background-color: var(--button-login);
+  color: white;
   font-weight: 600;
 }
 
-.sign-up {
-  background-color: #50802c;
-  border: none;
-  color: white;
+.signup {
+  margin-left: 15px;
+  background-color: var(--button-signup);
+  border: 1px solid;
+  border-color: var(--button-login);
+  color: var(--button-login);
   font-weight: 300;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .map {
@@ -63,25 +71,9 @@
   height: 100%;
 }
 
-/* .page {
-  display: flex;
-  flex-direction: column;
-  height: auto;
-}
-main {
-  flex: 1 1 0;
-  height: 100%;
-} */
-
-/* .leaflet-container {
-    height: 100%;
-  } */
-
 .flexSearchMap {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 60px;
-  min-height: 600px;
   background-color: #0000;
 }
 
@@ -113,23 +105,32 @@ main {
   background-color: #000000;
 }
 
-.getStart {
+.getStart {}
+
+.volontary {
+  min-height: 800px;
+  height: fit-content;
+  padding: 75px 0;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0 20px;
+  flex-direction: column;
+  padding-left: 100px;
+  padding-right: 150px;
+  color: var(--black-white-text);
+}
+
+.volontaryQuestion {
+  text-transform: uppercase;
+  color: #aec400;
 }
 
 .regular {
   font-family: "Recursive", sans-serif;
-  margin: 40px 0;
   font-size: 20px;
   font-weight: 400;
 }
 
 .regular2 {
   font-family: "Recursive", sans-serif;
-  margin-top: 40px;
   font-size: 20px;
   font-weight: 400;
 }
@@ -140,8 +141,12 @@ main {
   font-size: 26px;
 }
 
-.get-start-left {
-  width: 30%;
+.hidden {
+  display: none;
+}
+
+.unhidden {
+  display: block;
 }
 
 .getStartRight {
@@ -241,9 +246,7 @@ main {
   align-items: center;
 }
 
-.lastPart {
-  margin: 70px 0;
-}
+.lastPart {}
 
 .aboutTrees {
   align-items: center;
@@ -270,9 +273,6 @@ main {
 }
 
 @media screen and (max-width: 769px) {
-  .desktopMap {
-    display: none;
-  }
 
   .searchBlock {
     display: none;
@@ -306,10 +306,6 @@ main {
 
   .getStartRight {
     margin-bottom: 40px;
-  }
-
-  .flexSearchMap {
-    padding: 0px 7px;
   }
 
   .slogan {

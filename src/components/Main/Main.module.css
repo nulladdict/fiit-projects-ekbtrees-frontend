@@ -4,8 +4,26 @@
     height: fit-content;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
     .mainWrapper {
         margin-top: 0;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .fullMap {
+        height: 100vh;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .fullMap {
+        height: 80vh;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .mainWrapper {
+        margin-top: 164px;
     }
 }

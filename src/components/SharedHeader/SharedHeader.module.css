@@ -8,12 +8,12 @@
     align-items: center;
 }
 
-.sharedHeader>div {
+.sharedHeader > div {
     margin-right: auto;
     margin-top: 5px;
 }
 
-.sharedHeader>select {
+.sharedHeader > select {
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 145px;
@@ -37,6 +37,7 @@
 .links {
     margin: 10px 5px;
 }
+
 .sharedHeader a {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -89,22 +90,34 @@
     border-radius: 50%;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
     -webkit-transform: translateX(24px);
     -ms-transform: translateX(24px);
     transform: translateX(24px);
 }
 
 @media screen and (max-width: 480px) {
-
-@media screen and (max-width: 768px) {
-    .selectLanguage {
-        margin-left: 15px;
+    .sharedHeader {
+        padding: 0 10px;
+        height: 60px;
     }
 
+    .selectLanguage {
+        margin: 0 0 0 10px;
+    }
 
-    .sharedHeader>div {
-        margin-right: 0;
+    .russianFlag {
+        width: 50px;
+        height: 40px;
+        margin-left: 5px;
+    }
+
+    .select {
+        font-size: 15px;
+    }
+
+    .links {
+        margin: 0;
     }
 }
 

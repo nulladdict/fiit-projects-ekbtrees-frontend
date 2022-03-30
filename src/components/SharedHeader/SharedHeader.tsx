@@ -6,9 +6,9 @@ import { Logo } from "../Logo/Logo";
 import vkLogo from "../../img/vk.png"
 import youtubeHeaderLogo from "../../img/youtube.png"
 import russian from "../../img/russian.png"
+import { ISharedHeaderProps } from "./types";
 
-
-export class SharedHeader extends Component {
+export class SharedHeader extends Component<ISharedHeaderProps> {
 
 
 	render() {

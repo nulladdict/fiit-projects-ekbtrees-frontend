@@ -67,7 +67,7 @@
 }
 
 .activeSignLinks {
-    background-color: #50802c;
+    background-color: var(--first-color);
     border: none;
     color: white !important;
 }

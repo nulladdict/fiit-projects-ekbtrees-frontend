@@ -104,7 +104,7 @@ export default class LoginForm extends Component<ILoginFormProps, ILoginFormStat
         return (
             <div className={styles.flexSocial}>
                 <div className={styles.social}>
-                    <NavLink to="/vk"><img src={vkIcon} alt="google-link" /></NavLink>
+                    <NavLink to="/vk"><img src={vkIcon} alt="vk-link" /></NavLink>
                 </div>
             </div>
         );

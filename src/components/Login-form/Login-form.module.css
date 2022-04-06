@@ -229,7 +229,7 @@ body{
 }
 .loginMessage{
   height: 40px;
-  padding: 10px 0px;
+  padding: 10px 0;
 }
 .loginMessage p{
   color: red;

@@ -12,7 +12,7 @@ export default class Header extends Component<IHeaderProps, IHeaderState> {
 
         return (
             <header className={styles.headerWrapper} data-theme={this.props.theme}>
-                <SharedHeader></SharedHeader>
+                <SharedHeader switchTheme={this.props.switchTheme}/>
                 <MobileHeader onCookieRemove={onCookieRemove} user = {this.props.user}/>
                 <DesktopHeader onCookieRemove={onCookieRemove} user={this.props.user}/>
             </header>

@@ -40,6 +40,10 @@
     color: #d9dbe1
 }
 
+.company a:hover{
+    color: #1d53aa;
+}
+
 .company :first-child {
     margin-bottom: 5px;
     font-size: 20px;

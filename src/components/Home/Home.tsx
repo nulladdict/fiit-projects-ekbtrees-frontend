@@ -52,22 +52,13 @@ export default class Home extends Component<IHomeProps, IHomeState> {
       <>
 
         <section style={{ display: "flex" }}>
-          <div style={{ display: "flex", padding: "0 20px", backgroundColor: "saddlebrown", position: "relative" }}>
-            <div className={this.state.isHideText ? styles.hidden : styles.unhidden} style={{ position: "absolute", zIndex: 1, width: "300px", height: "300px", backgroundColor: "green", bottom: "100%" }} >fgfffffffffffffffffffffffff
-              ffffffffffffffffffffffffffff
-              fffffffffffffffffffff
-            </div>
-            <div className={cn([styles.regular, styles.bold])} style={{}}>ЗАЩИТИМ ДЕРЕВЬЯ ВМЕСТЕ</div>
-            <button style={{ width: "50px", height: "50px" }} onClick={this.hideText}>Жми меня</button>
-          </div>
 
           <div>
-            <h1 className={cn([styles.regular, styles.bold])}>Ежегодно Екатеринбург теряет сотни взрослых деревьев. Пора действовать!</h1>
+            <h1 className={cn([styles.regular, styles.bold])}>Ежегодно Екатеринбург теряет сотни взрослых деревьев. Защитим их вместе!</h1>
             <h2 className={cn([styles.regular])}>Городские деревья часто страдают при строительстве...
               <a> Читать дальше</a></h2>
 
           </div>
-
         </section>
       </>
     )

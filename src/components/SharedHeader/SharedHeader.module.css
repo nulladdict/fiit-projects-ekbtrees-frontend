@@ -1,6 +1,6 @@
 .sharedHeader {
     position: relative;
-    background-color: #aec400;
+    background-color: var(--second-color);
     display: flex;
     justify-content: flex-end;
     padding: 0 20px;
@@ -14,10 +14,7 @@
 }
 
 .sharedHeader > select {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 145px;
-    margin-right: 5px;
+    margin: 10px 5px 10px 145px;
 }
 
 .selectLanguage {
@@ -39,10 +36,7 @@
 }
 
 .sharedHeader a {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 10px 5px;
 }
 
 .sharedHeader img {
@@ -71,7 +65,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: gray;
+    background-color: #cccccc;
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 34px;
@@ -84,10 +78,14 @@
     width: 28px;
     left: 4px;
     bottom: 3px;
-    background-color: black;
+    background-color: white;
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 50%;
+}
+
+input:checked + .slider{
+    background: #2196f3;
 }
 
 input:checked + .slider:before {

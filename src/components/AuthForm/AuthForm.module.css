@@ -1,0 +1,75 @@
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.active {
+  border-bottom: 3px solid #fb8f07;
+  color: #fb8f07;
+}
+
+.welcome {
+  background-color: #50802c;
+  text-align: center;
+}
+
+.smallHeader {
+  font-size: 20px;
+  display: block;
+}
+
+.bigHeader {
+  font-size: 40px;
+  font-family: "Merriweather", serif;
+  color: white;
+  font-weight: 400;
+  padding-top: 20px;
+}
+
+.welcome .title {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: white;
+  padding: 20px 0px;
+}
+
+.welcome p {
+  font-family: "Recursive", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+  padding: 10px 0px;
+}
+
+.links {
+  display: flex;
+}
+
+.btnLogin,
+.btnSignUp {
+  width: 50%;
+  height: 4em;
+  background-color: #50802c;
+  border: none;
+  font-family: "Recursive", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: #91b475;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  border-bottom: 3px solid #fb8f07;
+  color: #fb8f07;
+}
+
+@media screen and (min-width: 768px) {
+  .welcome {
+    display: none;
+  }
+}

@@ -1,0 +1,108 @@
+.profileHeading {
+    text-align: center;
+    padding: 20px 0px;
+}
+.profileForm{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 15px -5px rgb(34 60 80 / 57%);
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+}
+.profileInput{
+    height: 35px;
+    border: 1px solid grey;
+    padding: 0px 10px;
+    min-width: 60%;
+    resize: none;
+    line-height: 45px;
+}
+.flex-column{
+    flex-direction: column;
+}
+.flex-column span{
+    line-height: 35px;
+}
+.flex-column .profileInput{
+    width: 100%;
+    line-height: 35px;
+}
+.textInfo{
+    height: 50px;
+}
+.profileFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0px;
+}
+.profileFlex span{
+    flex-basis: 10%;
+}
+.profileControls{
+    display: flex;
+    justify-content: space-around;
+    padding: 30px 10px;
+}
+.profileBtn{
+    padding: 10px 15px;
+    border-radius: 5px;
+    background: #50802C;
+    color: white;
+    font-size: 16px;
+}
+.profileBtn:hover{
+    filter: brightness(80%);
+}
+
+.dimOnHover:hover{
+    filter: brightness(80%);
+}
+
+.profileChangePasswordContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+@media screen and (min-width: 768px) {
+    .profile-photo{
+        flex-grow: 1;
+        max-width: unset;
+    }
+    .profileForm{
+        border-radius: 5px;
+        margin: 0px 10%;
+    }
+    .profileInput{
+        flex-grow: 1;
+        height: 45px;
+    }
+    .profileGroup{
+        display: flex;
+        justify-content: space-between;
+        order: 0;
+    }
+    .profileGroup .profileFlex{
+        flex-basis: 50%;
+    }
+    .profileGroup .profileFlex:nth-child(2){
+        padding-left: 10px;
+    }
+    .profileGroup .profileFlex .profileInput{
+        flex-grow: 1;
+    }
+    .profileGroup .profileFlex span{
+        flex-basis: 20%;
+    }
+    .order1{
+        order: 1;
+    }
+    .order2{
+        order: 2;
+    }
+    .order3{
+        order: 3;
+    }
+}

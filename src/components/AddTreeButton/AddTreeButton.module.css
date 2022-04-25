@@ -1,0 +1,26 @@
+.addTreeButton{
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    top: -100px;
+    color: white;
+    padding: 20px 30px;
+    margin: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: #50802c;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+    transition: .5s;
+    margin-top: 25px;
+    z-index : 2;
+}
+
+.addTreeButton:hover{
+    background-color: #6bc22a;
+}
+
+.addTreeButton:disabled{
+    background-color: #b9c5b0;
+}

@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+    background-color: #F3F6FA;
+}
+
+@font-face {
+  font-family: "Merriweather";
+  src: local("Merriweather"), url("./fonts/Merriweather-Regular.ttf");
+}
+@font-face {
+  font-family: "Recursive";
+  src: local("Recursive"), url("./fonts/Recursive-Regular.ttf");
+}
+@font-face {
+  font-family: "Oswald";
+  src: local("Oswald"), url("./fonts/Oswald-Regular.ttf");
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

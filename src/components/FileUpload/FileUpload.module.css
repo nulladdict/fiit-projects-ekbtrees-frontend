@@ -1,0 +1,153 @@
+.editLink {
+    color: #0e6dcd;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.editLink:hover {
+    text-decoration: underline;
+}
+
+.image {
+    max-height: 180px;
+    max-width: 100%;
+    display: inline-block;
+    margin-bottom: 15px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.file .image {
+    max-height: 120px;
+    margin-bottom: 0;
+}
+
+.title {
+    font-size: 24px;
+}
+
+.item,
+.itemImage {
+    width: 100%;
+    margin-top: 15px;
+    position: relative;
+}
+
+.itemImage {
+    max-width: 280px;
+}
+
+.itemImage:not(:last-child) {
+    padding-right: 15px;
+}
+
+.item:last-child:nth-child(odd) {
+    width: 100%;
+    padding-right: 0;
+}
+
+.file {
+    padding: 20px 30px 20px 30px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+}
+
+.deleteFile {
+    position: absolute;
+    right: 20px;
+    border: 0;
+    outline: 0;
+    background: none;
+    top: 10px;
+    cursor: pointer;
+}
+
+.fa-times::before {
+    font-size: 16px !important;
+}
+
+.wrapper,
+.linksWrapper,
+.linksWrapperImage {
+    background: #fff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+    margin: 15px 0;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.wrapper {
+    padding: 20px 25px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.linksWrapper,
+.linksWrapperImage {
+    padding: 15px 25px;
+}
+
+.linksWrapperImage {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.addingFilesWrapper {
+    width: 100%;
+    display: block;
+    text-align: right;
+    margin-top: 10px;
+}
+
+.addBtn {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: all ease-in-out .15s;
+}
+
+.addBtn:hover,
+.addBtn:focus,
+.addBtn:active {
+    color: #fff;
+    background-color: #437FC1;
+    border-color: #437FC1;
+    outline: #437FC1;
+}
+
+@media screen and (min-width: 768px){
+    .wrapper {
+        padding: 50px 100px;
+    }
+
+    .wrapper,
+    .linksWrapper,
+    .linksWrapperImage {
+        background: #fff;
+    }
+
+    .addBtn {
+        background-color: #fff;
+    }
+
+    .item {
+        display: inline-block;
+        max-width: 50%;
+        width: 100%;
+    }
+
+    .itemImage {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .item:nth-child(1n) {
+        padding-right: 7px;
+    }
+
+    .item:nth-child(2n) {
+        padding-left: 7px;
+    }
+}

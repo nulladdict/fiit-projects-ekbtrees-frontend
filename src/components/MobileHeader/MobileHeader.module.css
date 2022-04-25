@@ -1,0 +1,48 @@
+.mobileHeader {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.topNav {
+    background-color: #50802c;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.burgerBtn {
+    background: none;
+    border: 0;
+    font-size: 25px;
+    padding: 15px 20px;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ekbTrees {
+    font-family: "Merriweather", serif !important;
+    color: white;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+    line-height: 40px;
+    padding-left: 7px;
+}
+
+.logo {
+    color: #ffffff;
+}
+
+@media screen and (min-width: 768px) {
+    .mobileHeader {
+        display: none;
+    }
+}

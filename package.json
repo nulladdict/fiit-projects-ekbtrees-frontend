@@ -1,0 +1,72 @@
+{
+  "name": "ekb-trees",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "https://ekb-trees-help.ru",
+  "dependencies": {
+    "2gis-maps": "^3.6.6",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.9.2",
+    "@types/react": "^17.0.21",
+    "@types/react-dom": "^17.0.9",
+    "base-64": "^1.0.0",
+    "bootstrap": "^4.6.0",
+    "jwt-decode": "^3.1.2",
+    "leaflet": "^1.7.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.1",
+    "react-dom": "^17.0.2",
+    "react-leaflet": "^3.1.0",
+    "react-leaflet-markercluster": "^3.0.0-rc1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.4.3",
+    "universal-cookie": "^4.0.4",
+    "utf8": "^3.0.0",
+    "web-vitals": "^1.1.1"
+  },
+  "devDependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/base-64": "^1.0.0",
+    "@types/leaflet": "^1.7.5",
+    "@types/react-leaflet-markercluster": "^2.0.0",
+    "@types/react-router-dom": "^5.1.9",
+    "@types/utf8": "^3.0.0",
+    "classnames": "^2.3.1",
+    "dayjs": "^1.10.5",
+    "material-ui-dropzone": "^3.5.0",
+    "mini-create-react-context": "^0.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "stop": "taskkill -F -IM node.exe",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

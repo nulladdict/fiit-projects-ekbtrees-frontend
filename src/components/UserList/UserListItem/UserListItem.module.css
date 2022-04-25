@@ -1,0 +1,65 @@
+.userListItem {
+  background-color: #F5F1F1FF;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 10px 0;
+  padding: 5% 0;
+
+}
+.btnBlue {
+  background-color: #3C64B1FF;
+  border: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.btnRed {
+  background-color: #EC0B0BFF;
+  border: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.btnBlue:hover {
+cursor: pointer;
+background-color: rgb(48, 87, 160);
+}
+
+.btnRed:hover {
+  cursor: pointer;
+  background-color: rgb(219, 3, 3);
+}
+.userListItemTable {
+  width: 100%;
+}
+
+.fasPencilAlt {
+  font-size: 14px;
+  padding: 8px 10px;
+}
+
+.userListItemTable :nth-child(1) :nth-child(n) :nth-child(2) {
+  display: inline;
+  cursor: pointer;
+  color: rgb(196, 196, 196);
+  word-wrap: break-word;
+  width: 20px;
+
+}
+@media screen and (min-width: 768px) {
+  .userListItem {
+    padding: 10px;
+    line-height: 18px;
+    font-size: 16px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 15px -5px rgb(34 60 80 / 57%);
+
+  }
+  .userListItemTable :nth-child(1) :nth-child(1) :nth-child(1) {
+    width: 100px;
+
+  }
+  }

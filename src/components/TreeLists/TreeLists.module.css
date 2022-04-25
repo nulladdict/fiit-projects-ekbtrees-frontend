@@ -1,0 +1,194 @@
+a:hover {
+    text-decoration: none;
+}
+
+.treeHeader {
+    margin: 10px 15px 15px 15px;
+    text-align: center;
+}
+
+.treeHeader p {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.buttonNavigation {
+    margin: 10px;
+    background: inherit;
+    font-size: 20px;
+    color: grey;
+    cursor: pointer;
+    border: 0;
+}
+
+.activeNavigationButton {
+    color: black;
+    border-bottom: 2px solid #FB8F07;
+}
+
+.treeTableHeader {
+    display: none;
+}
+
+.treeTableBody {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.treeTableItemWrapper {
+    width: 100%;
+    padding: 20px 20px 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    max-width: 300px;
+    background: #fafafa;
+    box-shadow: 0 0 10px -5px rgb(34 60 80 / 57%);
+}
+
+.treeTableItem {
+    margin-bottom: 5px;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.treeTableItemImg,
+.treeTablePencil {
+    display: block;
+    text-align: center;
+}
+
+.treeTableItemImg {
+    width: 100%;
+    text-align: center;
+}
+
+.treTableEditButton {
+    border: 0;
+    max-width: 300px;
+    width: 100%;
+    border-radius: 15px;
+    height: 40px;
+    color: #FB8F07;
+    margin-top: 10px;
+}
+
+.treTableEditButton:focus,
+.treTableEditButton:active {
+    color: #fff;
+    background: #FB8F07;
+}
+
+.faPencil {
+    display: none;
+}
+
+.tableImg {
+    max-width: 100%;
+    max-height: 197px;
+}
+
+.treeNavigation {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.treeTableItemWrapper {
+    max-width: 195px;
+    flex-basis: 195px;
+    width: 100%;
+    margin: 0 1% 25px 1%;
+    padding-bottom: 70px;
+    position: relative;
+}
+
+.tableImg {
+    max-height: 130px
+}
+
+.treeTablePencil {
+    position: absolute;
+    bottom: 15px;
+    width: 155px;
+}
+
+.treeTable {
+    max-width: 1300px;
+    width: 100%;
+    display: table;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.treeTableHeader {
+    display: table-row;
+}
+
+.treeTableItemWrapper {
+    background: none;
+    box-shadow: none;
+    display: table-row;
+    height: 70px;
+    margin: 0;
+    padding: 0;
+}
+
+.treeTableItemWrapper:hover {
+    cursor: pointer;
+    background-color: #fff;
+    box-shadow: 0 0 15px -5px rgb(34 60 80 / 57%);
+}
+
+.treeTablePrefix {
+    display: none;
+}
+
+.treeTableBody {
+    display: table-row-group;
+}
+
+.treeTableHeaderItem {
+    display: table-cell;
+    text-align: center;
+    font-weight: bold;
+    padding: 20px;
+    vertical-align: middle;
+}
+
+.treeTableItem {
+    display: table-cell;
+    text-align: center;
+    padding: 5px 20px;
+    color: grey;
+    vertical-align: middle;
+}
+
+.treeTableItemImg {
+    width: auto;
+}
+
+.tableImg {
+    max-height: 70px;
+    max-width: 70px;
+}
+
+.treeTablePencil {
+    position: static;
+    width: auto;
+}
+
+.treTableEditButton {
+    display: none;
+}
+
+.faPencil {
+    display: inline-block;
+    font-size: 23px;
+    color: rgb(97, 96, 96);
+}
+
+.faPencil:hover {
+    color: #181818;
+}
+

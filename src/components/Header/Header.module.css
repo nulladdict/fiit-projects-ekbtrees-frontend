@@ -1,0 +1,4 @@
+.headerWrapper {
+    flex-shrink: 0;
+    height: 80px;
+}

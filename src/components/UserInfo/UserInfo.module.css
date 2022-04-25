@@ -1,0 +1,104 @@
+.userContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 10px 15px; */
+    /* box-shadow: 0px 0px 15px -5px rgba(34, 60, 80, 0.57); */
+    position: relative;
+    /* background-color: white; */
+}
+.user{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userMenuWrapper {
+
+}
+
+.user-heading{
+    font-size: 18px;
+}
+.userName, .userRole{
+    display: block;
+}
+.userName{
+    font-weight: 600;
+}
+.userRole{
+    font-size: 12px;
+    color: grey;
+    text-transform: lowercase;
+    line-height: 1.5;
+}
+.userIcon{
+    width: 35px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 20px;
+    margin: 0px 5px;
+}
+
+.userBtn {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    outline: none;
+}
+
+.faChevronDown,
+.faBell,
+.faSignOut{
+    color: lightgrey;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left:10px;
+}
+.faChevronDown:hover,
+.faBell:hover,
+.faSignOut:hover{
+    color: #54ABFDFF;
+}
+
+.faChevronDownActive {
+    color: rgb(84, 171, 253);
+}
+
+.faBell:before {
+    content: "\f0f3";
+}
+
+.faSignOut:before {
+    content: "\f08b";
+}
+
+.faChevronDown {
+    background: none;
+    border: 0;
+}
+
+.faChevronDown:before {
+    content: "\f078";
+}
+
+.userControls{
+    display: flex;
+    justify-content: space-between;
+    flex-basis: 60px;
+}
+
+@media screen and (min-width: 320px) {
+    .container {
+        margin: 10px;
+    }
+}
+
+@media screen and (min-width: 768px){
+    .container{
+        margin: 0;
+    }
+    .userContainer{
+        /*margin: 0px 10%;*/
+    }
+}

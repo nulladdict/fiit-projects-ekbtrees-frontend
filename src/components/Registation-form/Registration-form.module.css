@@ -1,0 +1,194 @@
+*{
+  font-family: "Recursive", sans-serif;
+}
+
+.registrationForm {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    padding: 10% 0;
+    padding-bottom: 0;
+}
+
+.registrationContainer{
+    box-shadow: 0px 0px 15px -5px rgba(34, 60, 80, 0.57);
+    background-color: white;
+}
+
+.registrationForm input {
+    box-sizing: border-box;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 25px;
+    border: 1px solid rgb(175, 175, 175);
+    height: 50px;
+    margin-bottom: 15px;
+    padding: 0px 24px;
+}
+
+.registrationForm input:focus {
+    outline: none;
+    border: 2px solid rgb(104, 103, 103);
+}
+
+.registrationForm button {
+    box-sizing: border-box;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 25px;
+    height: 50px;
+    margin: 15px 0px;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+    background-color: #50802C;
+    cursor: pointer;
+}
+
+.registrationForm button:hover,
+.registrationForm button:active{
+    background-color: #4c7929;
+}
+
+.registrationForm .loginMessage {
+    color: lightgray;
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
+}
+
+.registrationForm .flex {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: 15px auto;
+}
+
+.flex{
+      display: flex;
+}
+
+.flexSocial {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.privacyTerms {
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    padding: 15px 0px;
+}
+
+.animate__animated {
+    --animate-duration: 0.5s;
+}
+
+.social a {
+    text-align: center;
+    width: 40px;
+    height: 40px;
+    float: left;
+    background: #fff;
+    margin: 0 10px 10px 0;
+}
+
+.social a img{
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    display: none;
+    color: #FB8F07;
+    font-size: 20px;
+    text-align: center;
+    padding: 30px 0px;
+}
+
+.registrationContainer{
+    display: flex;
+}
+
+.registrationAside{
+    display: none;
+    flex-basis: 50%;
+    background-color: #4F802C;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.regError{
+    color: red;
+}
+
+.registrationAside .title{
+    color: white;
+    font-size: 25px;
+}
+
+.registrationAside p{
+     padding: 10px 0px;
+}
+
+.registrationAside .linkLogin{
+    width: 200px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 12px;
+    background-color: inherit;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin: 10px 0px;
+}
+
+.registrationAside .linkLogin:hover,
+.registrationAside .linkLogin:active{
+    background-color: white;
+    color: #4F802C;
+    transition: ease-in 0.15s;
+}
+
+@media screen and (min-width: 768px){
+    .registrationContainer{
+      height: 600px;
+    }
+
+    .title {
+      display: inline;
+    }
+
+    .registrationForm{
+      flex-basis: 50%;
+      padding: 0px 40px;
+    }
+
+    .registrationAside{
+      display: flex;
+    }
+
+    .privacyTerms{
+      display: none;
+    }
+  }
+
+@media screen and (min-width: 1024px){
+  .registrationContainer{
+        width: 80%;
+        margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 1440px){
+  .registrationContainer{
+        width: 1000px;
+        margin: 0 auto;
+    }
+}

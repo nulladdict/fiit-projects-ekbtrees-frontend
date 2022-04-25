@@ -1,0 +1,20 @@
+.leaflet-container .leaflet-control-attribution,
+.leaflet-container .leaflet-control-scal {
+    display: none;
+}
+
+.leaflet-container {
+    height: calc(100vh - 60px);
+}
+
+@media screen and (min-width: 1024px) {
+    .leaflet-container {
+        height: 500px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .leaflet-container {
+        height: 100%;
+    }
+}

@@ -1,0 +1,81 @@
+.logo h1 {
+    color: #50802c;
+    font-weight: 400;
+    padding: 10px 0;
+}
+
+.activeLink {
+    border-bottom: 3px solid #fb8f07;
+    color: #fb8f07;
+}
+
+.desktopHeader {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    color: #50802c;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu a {
+    letter-spacing: 0.05vw;
+    font-weight: bold;
+    color: rgb(0, 92, 92);
+    margin: 0 10px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.menu a:hover {
+    color: #3e69b6;
+}
+
+.signLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.signLinks a {
+    margin-left: 10px;
+    color: #3e69b6;
+    padding: 10px 15px;
+}
+
+.activeSignLinks {
+    background-color: #50802c;
+    border: none;
+    color: white !important;
+}
+
+@media screen and (min-width: 768px) {
+    .desktopHeader {
+        display: flex;
+    }
+
+    .menu {
+        margin: 0;
+        width: unset;
+        align-items: unset;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .desktopHeader {
+        padding: 0 10%;
+    }
+
+    .menu a {
+        font-size: 14px;
+    }
+}
+

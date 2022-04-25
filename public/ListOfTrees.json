@@ -1,0 +1,246 @@
+{
+    "tree1":{
+        "type": "Липа",
+        "age": 18,
+        "treeHeight": 10,
+        "latitude": 45.1231223,
+        "longitude": 55.1234567,
+        "image": "https://cdn.pixabay.com/photo/2016/06/26/11/31/tree-1480301_1280.jpg",
+        "additionDate": "21.02.2020"
+    },
+    "tree2":{
+        "type": "Дуб",
+        "age": 50,
+        "treeHeight": 17,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://crosti.ru/patterns/00/08/15/e47846d2b7/picture.jpg",
+        "additionDate": "12.04.2020"
+        },
+    "tree3":{
+        "type": "Кипарис",
+        "age": 13,
+        "treeHeight": 21,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://w-dog.ru/wallpapers/10/7/550056503648256/nebo-tuchi-pole-derevo-osen.jpg",
+        "additionDate": "01.12.2018"
+        },
+    "tree4":{
+        "type": "Сосна",
+        "age": 32,
+        "treeHeight": 9,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://ричстоун.рф/wp-content/uploads/2017/10/крона.jpg",
+        "additionDate": "21.02.2020"
+        },
+    "tree5":{
+        "type": "Береза",
+        "age": 22,
+        "treeHeight": 7,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://c.wallhere.com/photos/4a/a4/trees_nature_shrine_landscape-230732.jpg!d",
+        "additionDate": "17.09.2020"
+        },
+    "tree6":{
+        "type": "Ива",
+        "age": 10,
+        "treeHeight": 3,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://i.pinimg.com/originals/fe/9e/aa/fe9eaa2abe14f088b95d6c4fd1e10b7d.jpg",
+        "additionDate": "19.01.2020"
+        },
+    "tree7":{
+        "type": "Ольха",
+        "age": 8,
+        "treeHeight": 2.4,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "http://co19.nevseoboi.com.ua/nature/292/29284/1562068607-1003246-nature-nevseoboi.com.ua.jpg",
+        "additionDate": "05.05.2020"
+        },
+    "tree8":{
+        "type": "Лиственница",
+        "age": 10,
+        "treeHeight": 5,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://24warez.ru/uploads/posts/171017/065412/3.jpg",
+        "additionDate": "21.02.2020"
+    },
+    
+    "tree13":{
+        "type": "Сосна",
+        "age": 32,
+        "treeHeight": 9,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://ричстоун.рф/wp-content/uploads/2017/10/крона.jpg",
+        "additionDate": "21.02.2020"
+        },
+    "tree14":{
+        "type": "Береза",
+        "age": 22,
+        "treeHeight": 7,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://c.wallhere.com/photos/4a/a4/trees_nature_shrine_landscape-230732.jpg!d",
+        "additionDate": "17.09.2020"
+        },
+        "tree9":{
+            "type": "Ель",
+            "age": 9,
+            "treeHeight": 3,
+            "latitude": 45.1231223,
+            "longitude": 66.1234567,
+            "image": "https://i.pinimg.com/originals/c1/f1/7d/c1f17d9a164b33e220c10b882310267f.jpg",
+            "additionDate": "20.10.2020"
+        },
+        "tree10":{
+            "type": "Липа",
+            "age": 18,
+            "treeHeight": 10,
+            "latitude": 45.1231223,
+            "longitude": 55.1234567,
+            "image": "https://cdn.pixabay.com/photo/2016/06/26/11/31/tree-1480301_1280.jpg",
+            "additionDate": "21.02.2020"
+        },
+        "tree11":{
+            "type": "Дуб",
+            "age": 50,
+            "treeHeight": 17,
+            "latitude": 45.1231223,
+            "longitude": 66.1234567,
+            "image": "https://crosti.ru/patterns/00/08/15/e47846d2b7/picture.jpg",
+            "additionDate": "12.04.2020"
+            },
+        "tree12":{
+            "type": "Кипарис",
+            "age": 13,
+            "treeHeight": 21,
+            "latitude": 45.1231223,
+            "longitude": 66.1234567,
+            "image": "https://w-dog.ru/wallpapers/10/7/550056503648256/nebo-tuchi-pole-derevo-osen.jpg",
+            "additionDate": "01.12.2018"
+            },
+    "tree15":{
+        "type": "Ива",
+        "age": 10,
+        "treeHeight": 3,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://i.pinimg.com/originals/fe/9e/aa/fe9eaa2abe14f088b95d6c4fd1e10b7d.jpg",
+        "additionDate": "19.01.2020"
+        },
+    "tree16":{
+        "type": "Ольха",
+        "age": 8,
+        "treeHeight": 2.4,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "http://co19.nevseoboi.com.ua/nature/292/29284/1562068607-1003246-nature-nevseoboi.com.ua.jpg",
+        "additionDate": "05.05.2020"
+        },
+    "tree17":{
+        "type": "Лиственница",
+        "age": 10,
+        "treeHeight": 5,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://24warez.ru/uploads/posts/171017/065412/3.jpg",
+        "additionDate": "21.02.2020"
+    },
+    "tree20":{
+        "type": "Липа",
+        "age": 18,
+        "treeHeight": 10,
+        "latitude": 45.1231223,
+        "longitude": 55.1234567,
+        "image": "https://cdn.pixabay.com/photo/2016/06/26/11/31/tree-1480301_1280.jpg",
+        "additionDate": "21.02.2020"
+    },
+    "tree21":{
+        "type": "Дуб",
+        "age": 50,
+        "treeHeight": 17,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://crosti.ru/patterns/00/08/15/e47846d2b7/picture.jpg",
+        "additionDate": "12.04.2020"
+        },
+    "tree22":{
+        "type": "Кипарис",
+        "age": 13,
+        "treeHeight": 21,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://w-dog.ru/wallpapers/10/7/550056503648256/nebo-tuchi-pole-derevo-osen.jpg",
+        "additionDate": "01.12.2018"
+        },
+    "tree18":{
+        "type": "Ель",
+        "age": 9,
+        "treeHeight": 3,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://i.pinimg.com/originals/c1/f1/7d/c1f17d9a164b33e220c10b882310267f.jpg",
+        "additionDate": "20.10.2020"
+    },
+    "tree19":{
+        "type": "Ель",
+        "age": 9,
+        "treeHeight": 3,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://i.pinimg.com/originals/c1/f1/7d/c1f17d9a164b33e220c10b882310267f.jpg",
+        "additionDate": "20.10.2020"
+    },
+    "tree23":{
+        "type": "Сосна",
+        "age": 32,
+        "treeHeight": 9,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://ричстоун.рф/wp-content/uploads/2017/10/крона.jpg",
+        "additionDate": "21.02.2020"
+        },
+    "tree24":{
+        "type": "Береза",
+        "age": 22,
+        "treeHeight": 7,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://c.wallhere.com/photos/4a/a4/trees_nature_shrine_landscape-230732.jpg!d",
+        "additionDate": "17.09.2020"
+        },
+    "tree25":{
+        "type": "Ива",
+        "age": 10,
+        "treeHeight": 3,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://i.pinimg.com/originals/fe/9e/aa/fe9eaa2abe14f088b95d6c4fd1e10b7d.jpg",
+        "additionDate": "19.01.2020"
+        },
+    "tree26":{
+        "type": "Ольха",
+        "age": 8,
+        "treeHeight": 2.4,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "http://co19.nevseoboi.com.ua/nature/292/29284/1562068607-1003246-nature-nevseoboi.com.ua.jpg",
+        "additionDate": "05.05.2020"
+        },
+    "tree27":{
+        "type": "Лиственница",
+        "age": 10,
+        "treeHeight": 5,
+        "latitude": 45.1231223,
+        "longitude": 66.1234567,
+        "image": "https://24warez.ru/uploads/posts/171017/065412/3.jpg",
+        "additionDate": "21.02.2020"
+    }
+}

@@ -1,0 +1,279 @@
+.form {
+    margin: 20px 0;
+}
+
+.container {
+    padding: 0 9px;
+}
+
+.title {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.close {
+    cursor: pointer;
+    background: none;
+    font-size: 18px;
+    border: 0;
+    outline: none;
+}
+
+.blockTitle {
+    margin-bottom: 5px;
+}
+
+.block {
+    background-color: #F3F6FA;
+    border-radius: 10px;
+    padding: 15px 15px 20px 15px;
+    z-index: 1000;
+    margin: 0 15px;
+    width: 100%;
+    position: relative;
+}
+
+.fa-times:before {
+    font-size: 18px;
+}
+
+.link {
+    padding: 10px 15px;
+    background-color: #50802C;
+    color: white !important;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+    display: block;
+}
+
+.link:hover,
+.link:focus,
+.link:active {
+    background-color: #6bc22a;
+}
+
+.blockPrefix {
+    display: block;
+    font-size: 16px;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.blockValue {
+    text-align: left;
+    margin: 0;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 35px;
+}
+
+.blockSelect {
+    text-align-last: left;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 35px;
+}
+
+.blockSelectOption {
+    text-align: left;
+}
+
+.blockFileItem {
+    width: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.closeWrapper {
+    width: 100%;
+    text-align: right;
+}
+
+.addButton,
+.cancelButton {
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 60px;
+}
+
+.addButton {
+    background-color: #50802c;
+    border-color: #50802c;
+    margin-bottom: 15px;
+}
+
+.addButton:hover,
+.addButton:focus,
+.addButton:active {
+    opacity: .6;
+}
+
+.cancelButton {
+    background-color: #757575;
+    border-color: #757575;
+}
+
+.cancelButton:hover,
+.cancelButton:focus,
+.cancelButton:active {
+    opacity: .6;
+}
+
+.geopositionWrapper {
+    width: 100%;
+    line-height: 21px;
+}
+
+.geopositionItem {
+    width: 100%;
+    display: block;
+    font-size: 16px;
+}
+
+ @media screen and (min-width: 550px) {
+    .block {
+        width: 100%;
+    }
+
+    .blockWrapper {
+        position: relative;
+        margin-top: 20px;
+    }
+
+    .blockWrapper:first-child {
+        margin-top: 0;
+    }
+
+    .wrapperFlex {
+        margin-top: 20px;
+    }
+
+    .blockPrefix {
+        display: inline-block;
+        width: 30%;
+        margin: 0;
+    }
+
+    .blockValue,
+    .blockSelect {
+        position: absolute;
+        width: 68%;
+        top: 0;
+        right: 0;
+    }
+
+    .addButton,
+    .cancelButton {
+        width: 70%;
+    }
+
+    .geopositionWrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 68%;
+        display: inline-block;
+    }
+
+    .geopositionItem {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .title {
+        font-size: 25px;
+    }
+
+    .blockTitle {
+        font-size: 20px;
+    }
+
+    .subTitle {
+        color: #4b4b4b;
+    }
+
+    .navigation {
+        display: flex;
+    }
+
+    .blockWrapper:first-child {
+        margin-top: 20px;
+    }
+
+    .form {
+        max-width: 1150px;
+        width: 100%;
+        margin: 20px auto 20px auto;
+    }
+
+    .wrapperFlex {
+        margin-top: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .block {
+        background-color: #fff;
+        max-width: 900px;
+        padding: 25px 30px 30px 30px;
+        width: 100%;
+    }
+
+    .blockPrefix {
+        color: #4b4b4b;
+        max-width: 215px;
+        width: 100%;
+    }
+
+    .addButton,
+    .cancelButton {
+        width: 50%;
+    }
+
+    .blockWrapperDesktop {
+        width: 49%;
+        margin-top: 20px;
+    }
+
+    .blockWrapperDesktop:nth-child(2n) {
+        margin-left: 2%;
+    }
+
+    .blockSelect, .blockValue {
+        position: static;
+        width: 77.5%;
+    }
+
+    .blockWrapperDesktop .blockValue,
+    .wrapperDesktop .blockSelect {
+        width: 54%;
+    }
+
+    .geopositionWrapper {
+        position: static;
+        margin-bottom: 20px;
+    }
+
+    .blockWrapper {
+        display: flex;
+    }
+
+    .blockWrapper:first-child {
+        margin-bottom: 20px;
+    }
+}

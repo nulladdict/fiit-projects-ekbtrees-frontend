@@ -1,0 +1,81 @@
+.footerWrapper {
+    display: none;
+    flex-shrink: 0;
+    margin-top: 40px;
+}
+
+.footerMenu {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.footerMenu a {
+    letter-spacing: 0.05vw;
+    font-weight: bold;
+    color: rgb(0, 92, 92);
+    margin: 0px 10px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.logo .smallHeader {
+    font-family: "Merriweather", serif;
+    font-size: 20px;
+    display: block;
+    text-align: center;
+}
+
+.logo .bigHeader {
+    font-family: "Merriweather", serif;
+    font-size: 40px;
+    line-height: 30px;
+}
+
+.line {
+    background-color: #ADBEA5;
+    height: 1px;
+    width: 75%;
+    margin: 0 auto;
+}
+
+.footerWrapper .social {
+    display: flex;
+    width: 25%;
+    margin: 30px auto;
+    justify-content: space-between;
+}
+
+.footerWrapper .social img {
+    height: auto;
+    width: 30px;
+}
+
+.privacyTerms {
+    display: flex;
+    justify-content: center;
+}
+
+.underLine{
+    padding: 30px 20%;
+}
+@media screen and (min-width: 768px){
+    .footerWrapper {
+        display: block;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .footerMenu a {
+        font-size: 14px;
+    }
+    /* .underLine{
+        padding: 30px 30%;
+    } */
+}
+@media screen and (min-width: 2000px){
+    .footerWrapper {
+        padding: 0 10%;
+    }
+}

@@ -1,0 +1,231 @@
+.form {
+    margin: 75px 0 20px 0;
+}
+
+.formContainer {
+    padding: 0 15px;
+}
+
+.blockWrapper {
+    margin-top: 20px;
+}
+
+.subTitle,
+.blockTitle {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.title {
+    font-size: 24px;
+}
+
+.blockTitle {
+    margin-bottom: 5px;
+}
+
+.block {
+    background-color: #fff;
+    padding: 15px 15px 20px 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.blockPrefix {
+    display: block;
+    font-size: 16px;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.blockValue {
+    text-align: left;
+    margin: 0;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 35px;
+}
+
+.blockSelect {
+    text-align-last: left;
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 35px;
+}
+
+.blockSelectOption {
+    text-align: left;
+}
+
+.blockFileItem {
+    width: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.addButton,
+.cancelButton {
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    height: 60px;
+    border: 0;
+}
+
+.addButton {
+    background-color: #50802c;
+    border-color: #50802c;
+    margin-bottom: 15px;
+}
+
+.addButton:hover,
+.addButton:focus,
+.addButton:active {
+    opacity: .6;
+}
+
+.cancelButton {
+    background-color: #757575;
+    border-color: #757575;
+}
+
+.cancelButton:hover,
+.cancelButton:focus,
+.cancelButton:active {
+    opacity: .6;
+}
+
+.geopositionWrapper {
+    width: 100%;
+    line-height: 21px;
+}
+
+.geopositionItem {
+    width: 100%;
+    display: block;
+}
+
+@media screen and (min-width: 550px) {
+    .blockWrapper {
+        position: relative;
+    }
+
+    .buttons {
+        margin-top: 10px;
+        display: flex;
+    }
+
+    .blockWrapper:first-child {
+        margin-top: 0;
+    }
+
+    .wrapperFlex {
+        margin-top: 20px;
+    }
+
+    .blockPrefix {
+        display: inline-block;
+        width: 30%;
+    }
+
+    .blockValue,
+    .blockSelect {
+        position: absolute;
+        width: 68%;
+        top: 0;
+        right: 0;
+    }
+
+    .geopositionWrapper {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 68%;
+        display: inline-block;
+    }
+
+    .geopositionItem {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .blockTitle {
+        font-size: 20px;
+    }
+
+    .subTitle {
+        color: #4b4b4b;
+    }
+
+    .addButton {
+        border-right: 1px solid black;
+    }
+
+    .form {
+        max-width: 1150px;
+        width: 100%;
+        margin: 20px auto 20px auto;
+    }
+
+    .wrapperFlex {
+        margin-top: 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .block {
+        background-color: #fff;
+        padding: 25px 30px 30px 30px;
+    }
+
+    .blockPrefix {
+        color: #4b4b4b;
+        max-width: 215px;
+        width: 100%;
+    }
+
+    .blockWrapperDesktop {
+        width: 49%;
+    }
+
+    .blockWrapperDesktop:first-child {
+        margin-top: 20px;
+    }
+
+    .blockWrapperDesktop:nth-child(2n) {
+        margin-left: 2%;
+    }
+
+    .blockSelect, .blockValue {
+        position: static;
+        width: 77.5%;
+    }
+
+    .blockWrapperDesktop .blockValue,
+    .blockWrapperDesktop .blockSelect {
+        width: 54%;
+    }
+
+    .geopositionWrapper {
+        position: static;
+    }
+
+    .blockWrapper {
+        display: flex;
+    }
+}

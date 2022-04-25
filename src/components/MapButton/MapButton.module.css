@@ -1,0 +1,32 @@
+.mapButton {
+    height: 40px;
+    position: fixed;
+    z-index: 999;
+    right: 0px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    background-color: #50802c;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 5px;
+    padding: 5px 30px;
+}
+
+.mapButton:hover{
+    background-color: #6bc22a;
+}
+
+.mapButton:disabled{
+    background-color: #b9c5b0;
+}
+
+@media screen and (min-width: 768px) {
+    .mapButton {
+        top: 75vh;
+        position: absolute;
+    }
+}

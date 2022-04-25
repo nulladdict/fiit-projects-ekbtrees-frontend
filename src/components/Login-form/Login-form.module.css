@@ -1,0 +1,259 @@
+* {
+  box-sizing: border-box;
+  font-family: "Recursive", sans-serif;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+  padding: 10% 0;
+  padding-bottom: 0;
+}
+
+.loginContainer {
+  box-shadow: 0px 0px 15px -5px rgba(34, 60, 80, 0.57);
+  background-color: white;
+}
+
+.wrapper input {
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 25px;
+  border: 1px solid rgb(175, 175, 175);
+  height: 50px;
+  margin-bottom: 15px;
+  padding: 0px 24px;
+}
+
+.wrapper input:focus {
+  outline: none;
+  border: 2px solid rgb(104, 103, 103);
+}
+
+.wrapper button {
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 25px;
+  height: 50px;
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  background-color: #50802c;
+  cursor: pointer;
+  margin: 15px 0px;
+}
+
+.wrapper button:hover,
+.wrapper button:active {
+  background-color: #4c7929;
+}
+
+.wrapper .loginMessage {
+  color: lightgray;
+  text-align: center;
+  margin: 0;
+  font-size: 14px;
+}
+
+.wrapper .flex {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: 15px auto;
+}
+
+.flexRegister {
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.flexRegister p {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.flexRegister .yellow {
+  color: #fb8f07;
+}
+
+.flexRegister .yellow a {
+  color: #fb8f07;
+  text-decoration: none;
+  padding-left: 3px;
+}
+
+.privacyTerms {
+  font-weight: 500;
+  font-size: 12px;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.loginHelp {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 15px 0;
+  font-size: 14px;
+}
+
+.login-checkbox {
+  position: relative;
+  color: #fb8f07;
+  padding-left: 30px;
+  cursor: pointer;
+}
+
+.login-checkbox:hover,
+.login-checkbox:focus {
+  color: #fb8f07;
+}
+
+.login-checkbox input[type="checkbox"] + .checkbox-indicator {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #000000;
+}
+
+.login-checkbox input[type="checkbox"]:checked + .checkbox-indicator::before {
+  content: "\f00c";
+  font-family: "FontAwesome";
+  position: relative;
+  left: 1px;
+  color: black;
+}
+
+.restore {
+  color: #fb8f07;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.restore:hover,
+.restore:focus {
+  text-decoration: none;
+}
+
+.visually-hidden {
+  display: none;
+}
+
+.social a {
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  float: left;
+  margin: 0 10px 10px 0;
+}
+
+.social a img {
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  display: none;
+  color: #fb8f07;
+  font-size: 20px;
+  text-align: center;
+  padding: 30px 0px;
+}
+
+.loginContainer {
+  display: flex;
+}
+
+.loginAside {
+  display: none;
+  flex-basis: 50%;
+  background-color: #4f802c;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+.loginAside .title {
+  color: white;
+  font-size: 25px;
+}
+
+.loginAside p {
+  padding: 10px 0px;
+}
+.flexSocial{
+  display: flex;
+  justify-content: center;
+  padding: 10px 0px;
+}
+.loginAside .linkRegister {
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  text-transform: uppercase;
+  color: white;
+  font-size: 12px;
+  background-color: inherit;
+  border: 1px solid white;
+  border-radius: 5px;
+  margin: 10px 0px;
+}
+
+.loginAside .linkRegister:hover,
+.loginAside .linkRegister:active {
+  background-color: white;
+  color: #4f802c;
+  transition: ease-in 0.15s;
+}
+.loginMessage{
+  height: 40px;
+  padding: 10px 0px;
+}
+.loginMessage p{
+  color: red;
+}
+@media screen and (min-width: 768px) {
+  .loginContainer {
+    height: 550px;
+  }
+
+  .title {
+    display: inline;
+  }
+
+  .loginAside {
+    display: flex;
+  }
+
+  .wrapper {
+    flex-basis: 50%;
+    padding: 0px 40px;
+  }
+
+  .privacyTerms {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .loginContainer {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .loginContainer {
+    width: 1000px;
+    margin: 0 auto;
+  }
+}

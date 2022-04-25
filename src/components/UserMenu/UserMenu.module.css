@@ -1,0 +1,47 @@
+.userNavBar {
+  width: 180px;
+  position: absolute;
+  z-index: 1000;
+  right: 7%;
+}
+
+.userNavBar a{
+  background-color: #282A3DFF;
+  color: #54ABFDFF;
+  text-transform: uppercase;
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.faUser {
+  padding: 8px 10px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #1d53aa;
+}
+
+.active {
+  border-bottom: 3px solid #fb8f07;
+}
+
+.userNavBar a:hover{
+  background-color: #383B56FF;
+}
+
+.fas {
+  font-size: 14px;
+  padding: 8px 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .userNavBar {
+    right: 7%;
+  }
+}
+
+@media screen and (min-width: 820px) {
+  .userNavBar {
+    right: 13%;
+  }
+}
